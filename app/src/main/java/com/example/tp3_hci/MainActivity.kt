@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val switch = findViewById<Switch>(R.id.switch1) as Switch
+//        val switch = findViewById<Switch>(R.id.switch1) as Switch
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
