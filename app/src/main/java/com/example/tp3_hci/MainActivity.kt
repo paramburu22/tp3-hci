@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-        textField = findViewById(R.id.text_field)
+        textField = findViewById(R.id.tex)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -42,9 +42,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun getPageName(destinationId: Int): String {
         return when (destinationId) {
-            R.id.navigation_home -> "Home"
-            R.id.navigation_dashboard -> "Dashboard"
-            R.id.navigation_notifications -> "Notifications"
+            R.id.navigation_home -> "Inicio"
+            R.id.navigation_dashboard -> "Dispositivos"
+            R.id.navigation_notifications -> "Rutinas"
+            R.id.navigation_notifications -> "Usuario"
             // Add cases for other destinations as needed
             else -> ""
         }

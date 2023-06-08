@@ -1,4 +1,4 @@
-package com.example.tp3_hci.ui.notifications
+package com.example.tp3_hci.ui.devices
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.tp3_hci.databinding.FragmentNotificationsBinding
+import com.example.tp3_hci.databinding.FragmentDevicesBinding
 
-class NotificationsFragment : Fragment() {
+class DevicesFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentDevicesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,12 +23,12 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+            ViewModelProvider(this).get(DevicesViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentDevicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
+        val textView: TextView = binding.textDevices
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

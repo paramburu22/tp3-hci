@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">tp3-hci</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_devices">Dispositivos</string>
+    <string name="title_routines">Rutinas</string>
+    <string name="title_users">Usuarios</string>
 </resources>

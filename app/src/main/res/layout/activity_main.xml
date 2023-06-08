@@ -15,14 +15,14 @@
         android:background="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent">   </View>
 
-    <EditText
-        android:id="@+id/text_field"
+    <TextView
+        android:id="@+id/tex"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter text"
         android:minHeight="48dp"
         android:padding="8dp"
         android:text="Page Name Placeholder"
+        android:inputType="none"
         app:layout_constraintBottom_toBottomOf="@id/white_rectangle"
         app:layout_constraintEnd_toEndOf="@id/white_rectangle"
         app:layout_constraintStart_toStartOf="@id/white_rectangle"
