@@ -22,6 +22,7 @@
         android:name="com.example.tp3_hci.ui.routine.RoutineFragment"
         android:label="@string/title_routines"
         tools:layout="@layout/fragment_routines" />
+
     <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.tp3_hci.ui.user.UserFragment"
