@@ -1,7 +1,8 @@
 package com.example.tp3_hci
 
 import android.os.Bundle
-import android.widget.EditText
+import android.widget.Switch
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -10,19 +11,29 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tp3_hci.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var textField: EditText
+//    private lateinit var textField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val switch = findViewById<Switch>(R.id.switch1) as Switch
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        switch.setOnClickListener{
+//            if(switch.isChecked) {
+//                Toast.makeText(applicationContext, "Switch is On", Toast.LENGTH_LONG).show()
+//            } else {
+//                Toast.makeText(applicationContext, "Switch is Off", Toast.LENGTH_LONG).show()
+//            }
+//        }
         val navView: BottomNavigationView = binding.navView
-        textField = findViewById(R.id.tex)
+//        textField = findViewById(R.id.tex)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -36,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val pageName = getPageName(destination.id)
-            textField.setText(pageName)
+//            textField.setText(pageName)
         }
     }
 

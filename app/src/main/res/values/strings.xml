@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tp3-hci</string>
+    <string name="app_name">ContrAll</string>
     <string name="title_home">Inicio</string>
     <string name="title_devices">Dispositivos</string>
     <string name="title_routines">Rutinas</string>

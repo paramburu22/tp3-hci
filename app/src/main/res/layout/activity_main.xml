@@ -8,53 +8,87 @@
     android:background="@drawable/background"
     android:paddingTop="0dp">
 
-    <View
-        android:id="@+id/white_rectangle"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
-        app:layout_constraintTop_toTopOf="parent">   </View>
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
-    <TextView
-        android:id="@+id/tex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:padding="8dp"
-        android:text="Page Name Placeholder"
-        android:inputType="none"
-        app:layout_constraintBottom_toBottomOf="@id/white_rectangle"
-        app:layout_constraintEnd_toEndOf="@id/white_rectangle"
-        app:layout_constraintStart_toStartOf="@id/white_rectangle"
-        app:layout_constraintTop_toTopOf="@id/white_rectangle" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="20dp"
+            >
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperatura"
+                    android:minHeight="50dp"
+                    android:textSize="20dp"
+                    android:switchPadding="20dp"
+                    android:textOff="Apagado"
+                    android:textOn="Encendido"
+                    tools:ignore="UseSwitchCompatOrMaterialXml"
+                />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/nav_host_fragment_activity_main"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/mobile_navigation" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!--    <View-->
+    <!--        android:id="@+id/white_rectangle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?attr/actionBarSize"-->
+    <!--        android:background="#FFFFFF"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">   </View>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tex"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:minHeight="48dp"-->
+    <!--        android:padding="8dp"-->
+    <!--        android:text="Page Name Placeholder"-->
+    <!--        android:inputType="none"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/white_rectangle"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/white_rectangle"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/white_rectangle"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/white_rectangle" />-->
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-
-    <fragment
-        android:id="@+id/nav_host_fragment_activity_main"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/nav_view"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:navGraph="@navigation/mobile_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
