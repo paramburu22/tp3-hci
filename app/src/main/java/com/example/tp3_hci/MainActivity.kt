@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_devices, R.id.navigation_routines,  R.id.navigation_user
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
     private fun getPageName(destinationId: Int): String {
         return when (destinationId) {
             R.id.navigation_home -> "Inicio"
-            R.id.navigation_dashboard -> "Dispositivos"
-            R.id.navigation_notifications -> "Rutinas"
-            R.id.navigation_notifications -> "Usuario"
+            R.id.navigation_devices -> "Dispositivos"
+            R.id.navigation_routines -> "Rutinas"
+            R.id.navigation_user -> "Usuario"
             // Add cases for other destinations as needed
             else -> ""
         }

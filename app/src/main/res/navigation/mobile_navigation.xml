@@ -12,14 +12,19 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.tp3_hci.ui.dispositivos.DispositivosFragment"
-        android:label="@string/title_dashboard"
+        android:id="@+id/navigation_devices"
+        android:name="com.example.tp3_hci.ui.devices.DevicesFragment"
+        android:label="@string/title_devices"
         tools:layout="@layout/fragment_devices" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.tp3_hci.ui.devices.DevicesFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_routines"
+        android:name="com.example.tp3_hci.ui.routine.RoutineFragment"
+        android:label="@string/title_routines"
         tools:layout="@layout/fragment_routines" />
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.example.tp3_hci.ui.user.UserFragment"
+        android:label="@string/title_users"
+        tools:layout="@layout/fragment_user" />
 </navigation>

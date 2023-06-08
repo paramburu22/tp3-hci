@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tp3_hci.databinding.FragmentRoutinesBinding
 
-class NotificationsFragment : Fragment() {
+class RoutineFragment : Fragment() {
 
     private var _binding: FragmentRoutinesBinding? = null
 
@@ -22,14 +22,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
+        val routineViewModel =
             ViewModelProvider(this).get(RoutineViewModel::class.java)
 
         _binding = FragmentRoutinesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textRoutines
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        routineViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
