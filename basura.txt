@@ -1,0 +1,21 @@
+
+       <TextView
+           android:id="@+id/tex"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:minHeight="48dp"
+           android:padding="8dp"
+           android:text="Page Name Placeholder"
+           android:inputType="none"
+           app:layout_constraintBottom_toBottomOf="@id/white_rectangle"
+           app:layout_constraintEnd_toEndOf="@id/white_rectangle"
+           app:layout_constraintStart_toStartOf="@id/white_rectangle"
+           app:layout_constraintTop_toTopOf="@id/white_rectangle" />
+
+           
+       <View
+           android:id="@+id/white_rectangle"
+           android:layout_width="match_parent"
+           android:layout_height="?attr/actionBarSize"
+           android:background="#FFFFFF"
+           app:layout_constraintTop_toTopOf="parent">   </View>
