@@ -31,10 +31,11 @@ import androidx.compose.ui.unit.sp
 import com.example.contrall.R
 import com.example.contrall.data.LampUiState
 import com.example.contrall.util.LampViewModel
-//@Preview 
+@Preview
 @Composable
 fun LampScreen(
     //lampViewModel: LampViewModel,
+    //    lampUIState: LampUiState
     intensityValue: Float,
     switchState: Boolean,
     onSwitchStateChanged: (Boolean) -> Unit = {},
@@ -42,7 +43,7 @@ fun LampScreen(
     sliderValue: Float = 0f,
     onSliderValueChanged: (Float) -> Unit = {},
 ) {
-    Row(
+    Box(
         //modifier = Modifier.size(width = 150.dp, height = 110.dp).padding(start = 8.dp, end = 8.dp),
     ){
         Card(
