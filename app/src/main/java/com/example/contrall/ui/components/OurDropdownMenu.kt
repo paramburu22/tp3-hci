@@ -26,15 +26,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun OurDropdownMenu(items: List<String>, title: String) {
-    //val items = listOf("Item 1", "Item 2", "Item 3")
-    var selectedItem by remember{mutableStateOf(items[0])}
-    val expanded = remember { mutableStateOf(false) }
-    val func: ()->Unit = {}
+fun OurDropdownMenu(items: List<String>, selectedItem: String, onItemSelected: (String) -> Unit, title: String) {
+    var expanded by remember { mutableStateOf(false) }
+
 
     Box() {
         Button(
-            onClick = func,
+            onClick = { expanded = true },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             modifier = Modifier.fillMaxWidth()
 
@@ -51,8 +49,7 @@ fun OurDropdownMenu(items: List<String>, title: String) {
                 Row(modifier = Modifier.align(Alignment.Start)){
                     Text(
                         text = selectedItem,
-                        modifier = Modifier
-                            .clickable { expanded.value = true },
+                        modifier = Modifier.clickable { expanded = true },
                         textAlign = TextAlign.Start
                         //.padding(16.dp)
                     )
@@ -62,15 +59,15 @@ fun OurDropdownMenu(items: List<String>, title: String) {
 
         }
         DropdownMenu(
-            expanded = expanded.value,
-            onDismissRequest = { expanded.value = false },
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
             //modifier = Modifier.align(Alignment.CenterStart)
         ) {
             items.forEach { item ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedItem = item
-                        expanded.value = false
+                        onItemSelected(item)
+                        expanded = false
                     }
                 ) {
                     Text(text = item)
