@@ -52,7 +52,7 @@ fun ContrAllTheme(
     }
 
     MaterialTheme(
-        colors = colors,
+        colors = LightColorScheme,
         typography = Typography,
         shapes = Shapes,
         content = content

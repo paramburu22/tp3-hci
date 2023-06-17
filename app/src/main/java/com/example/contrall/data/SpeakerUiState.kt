@@ -1,8 +1,9 @@
-package com.example.contrall.ui
+package com.example.contrall.data
 
 import com.example.contrall.R
 
 data class SpeakerUiState(
     val name : String = R.string.speaker_name.toString(),
-    val volume : Int = 0
+    var volume : Int = 0,
+    val playing: Boolean = false,
 )

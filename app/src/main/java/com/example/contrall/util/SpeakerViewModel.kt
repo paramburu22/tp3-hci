@@ -1,7 +1,7 @@
 package com.example.contrall.util
 
 import androidx.lifecycle.ViewModel
-import com.example.contrall.ui.SpeakerUiState
+import com.example.contrall.data.SpeakerUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,5 +17,21 @@ class SpeakerViewModel : ViewModel() {
 
     fun resetSpeaker() {
         _uiState.value = SpeakerUiState(volume = 0)
+    }
+
+    fun decreaseVolume() {
+        if(_uiState.value.volume > 0) {
+            _uiState.value.volume -= 1
+        }
+    }
+
+    fun setVolume(value : Float) {
+        _uiState.value.volume = value.toInt()
+    }
+
+    fun increaseVolume() {
+        if(_uiState.value.volume < 10) {
+            _uiState.value.volume += 1
+        }
     }
 }

@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.contrall.ui.components.SpeakerScreen
 import com.example.contrall.ui.screens.DeviceScreen
 import com.example.contrall.ui.screens.HomeScreen
 import com.example.contrall.ui.screens.RoutineScreen
+import com.example.contrall.util.SpeakerViewModel
 
 @Composable
 fun ContrAllNavGraph(navController: NavHostController) {
@@ -15,13 +17,13 @@ fun ContrAllNavGraph(navController: NavHostController) {
         startDestination = Screen.FirstScreen.route
     ) {
         composable(Screen.FirstScreen.route) {
-            HomeScreen()
+            SpeakerScreen(SpeakerViewModel(),  R.drawable.background)
         }
         composable(Screen.SecondScreen.route) {
-            DeviceScreen()
+            DeviceScreen(R.drawable.background)
         }
         composable(Screen.ThirdScreen.route) {
-            RoutineScreen()
+            RoutineScreen(R.drawable.background)
         }
     }
 }

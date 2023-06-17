@@ -56,20 +56,7 @@ fun DoorScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Puerta")
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        Toast.makeText(contextForToast, "Back Icon Click", Toast.LENGTH_SHORT)
-                            .show()
-                    }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
-                    }
-                },
-                backgroundColor = MaterialTheme.colors.primary,
-            )
+            DevicesTopAppBar()
         }, content = {
             Box( modifier = Modifier
                 .fillMaxSize()

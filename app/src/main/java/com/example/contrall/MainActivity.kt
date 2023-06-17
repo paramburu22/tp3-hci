@@ -8,6 +8,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,22 +29,7 @@ class MainActivity : ComponentActivity() {
             ContrAllTheme {
                 val navController = rememberNavController()
                 Scaffold(
-//                    content = {
-//                        Box(modifier = Modifier.fillMaxSize()) {
-//                            // Load the background image
-//                            val backgroundImage = painterResource(R.drawable.background)
-//
-//                            // Display the background image
-//                            Image(
-//                                bitmap = backgroundImage.asImageBitmap(),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//
-//                            // Your actual content goes here
-//                            // ...
-//                        }
-//                    },
+
                     bottomBar = { BottomBar(navController = navController)}
                 ) {
                     ContrAllNavGraph(navController = navController)
