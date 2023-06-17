@@ -41,6 +41,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.util.SpeakerViewModel
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -52,11 +55,12 @@ import com.example.contrall.R
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview
 @Composable
 fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: Int) {
     val speakerUiState by speakerViewModel.uiState.collectAsState()
     val painter = painterResource(imageResId)
+
+    var showPlaylist by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -136,41 +140,49 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.baseline_skip_previous_24),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .padding(end = 12.dp)
-                                    .align(Alignment.CenterVertically))
+                            IconButton(onClick = { speakerViewModel.previousSong() }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_skip_previous_24),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .padding(end = 12.dp)
+                                        .align(Alignment.CenterVertically))
+                            }
 
-                            Image(
-                                painter = painterResource(id = R.drawable.baseline_play_arrow_24),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .padding(end = 12.dp)
-                                    .align(Alignment.CenterVertically))
+                            IconButton(onClick = { speakerViewModel.play() }) {
+                                Icon(
+                                    painter = if (speakerUiState.playing) {
+                                        painterResource(id = R.drawable.baseline_pause_24)
+                                    } else {
+                                        painterResource(id = R.drawable.baseline_play_arrow_24)
+                                    },
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .padding(end = 12.dp)
+                                        .align(Alignment.CenterVertically))
+                            }
 
-                            Image(
-                                painter = if (speakerUiState.playing) {
-                                    painterResource(id = R.drawable.baseline_pause_24)
-                                } else {
-                                    painterResource(id = R.drawable.baseline_stop_24)
-                                },
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .padding(end = 12.dp)
-                            )
+                            IconButton(onClick = { speakerViewModel.stop() }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_stop_24),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .padding(end = 12.dp)
+                                )
+                            }
 
-                            Image(
-                                painter = painterResource(id = R.drawable.baseline_skip_next_24),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .padding(end = 12.dp)
-                                    .align(Alignment.CenterVertically))
+                            IconButton(onClick = { speakerViewModel.nextSong() }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baseline_skip_next_24),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .padding(end = 12.dp)
+                                        .align(Alignment.CenterVertically))
+                            }
 
                         }
 
@@ -198,7 +210,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                                 onClick = { speakerViewModel.decreaseVolume() },
                                 modifier = Modifier.size(30.dp)) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.minus_svgrepo_com),
+                                    painter = painterResource(id = R.drawable.ic_round_remove_24),
                                     contentDescription = "Minus"
                                 )
                             }
@@ -220,7 +232,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                                 onClick = { speakerViewModel.increaseVolume() },
                                 modifier = Modifier.size(30.dp)) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.plus_svgrepo_com),
+                                    painter = painterResource(id = R.drawable.ic_round_add_24),
                                     contentDescription = "Minus"
                                 )
                             }
@@ -234,8 +246,10 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-//                            OurDropdownMenu(items = listOf("Pop", "Rock", "Latina", "Clasica"),
-//                                title = "Seleccione un genero")
+                            OurDropdownMenu(items = speakerUiState.genres,
+                                selectedItem = speakerUiState.currentGenre,
+                                onItemSelected = speakerViewModel::changeGenre,
+                                title = "Seleccione un genero")
                         }
                         Row(
                             modifier = Modifier
@@ -244,7 +258,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextButton(
-                                onClick = { /*TODO obtener lista de reproduccion*/ },
+                                onClick = { showPlaylist = true },
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
                             ) {
@@ -261,18 +275,17 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                     }
                 }
             }
-        })
+        }
+    )
 
+        if (showPlaylist) {
+            PlaylistDialog(
+                open = showPlaylist,
+                onClose = { showPlaylist = false },
+                genre = speakerUiState.currentGenre,
+                playlist = speakerUiState.currentPlaylist
+            )
+        }
 }
 
-
-//    Column(
-//        modifier = Modifier
-//            .verticalScroll(rememberScrollState())
-//            .padding(5.dp),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(text = speakerUiState.name)
-//    }
 
