@@ -1,36 +1,23 @@
 package com.example.contrall.ui.components
 
-import android.content.res.Resources.Theme
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
-import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,19 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.R
+import com.example.contrall.util.DoorViewModel
 
-@Preview
+//@Preview
 @Composable
 fun DoorScreen(
-    //lampViewModel: LampViewModel,
-    lockState: Boolean = false,
-    openState: Boolean = false,
-    onLockStateChanged: (Boolean) -> Unit = {},
-    onOpenStateChanged: (Boolean) -> Unit = {},
+    doorViewModel: DoorViewModel = viewModel(), imageResId: Int,
 ) {
     val painter = painterResource(R.drawable.background);
-    val contextForToast = LocalContext.current.applicationContext;
+    val doorUiState by doorViewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -113,14 +98,14 @@ fun DoorScreen(
                         ) {
                             // Lock Switch
                             Switch(
-                                checked = lockState,
-                                onCheckedChange = { value -> onLockStateChanged(value) },
+                                checked = doorUiState.lockSwitchState,
+                                onCheckedChange = { value -> doorViewModel.lockOrUnlockDoor(value) },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (lockState) "Bloqueada" else "Desbloqueada",
+                                text = if (doorUiState.lockSwitchState) "Bloqueada" else "Desbloqueada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -137,14 +122,14 @@ fun DoorScreen(
                         ) {
                             // Open Switch
                             Switch(
-                                checked = openState,
-                                onCheckedChange = { value -> onOpenStateChanged(value) },
+                                checked = doorUiState.openSwitchState,
+                                onCheckedChange = { value -> doorViewModel.openOrCloseDoor(value) },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (openState) "Abierta" else "Cerrada",
+                                text = if (doorUiState.openSwitchState) "Abierta" else "Cerrada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
