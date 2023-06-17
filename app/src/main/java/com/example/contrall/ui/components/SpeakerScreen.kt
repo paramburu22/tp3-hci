@@ -234,8 +234,8 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            OurDropdownMenu(items = listOf("Pop", "Rock", "Latina", "Clasica"),
-                                title = "Seleccione un genero")
+//                            OurDropdownMenu(items = listOf("Pop", "Rock", "Latina", "Clasica"),
+//                                title = "Seleccione un genero")
                         }
                         Row(
                             modifier = Modifier

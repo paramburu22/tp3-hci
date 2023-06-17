@@ -5,6 +5,7 @@ import com.example.contrall.data.SpeakerUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class SpeakerViewModel : ViewModel() {
     // Speaker UI state
@@ -21,17 +22,23 @@ class SpeakerViewModel : ViewModel() {
 
     fun decreaseVolume() {
         if(_uiState.value.volume > 0) {
-            _uiState.value.volume -= 1
+            _uiState.update { currentState -> currentState.copy(
+                volume = currentState.volume - 1
+            ) }
         }
     }
 
     fun setVolume(value : Float) {
-        _uiState.value.volume = value.toInt()
+        _uiState.update { currentState -> currentState.copy(
+            volume = value.toInt()
+        ) }
     }
 
     fun increaseVolume() {
         if(_uiState.value.volume < 10) {
-            _uiState.value.volume += 1
+            _uiState.update { currentState -> currentState.copy(
+                volume = currentState.volume + 1
+            ) }
         }
     }
 }
