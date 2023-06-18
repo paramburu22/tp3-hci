@@ -2,8 +2,10 @@ package com.example.contrall.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,6 +14,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
@@ -24,7 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
@@ -38,155 +45,189 @@ import com.example.contrall.util.OvenViewModel
 @Composable
 fun OvenScreen(
     ovenViewModel : OvenViewModel,
-    ovenUI : OvenUIState,
-    imageResId: Int
 ) {
-
     val ovenUiState by ovenViewModel.uiState.collectAsState()
-    val painter = painterResource(imageResId)
-    Card(
-        //onClick = func,
-        //modifier = Modifier.fillMaxSize(),
-        border = BorderStroke(2.dp, Color.LightGray),
-        shape = RoundedCornerShape(15.dp),
-        //elevation = 2.dp
-    ){
+    val painter = painterResource(R.drawable.background)
 
-        // Your UI content goes here
-        Column(
-            modifier = Modifier
-                .padding(10.dp)
-        ) {
-            Row(modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth()
-            ){
-
+    Scaffold(
+        topBar = {
+            DevicesTopAppBar()
+        },
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                //contentAlignment = Alignment.Center
+            ) {
                 Image(
-                    painter = painterResource(R.drawable.baseline_cookie_24),
+                    painter = painter,
                     contentDescription = null,
-                    modifier = Modifier.size(48.dp)
-                        .padding(end = 12.dp)
-                        .align(Alignment.CenterVertically)
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
-                // Lamp Title
-                Text(
-                    text = "Horno",
-                    fontSize = 30.sp,
-                )
-            }
-
-            Divider(modifier = Modifier.fillMaxWidth())
-
-
-            Row(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-            ) {
-                // Lamp Switch
-                Switch(
-                    checked = switchState,
-                    onCheckedChange = ovenViewModel ::toggleSwitchState ,
-                    modifier = Modifier.padding(bottom = 8.dp).padding(end = 10.dp),
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PrimaryLight, // Change the color of the switch thumb when checked
-                        checkedTrackColor = PrimaryLight, // Change the color of the switch track when checked
-                        uncheckedThumbColor = Color.Gray, // Change the color of the switch thumb when unchecked
-                        uncheckedTrackColor = Color.LightGray // Change the color of the switch track when unchecked
-                    ),
-                    //checked = lampViewModel.switchState,
-                    //checked = switchState,
-                    //onCheckedChange = { set -> lampViewModel.toggleSwitch(set) },
-                    //onCheckedChange = func,
-                    //modifier = Modifier.padding(bottom = 10.dp)
-                )
-                Text(
-                    text = if (switchState) "Prendido" else "Apagado",
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp)
-                        .align(Alignment.CenterVertically)
-                )
-            }
-
-            val title1 = "Fuente Calor"
-            Row(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-            ) {
-                OurDropdownMenu(ovenUI.heatModes, title1)
-            }
-
-            Text(
-                text = "Temperatura",
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .padding(10.dp)
-                //.align(Alignment.CenterVertically)
-            )
-
-            Row(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-            ) {
-                Button(
-                    onClick = ovenViewModel :: decreaseTemperatureValue,
-                    modifier = Modifier.padding(end = 10.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
-
+                Card(
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    shape = RoundedCornerShape(15.dp),
+                    modifier = Modifier.padding(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_round_remove_24),
-                        contentDescription = null,
-                    )
+
+                    // Your UI content goes here
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(20.dp)
+                                .fillMaxWidth()
+                        ) {
+
+                            Image(
+                                painter = painterResource(R.drawable.baseline_cookie_24),
+                                contentDescription = null,
+                                modifier = Modifier.size(48.dp)
+                                    .padding(end = 12.dp)
+                                    .align(Alignment.CenterVertically)
+                            )
+                            // Lamp Title
+                            Text(
+                                text = "Horno",
+                                fontSize = 30.sp,
+                            )
+                        }
+
+                        Divider(modifier = Modifier.fillMaxWidth())
+
+
+                        Row(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Switch(
+                                checked = ovenViewModel.switchState,
+                                onCheckedChange = { isChecked ->
+                                    ovenViewModel.toggleSwitchState(isChecked)
+                                },
+                                modifier = Modifier.padding(bottom = 8.dp).padding(end = 10.dp),
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = PrimaryLight, // Change the color of the switch thumb when checked
+                                    checkedTrackColor = PrimaryLight, // Change the color of the switch track when checked
+                                    uncheckedThumbColor = Color.Gray, // Change the color of the switch thumb when unchecked
+                                    uncheckedTrackColor = Color.LightGray // Change the color of the switch track when unchecked
+                                ),
+                                //checked = lampViewModel.switchState,
+                                //checked = switchState,
+                                //onCheckedChange = { set -> lampViewModel.toggleSwitch(set) },
+                                //onCheckedChange = func,
+                                //modifier = Modifier.padding(bottom = 10.dp)
+                            )
+                            Text(
+                                text = if (ovenViewModel.switchState) "Prendido" else "Apagado",
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(bottom = 8.dp)
+                                    .align(Alignment.CenterVertically)
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()
+                        ) {
+                            OurDropdownMenu(
+                                items = ovenUiState.heatModes,
+                                selectedItem = ovenUiState.selectedHeatModeValue,
+                                onItemSelected = ovenViewModel::setHeatMode,
+                                title = "Seleccione Fuente de Calor"
+                            )
+                        }
+
+                        Text(
+                            text = "Temperatura",
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(10.dp)
+                            //.align(Alignment.CenterVertically)
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Button(
+                                onClick = {ovenViewModel.decreaseTemperatureValue()},
+                                modifier = Modifier.padding(end = 10.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.ic_round_remove_24),
+                                    contentDescription = null,
+                                )
+                            }
+
+                            TextField(
+                                value = ovenUiState.temperatureValue.toString(),
+                                onValueChange = { value: String ->
+                                    val intValue = value.toIntOrNull() ?: 0
+                                    ovenViewModel.setTemperatureValue(intValue)
+                                },
+                                modifier = Modifier.width(100.dp) // Expand to fill the available width
+                            )
+
+                            Button(
+                                onClick = { ovenViewModel.increaseTemperatureValue() },
+                                modifier = Modifier.padding(end = 10.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+
+                            ) {
+                                Image(
+                                    painter = painterResource(R.drawable.ic_round_add_24),
+                                    contentDescription = null,
+                                )
+                            }
+
+                        }
+                        Row(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()
+                        ) {
+                            OurDropdownMenu(
+                                items = ovenUiState.grillModes,
+                                selectedItem = ovenUiState.selectedGrillModeValue,
+                                onItemSelected = ovenViewModel::setGrillMode,
+                                title = "Seleccione Modo Grill"
+                            )
+                        }
+                        val titleConvection = "Modo Conveccion"
+                        Row(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .fillMaxWidth()
+                        ) {
+                            OurDropdownMenu(
+                                items = ovenUiState.convModes,
+                                selectedItem = ovenUiState.selectedConvModeValue,
+                                onItemSelected = ovenViewModel::setConvMode,
+                                title = "Seleccione Modo Conveccion"
+                            )
+                        }
+                        // Trash Bin Image
+                        Image(
+                            painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
-
-                TextField(
-                    value = "100", // Set the initial text value
-                    onValueChange = { value -> ovenViewModel.setTemperatureValue(value.toInt()) },
-                    modifier = Modifier.width(100.dp) // Expand to fill the available width
-                )
-
-                Button(
-                    onClick = ovenViewModel :: increaseTemperatureValue,
-                    modifier = Modifier.padding(end = 10.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
-
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_round_add_24),
-                        contentDescription = null,
-                    )
-                }
-
             }
-            val titleGrill = "Modo Grill"
-            Row(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-            ) {
-                OurDropdownMenu(ovenUI.grillModes, titleGrill)
-            }
-            val titleConvection = "Modo Conveccion"
-            Row(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-            ) {
-                OurDropdownMenu(ovenUI.convModes, titleConvection)
-            }
-            // Trash Bin Image
-            Image(
-                painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                contentDescription = null,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
+
+    })
 }
 
 

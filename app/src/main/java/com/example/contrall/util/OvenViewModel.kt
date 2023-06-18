@@ -19,6 +19,14 @@ class OvenViewModel : ViewModel() {
     fun resetOven() {
         _uiState.value = OvenUIState(temperatureValue = 100)
     }
+    val switchState: Boolean
+        get() = _uiState.value.switchState
+
+    fun toggleSwitchState(newState: Boolean) {
+        _uiState.update { currentState -> currentState.copy(
+            switchState = newState
+        ) }
+    }
     fun setTemperatureValue(value : Int) {
         _uiState.update { currentState -> currentState.copy(
             temperatureValue = value
@@ -38,19 +46,20 @@ class OvenViewModel : ViewModel() {
             ) }
         }
     }
-    fun changeConvMode(value : String) {
-        _uiState.update { currentState -> currentState.copy(
-            selectedConvModeValue = value
-        ) }
-    }
-    fun changeGrillMode(value : String) {
-        _uiState.update { currentState -> currentState.copy(
-            selectedGrillModeValue = value
-        ) }
-    }
-    fun changeHeatMode(value : String) {
+    fun setHeatMode(value : String) {
         _uiState.update { currentState -> currentState.copy(
             selectedHeatModeValue = value
         ) }
     }
+    fun setConvMode(value : String) {
+        _uiState.update { currentState -> currentState.copy(
+            selectedConvModeValue = value
+        ) }
+    }
+    fun setGrillMode(value : String) {
+        _uiState.update { currentState -> currentState.copy(
+            selectedGrillModeValue = value
+        ) }
+    }
+
 }
