@@ -1,17 +1,14 @@
 package com.example.contrall.data
 
-data class LampUiState(
-    /*val lightStatus: Boolean = false,
-    val color: String = "",
-    val intensity: Int = 0,
-    val switchState: Boolean,
-    val sliderValue: Float*/
-    val intensityValue: Float,
-    val switchState: Boolean,
-    val onSwitchStateChanged: (Boolean) -> Unit = {},
-    val func: ()->Unit = {},
-    val sliderValue: Float = 0f,
-    val onSliderValueChanged: (Float) -> Unit = {},
+import androidx.compose.ui.graphics.Color
 
-) {
-}
+
+data class LampUiState(
+    val intensityValue: Float = 100f,
+    val switchState: Boolean = false,
+    val sliderValue: Float = 0f,
+    var selectedColor: Color = Color.White,
+    val selectedX: Float = 0f,
+    val selectedY: Float = 0f,
+    val showDialog: Boolean = false
+)

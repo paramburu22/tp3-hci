@@ -14,7 +14,5 @@ data class AirConditionerUiState (
     val selectedHorizontalSwing: String = "0",
 
     var switchState: Boolean = false,
-    //val onSwitchStateChanged: (Boolean) -> Unit = {},
-
     val temperature: Int = 24,
-    ){}
+){}
