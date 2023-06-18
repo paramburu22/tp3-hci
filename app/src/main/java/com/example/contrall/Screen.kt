@@ -1,17 +1,24 @@
 package com.example.contrall
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 
-sealed class Screen(val title: String, val icon: ImageVector, val route: String) {
 
-    object FirstScreen : Screen("Home", Icons.Filled.Home, "first_screen")
+sealed class Screen(val title: String,val iconResId: Int, val route: String) {
 
-    object SecondScreen : Screen("Devices", Icons.Filled.Favorite, "second_screen")
+    object FirstScreen : Screen("Inicio",R.drawable.home_icon, "first_screen")
 
-    object ThirdScreen : Screen("Routines", Icons.Filled.Face, "third_screen")
+    object SecondScreen : Screen("Dispositivos", R.drawable.devices_icon, "second_screen")
+
+    object ThirdScreen : Screen("Rutinas",R.drawable.routine_icon, "third_screen")
 }
 

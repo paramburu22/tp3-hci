@@ -73,7 +73,7 @@ fun LampScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it),
-                contentAlignment = Alignment.Center
+                //contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painter,
@@ -84,27 +84,33 @@ fun LampScreen(
                 Card(
                     border = BorderStroke(2.dp, Color.LightGray),
                     shape = RoundedCornerShape(15.dp),
+                    modifier = Modifier.padding(16.dp)
                 ) {
-                        Row(
-                            modifier = Modifier.padding(20.dp).fillMaxWidth()
-
-                        ) {
-                            Image(
-                                painter = painterResource(R.drawable.ic_baseline_lightbulb_24),
-                                contentDescription = null,
-                                modifier = Modifier.size(48.dp)
-                            )
-                            Text(
-                                text = "Lamp",
-                                fontSize = 30.sp
-                            )
-                        }
+                    Row(
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ic_baseline_lightbulb_24),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(48.dp)
+                                .padding(end = 12.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                        // Lamp Title
+                        Text(
+                            text = "Luz",
+                            fontSize = 30.sp,
+                        )
+                    }
 
                         Divider()
 
                         Row(
                             modifier = Modifier
-                                .padding(vertical = 8.dp)
+                                .padding(8.dp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -155,7 +161,7 @@ fun LampScreen(
 
                         Row(
                             modifier = Modifier
-                                .padding(vertical = 8.dp)
+                                .padding( 8.dp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {

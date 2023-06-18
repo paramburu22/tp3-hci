@@ -52,14 +52,13 @@ fun ColorPickerDialog(
     // Dialog background with a semi-transparent overlay
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onDismiss),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         // Color picker content
         Card(
             modifier = Modifier
-                .width(300.dp)
+                .width(400.dp)
                 .wrapContentHeight()
                 .padding(16.dp),
             elevation = 8.dp
@@ -148,24 +147,28 @@ fun ColorPickerDialog(
                                 )
                         )
                     }
-                    Column() {
-                        Button(
-                            onClick = onDismiss,
-                        ) {
-                            Text(text = "Cancel")
+                    Column(modifier = Modifier.padding(6.dp).fillMaxWidth()) {
+                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                            Button(
+                                onClick = onDismiss,
+                                modifier = Modifier.padding(end=26.dp)
+                            ) {
+                                Text(text = "Cancel")
+                            }
+
+                            // Confirm button
+                            Button(
+                                onClick = {
+                                    val color =
+                                        Color(red = red.value, green = green.value, blue = blue.value)
+                                    onColorSelected(color)
+                                    onDismiss()
+                                },
+                            ) {
+                                Text(text = "OK")
+                            }
                         }
 
-                        // Confirm button
-                        Button(
-                            onClick = {
-                                val color =
-                                    Color(red = red.value, green = green.value, blue = blue.value)
-                                onColorSelected(color)
-                                onDismiss()
-                            },
-                        ) {
-                            Text(text = "OK")
-                        }
                     }
                 }
             }
