@@ -1,7 +1,10 @@
 package com.example.contrall.util
 
+import android.annotation.SuppressLint
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import com.example.contrall.data.SpeakerUiState
+import com.example.contrall.ui.components.PlaylistDialog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +20,7 @@ class SpeakerViewModel : ViewModel() {
     }
 
     fun resetSpeaker() {
-        _uiState.value = SpeakerUiState(volume = 0)
+        _uiState.value = SpeakerUiState(volume = 0, playing = false)
     }
 
     fun decreaseVolume() {
@@ -41,4 +44,46 @@ class SpeakerViewModel : ViewModel() {
             ) }
         }
     }
+
+    fun changeGenre(newGenre : String) {
+        _uiState.update { currentState -> currentState.copy(
+            currentGenre = newGenre
+        ) }
+    }
+
+    fun play() {
+        if(_uiState.value.stopped) {
+            // arranco el parlante
+            _uiState.update { currentState ->
+                currentState.copy(
+                    stopped = false,
+                    playing = true,
+                )
+            }
+        }
+        if (_uiState.value.playing) {
+            // pause
+            _uiState.update { currentState -> currentState.copy(playing = false) }
+        } else {
+            // resume
+            _uiState.update { currentState -> currentState.copy(playing = true) }
+        }
+    }
+
+    fun stop() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                stopped = true,
+                playing = false,
+            )
+        }
+    }
+
+    fun nextSong() {
+
+    }
+    fun previousSong() {
+
+    }
+
 }
