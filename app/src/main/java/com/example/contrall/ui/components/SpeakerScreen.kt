@@ -57,9 +57,9 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: Int) {
+fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
     val speakerUiState by speakerViewModel.uiState.collectAsState()
-    val painter = painterResource(imageResId)
+    val painter = painterResource(R.drawable.background)
 
     var showPlaylist by remember { mutableStateOf(false) }
 

@@ -14,11 +14,11 @@ import com.example.contrall.R
 import com.example.contrall.ui.components.TopAppBar
 
 @Composable
-fun HomeScreen() {
+fun RoutinesScreen() {
     val painter = painterResource(R.drawable.background)
     Scaffold(
         topBar = {
-            TopAppBar(title = "Inicio", showIcon = false)
+            TopAppBar(title = "Rutinas", showIcon = false)
         },
         content = {
             Box(

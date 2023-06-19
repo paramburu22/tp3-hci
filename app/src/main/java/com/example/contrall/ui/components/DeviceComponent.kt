@@ -3,6 +3,7 @@ package com.example.contrall.ui.components
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,12 +28,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
 
 @Composable
 
-fun DeviceComponent(device : Device) {
+fun DeviceComponent(device : Device, navController: NavController) {
     lateinit var icon : Painter
     when(device.type?.name) {
         "lamp" -> icon = painterResource(id = R.drawable.ic_baseline_lightbulb_24)
@@ -41,7 +43,9 @@ fun DeviceComponent(device : Device) {
         "speaker" -> icon = painterResource(id = R.drawable.outline_speaker_24)
         "door" -> icon = painterResource(id = R.drawable.outline_sensor_door_24)
     }
+
     Card(
+        modifier = Modifier.clickable { navController.navigate(route = "home_screen") },
         border = BorderStroke(2.dp, Color.LightGray),
         shape = RoundedCornerShape(15.dp),
     ) {

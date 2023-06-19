@@ -32,10 +32,9 @@ import com.example.contrall.R
 import com.example.contrall.util.DoorViewModel
 import com.example.contrall.ui.components.TopAppBar
 
-//@Preview
 @Composable
 fun DoorScreen(
-    doorViewModel: DoorViewModel = viewModel(), imageResId: Int,
+    doorViewModel: DoorViewModel,
 ) {
     val painter = painterResource(R.drawable.background);
     val doorUiState by doorViewModel.uiState.collectAsState()
