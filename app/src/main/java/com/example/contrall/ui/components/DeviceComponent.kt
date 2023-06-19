@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.contrall.R
 
 @Composable
-@Preview
+
 fun DeviceComponent() {
     Card(
         border = BorderStroke(2.dp, Color.LightGray),

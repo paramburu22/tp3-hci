@@ -12,21 +12,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-fun DevicesTopAppBar() {
+fun TopAppBar(
+    title: String = "Device",
+    showIcon: Boolean = true,
+) {
 
     val contextForToast = LocalContext.current.applicationContext
     TopAppBar(
         title = {
-            Text(text = "Device")
+            Text(text = title)
         },
-        navigationIcon = {
-            IconButton(onClick = {
-                Toast.makeText(contextForToast, "Back Icon Click", Toast.LENGTH_SHORT)
-                    .show()
-            }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
+        navigationIcon = if (showIcon) {
+            {
+                IconButton(onClick = {
+                    Toast.makeText(contextForToast, "Back Icon Click", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
+                }
             }
-        },
+        } else null,
         backgroundColor = MaterialTheme.colors.primary,
     )
 }

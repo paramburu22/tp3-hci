@@ -51,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
+import com.example.contrall.ui.components.TopAppBar
 
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -64,7 +65,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel(), imageResId: 
 
     Scaffold(
         topBar = {
-                 DevicesTopAppBar()
+                 TopAppBar()
         }, content = {
             Box( modifier = Modifier
                 .fillMaxSize()

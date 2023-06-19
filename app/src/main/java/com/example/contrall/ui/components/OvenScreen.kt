@@ -38,6 +38,7 @@ import com.example.contrall.R
 import com.example.contrall.data.OvenUIState
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.OvenViewModel
+import com.example.contrall.ui.components.TopAppBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +52,7 @@ fun OvenScreen(
 
     Scaffold(
         topBar = {
-            DevicesTopAppBar()
+            TopAppBar()
         },
         content = {
             Box(

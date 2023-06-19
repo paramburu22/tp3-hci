@@ -23,6 +23,7 @@ import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
+import com.example.contrall.ui.components.TopAppBar
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -51,7 +52,7 @@ fun AirConditionerScreen(
 
     Scaffold(
         topBar = {
-            DevicesTopAppBar()
+            TopAppBar()
         },content = {
             Box( modifier = Modifier
                 .fillMaxSize()

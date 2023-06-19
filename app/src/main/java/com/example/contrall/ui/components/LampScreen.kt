@@ -54,6 +54,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.window.DialogProperties
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.contrall.ui.components.TopAppBar
 
 
 //@Preview
@@ -66,7 +67,7 @@ fun LampScreen(
 
     Scaffold(
         topBar = {
-            DevicesTopAppBar()
+            TopAppBar()
         },
         content = {
             Box(

@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.R
 import com.example.contrall.util.DoorViewModel
+import com.example.contrall.ui.components.TopAppBar
 
 //@Preview
 @Composable
@@ -41,7 +42,7 @@ fun DoorScreen(
 
     Scaffold(
         topBar = {
-            DevicesTopAppBar()
+            TopAppBar()
         }, content = {
             Box( modifier = Modifier
                 .fillMaxSize()
