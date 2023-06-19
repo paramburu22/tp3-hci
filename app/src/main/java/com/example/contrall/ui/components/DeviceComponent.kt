@@ -21,16 +21,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
+import com.example.contrall.data.network.models.Device
 
 @Composable
 
-fun DeviceComponent() {
+fun DeviceComponent(device : Device) {
+    lateinit var icon : Painter
+    when(device.type?.name) {
+        "lamp" -> icon = painterResource(id = R.drawable.ic_baseline_lightbulb_24)
+        "oven" -> icon = painterResource(id = R.drawable.baseline_cookie_24)
+        "ac" -> icon = painterResource(id = R.drawable.ic_baseline_ac_unit_24)
+        "speaker" -> icon = painterResource(id = R.drawable.outline_speaker_24)
+        "door" -> icon = painterResource(id = R.drawable.outline_sensor_door_24)
+    }
     Card(
         border = BorderStroke(2.dp, Color.LightGray),
         shape = RoundedCornerShape(15.dp),
@@ -42,27 +52,29 @@ fun DeviceComponent() {
         )
         {
             Image(
-                painter = painterResource(R.drawable.outline_sensor_door_24),
+                painter = icon,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(38.dp)
                     .padding(end = 12.dp)
                     .align(Alignment.CenterVertically)
             )
             // Door Title
-            Text(
-                text = "Door",
-                fontSize = 24.sp,
-            )
+            device.name?.let {
+                Text(
+                    text = it,
+                    fontSize = 24.sp,
+                )
+            }
         }
         Row(modifier = Modifier
-            .padding(20.dp)
+            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
             .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         )
         {
             Text(
-                text = "Oficina - Baño",
+                text = "${device.room?.home?.name} - ${device.room?.name}",
                 fontSize = 14.sp,
             )
         }

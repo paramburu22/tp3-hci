@@ -13,4 +13,5 @@ data class Device(
     @SerializedName("name")  var name  : String? = null,
     @SerializedName("type")  var type  : Type?   = Type(),
     @SerializedName("state") var state : State? = State(),
+    @SerializedName("room"  ) var room  : Room?   = Room()
 )
