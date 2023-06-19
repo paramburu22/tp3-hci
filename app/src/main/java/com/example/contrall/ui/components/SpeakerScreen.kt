@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.util.SpeakerViewModel
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,11 +52,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
+import com.example.contrall.data.SongInfo
 import com.example.contrall.ui.components.TopAppBar
 
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
 fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
     val speakerUiState by speakerViewModel.uiState.collectAsState()
@@ -151,9 +153,15 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                                         .align(Alignment.CenterVertically))
                             }
 
-                            IconButton(onClick = { speakerViewModel.play() }) {
+                            IconButton(onClick = { when (speakerUiState.state.status) {
+                                "stopped" -> speakerViewModel.play()
+                                "paused" -> speakerViewModel.resume()
+                                else -> speakerViewModel.pause()
+                            }
+
+                            }) {
                                 Icon(
-                                    painter = if (speakerUiState.playing) {
+                                    painter = if (speakerUiState.state.status == "playing") {
                                         painterResource(id = R.drawable.baseline_pause_24)
                                     } else {
                                         painterResource(id = R.drawable.baseline_play_arrow_24)
@@ -197,7 +205,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Volumen: ${speakerUiState.volume}",
+                                text = "Volumen: ${speakerUiState.state.volume}",
                                 fontSize = 18.sp,
                             )
                         }
@@ -208,7 +216,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(
-                                onClick = { speakerViewModel.decreaseVolume() },
+                                onClick = { speakerViewModel.setVolume(speakerUiState.state.volume!!.toFloat() - 1) },
                                 modifier = Modifier.size(30.dp)) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_round_remove_24),
@@ -216,7 +224,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                                 )
                             }
                             Slider(
-                                value = speakerUiState.volume.toFloat(),
+                                value = speakerUiState.state.volume!!.toFloat(),
                                 onValueChange = { value -> speakerViewModel.setVolume(value.toInt().toFloat()) },
                                 valueRange = 0f..10f,
                                 steps = 1,
@@ -230,7 +238,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                                     .width(260.dp)
                             )
                             IconButton(
-                                onClick = { speakerViewModel.increaseVolume() },
+                                onClick = { speakerViewModel.setVolume(speakerUiState.state.volume!!.toFloat() + 1) },
                                 modifier = Modifier.size(30.dp)) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_round_add_24),
@@ -247,10 +255,17 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            OurDropdownMenu(items = speakerUiState.genres,
-                                selectedItem = speakerUiState.currentGenre,
-                                onItemSelected = speakerViewModel::changeGenre,
-                                title = "Seleccione un genero")
+                            speakerUiState.state.genre?.let { it1 ->
+                                OurDropdownMenu(items = listOf("clasica",
+                                    "country",
+                                    "dance",
+                                    "latina",
+                                    "pop",
+                                    "rock"),
+                                    selectedItem = it1,
+                                    onItemSelected = speakerViewModel::changeGenre,
+                                    title = "Seleccione un genero")
+                            }
                         }
                         Row(
                             modifier = Modifier
@@ -283,8 +298,12 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
             PlaylistDialog(
                 open = showPlaylist,
                 onClose = { showPlaylist = false },
-                genre = speakerUiState.currentGenre,
-                playlist = speakerUiState.currentPlaylist
+                genre = speakerUiState.state.genre!!,
+                playlist = mutableStateListOf(
+                    SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30"),
+                    SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15"),
+                    SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45")
+                )
             )
         }
 }

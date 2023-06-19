@@ -4,17 +4,27 @@ import android.icu.text.IDNA
 import androidx.compose.runtime.mutableStateListOf
 import com.example.contrall.R
 
+
 data class SpeakerUiState(
-    val name : String = R.string.speaker_name.toString(),
-    var volume : Int = 0,
-    val playing: Boolean = false,
-    val stopped : Boolean = true,
-    val genres : List<String> = mutableStateListOf("Pop", "Rock", "Latina", "Clasica"),
-    val currentGenre : String = "Pop",
-    val currentPlaylist : List<SongInfo> = mutableStateListOf(
-        SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30"),
-        SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15"),
-        SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45")
-    ),
-    var showPlaylist : Boolean = false
+    val id : String? = "",
+    val name : String? = "",
+    val type : SpeakerType = SpeakerType(),
+    val state : SpeakerState = SpeakerState(),
+
 )
+
+data class SpeakerType(
+    val id : String = "c89b94e8581855bc",
+    val name : String = "speaker",
+    val powerUsage : Int = 20
+)
+
+data class SpeakerState(
+    val status : String? = "stopped",
+    var volume : Int? = 5,
+    val genre : String? = "pop",
+    val song : SongInfo? = null,
+//    val playing: Boolean = false,
+//    val stopped : Boolean = true,
+)
+

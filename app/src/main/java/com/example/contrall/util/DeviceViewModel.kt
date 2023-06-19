@@ -32,9 +32,6 @@ class DevicesViewModel : ViewModel() {
                         isLoading = false
                     )
                 }
-//                response.body()?.devices?.let { devices ->
-//                    currentDevices = devices.toMutableList()
-//                }
             }.onFailure { e->
                 _uiState.update { it.copy(
                     message = e.message,
