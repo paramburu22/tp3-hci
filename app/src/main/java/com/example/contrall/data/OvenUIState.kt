@@ -1,14 +1,26 @@
 package com.example.contrall.data
 
-import androidx.compose.runtime.mutableStateListOf
+import com.example.contrall.R
 
 data class OvenUIState(
-    val temperatureValue: Int = 100,
-    val switchState: Boolean = false,
-    val heatModes : List<String> = mutableStateListOf("Convencional", "Arriba", "Abajo"),
-    val convModes : List<String> = mutableStateListOf("Apagado", "Economico", "Completo"),
-    val grillModes : List<String> = mutableStateListOf("Apagado", "Economico", "Convencional"),
-    val selectedHeatModeValue : String ="Convencional",
-    val selectedConvModeValue : String = "Apagado",
-    val selectedGrillModeValue : String = "Apagado",
+    val id: String? = "",
+    val name: String? = "",
+    val type: OvenType = OvenType(),
+    val state: OvenState = OvenState(),
+    val img: Int = R.drawable.baseline_cookie_24,
+    val isLoading : Boolean = false
     )
+
+data class OvenType(
+    val id: String = "im77xxyulpegfmv8",
+    val name: String = "oven",
+    val powerUsage: Int = 1225,
+)
+
+data class OvenState(
+    val status: String = "off",
+    val temperature: String = "90",
+    val heat : String = "conventional",
+    val grill : String = "off",
+    val convection : String = "off"
+)
