@@ -14,8 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
@@ -31,14 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
-import com.example.contrall.data.OvenUIState
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.OvenViewModel
-import com.example.contrall.ui.components.TopAppBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,9 +102,9 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             Switch(
-                                checked = ovenViewModel.switchState,
-                                onCheckedChange = { isChecked ->
-                                    ovenViewModel.toggleSwitchState(isChecked)
+                                checked = ovenUiState.state.status.toBoolean(),
+                                onCheckedChange = {
+                                    ovenViewModel.switchState()
                                 },
                                 modifier = Modifier.padding(bottom = 8.dp).padding(end = 10.dp),
                                 colors = SwitchDefaults.colors(
@@ -125,7 +120,7 @@ fun OvenScreen(
                                 //modifier = Modifier.padding(bottom = 10.dp)
                             )
                             Text(
-                                text = if (ovenViewModel.switchState) "Prendido" else "Apagado",
+                                text = if (ovenUiState.state.status.toBoolean()) "Prendido" else "Apagado",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -139,8 +134,8 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = ovenUiState.heatModes,
-                                selectedItem = ovenUiState.selectedHeatModeValue,
+                                items = listOf<String>("conventional", "top", "bottom"),
+                                selectedItem = ovenUiState.state.heat,
                                 onItemSelected = ovenViewModel::setHeatMode,
                                 title = "Seleccione Fuente de Calor"
                             )
@@ -172,7 +167,7 @@ fun OvenScreen(
                             }
 
                             TextField(
-                                value = ovenUiState.temperatureValue.toString(),
+                                value = ovenUiState.state.temperature,
                                 onValueChange = { value: String ->
                                     val intValue = value.toIntOrNull() ?: 0
                                     ovenViewModel.setTemperatureValue(intValue)
@@ -199,8 +194,8 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = ovenUiState.grillModes,
-                                selectedItem = ovenUiState.selectedGrillModeValue,
+                                items = listOf("large", "eco", "off"),
+                                selectedItem = ovenUiState.state.grill,
                                 onItemSelected = ovenViewModel::setGrillMode,
                                 title = "Seleccione Modo Grill"
                             )
@@ -212,8 +207,8 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = ovenUiState.convModes,
-                                selectedItem = ovenUiState.selectedConvModeValue,
+                                items = listOf("normal","eco","off"),
+                                selectedItem = ovenUiState.state.convection,
                                 onItemSelected = ovenViewModel::setConvMode,
                                 title = "Seleccione Modo Conveccion"
                             )
