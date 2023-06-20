@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SpeakerViewModel(device : Device) : ViewModel() {
+class SpeakerViewModel(device : Device = Device()) : ViewModel() {
     // Speaker UI state
     private val _uiState = MutableStateFlow(SpeakerUiState())
     val uiState: StateFlow<SpeakerUiState> = _uiState.asStateFlow()
@@ -28,9 +28,9 @@ class SpeakerViewModel(device : Device) : ViewModel() {
 
 
     val currentPlaylist : List<SongInfo> = mutableStateListOf(
-        SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30"),
-        SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15"),
-        SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45")
+        SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
+        SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
+        SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
     )
 
     private var fetchJob : Job? = null
@@ -46,7 +46,8 @@ class SpeakerViewModel(device : Device) : ViewModel() {
             state = SpeakerState(
                 status = device.state?.status ?: "stopped",
                 volume = device.state?.volume ?: 5,
-                genre = device.state?.genre ?: "pop"
+                genre = device.state?.genre ?: "pop",
+                song = device.state?.song,
             )
         )
     }
@@ -162,9 +163,9 @@ class SpeakerViewModel(device : Device) : ViewModel() {
             apiService.execute(_uiState.value.id!!,"getPlaylist") }
 
         val res : List<SongInfo> = mutableStateListOf(
-            SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30"),
-            SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15"),
-            SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45")
+            SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
+            SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
+            SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
         )
     }
 }

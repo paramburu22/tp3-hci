@@ -32,7 +32,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 powerUsage= device.type?.powerUsage ?: 1225,
             ),
             state = OvenState(
-                status = device.state?.status ?: "off",
+                status = device.state?.status ?: "",
                 temperature = device.state?.temperature ?: "90",
                 heat  = device.state?.heat ?: "conventional",
                 grill  = device.state?.grill ?: "off",

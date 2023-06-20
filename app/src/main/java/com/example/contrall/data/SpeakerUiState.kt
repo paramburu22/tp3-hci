@@ -24,7 +24,5 @@ data class SpeakerState(
     var volume : Int? = 5,
     val genre : String? = "pop",
     val song : SongInfo? = null,
-//    val playing: Boolean = false,
-//    val stopped : Boolean = true,
 )
 

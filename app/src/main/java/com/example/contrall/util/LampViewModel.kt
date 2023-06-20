@@ -5,53 +5,99 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.contrall.data.AirConditionerUiState
+import com.example.contrall.data.LampState
+import com.example.contrall.data.LampType
 import com.example.contrall.data.LampUiState
+import com.example.contrall.data.SpeakerState
+import com.example.contrall.data.SpeakerType
+import com.example.contrall.data.SpeakerUiState
+import com.example.contrall.data.network.RetrofitClient
+import com.example.contrall.data.network.models.Device
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class LampViewModel : ViewModel() {
+class LampViewModel(device : Device = Device()) : ViewModel() {
     private val _uiState = MutableStateFlow(LampUiState())
     val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
 
-    val switchState: Boolean
-        get() = _uiState.value.switchState
+    val switchState : Boolean = false
 
-    val intensityValue: Float
-        get() = _uiState.value.intensityValue
+    val selectedColor : Color = Color.White
 
-    val selectedColor: Color
-        get() = _uiState.value.selectedColor
+    var showDialog : Boolean = false
 
-    val showDialog: Boolean
-        get() = _uiState.value.showDialog
+    private var fetchJob : Job? = null
+
+    init {
+        _uiState.value = LampUiState(
+            id = device.id ?: "",
+            name = device.name ?: "",
+            type = LampType(
+                id = device.type?.id ?: "go46xmbqeomjrsjr",
+                name = device.type?.name ?: "lamp",
+                powerUsage = device.type?.powerUsage ?: 15,
+            ),
+            state = LampState(
+                status = device.state?.status ?: "stopped",
+                color = device.state?.color ?: "FFFFFF",
+                brightness = device.state?.brightness ?: 100,
+            )
+        )
+    }
+
+
 
     fun toggleSwitchState(newState: Boolean) {
-        _uiState.update { currentState -> currentState.copy(
-            switchState = newState
-        ) }
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            val apiService = RetrofitClient.getApiService()
+            if (!switchState) {
+                apiService.execute(_uiState.value.id!!, "turnOn")
+            } else {
+                apiService.execute(_uiState.value.id!!, "turnOff")
+            }
+        }
+        if (!switchState) {
+            _uiState.update { currentState ->
+                currentState.copy(state = currentState.state.copy(status = "on"))
+            }
+        } else {
+            _uiState.update { currentState ->
+                currentState.copy(state = currentState.state.copy(status = "off"))
+            }
+        }
+
     }
 
     fun setIntensityValue(value: Float) {
-        _uiState.update { currentState -> currentState.copy(
-            intensityValue = value
-        ) }
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            val apiService = RetrofitClient.getApiService()
+            apiService.executePI(_uiState.value.id!!,"setBrightness", listOf(value.toInt()) ) }
+        _uiState.update { currentState ->
+            currentState.copy(
+                state = currentState.state.copy(brightness = value.toInt())
+            ) }
     }
 
     fun setColor(color: Color) {
-        _uiState.update { currentState -> currentState.copy(
-            selectedColor = color
-        ) }
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            val apiService = RetrofitClient.getApiService()
+            apiService.executePS(_uiState.value.id!!,"setColor", listOf(color.toString())) }
+        _uiState.update { currentState ->
+            currentState.copy(
+                state = currentState.state.copy(color = color.toString())
+            )
+        }
     }
 
-    fun setSelectedPosition(x: Float, y: Float) {
-        _uiState.update { currentState -> currentState.copy(
-            selectedX = x,
-            selectedY = y
-        ) }
-    }
 
     fun intToColor(colorValue: Int): Color {
         val alpha = (colorValue shr 24 and 0xFF) / 255f
@@ -62,9 +108,7 @@ class LampViewModel : ViewModel() {
     }
 
     fun changeDialog(value: Boolean){
-        _uiState.update { currentState -> currentState.copy(
-            showDialog = value
-        ) }
+        showDialog = value
     }
 
 }

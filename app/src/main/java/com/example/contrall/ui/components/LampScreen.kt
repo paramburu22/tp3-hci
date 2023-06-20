@@ -165,12 +165,12 @@ fun LampScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Intensidad: ${lampViewModel.intensityValue.toInt()}%",
+                                text = "Intensidad: ${lampUiState.state.brightness!!.toInt()}%",
                                 fontSize = 18.sp,
                                 modifier = Modifier.padding(end = 10.dp)
                             )
                             Slider(
-                                value = lampUiState.intensityValue.toFloat(),
+                                value = lampUiState.state.brightness!!.toFloat(),
                                 onValueChange = { value ->
                                     lampViewModel.setIntensityValue(value.toInt().toFloat())
                                 },

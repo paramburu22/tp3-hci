@@ -4,11 +4,21 @@ import androidx.compose.ui.graphics.Color
 
 
 data class LampUiState(
-    val intensityValue: Float = 100f,
-    val switchState: Boolean = false,
-    val sliderValue: Float = 0f,
-    var selectedColor: Color = Color.White,
-    val selectedX: Float = 0f,
-    val selectedY: Float = 0f,
-    val showDialog: Boolean = false
+    val id : String? = "",
+    val name : String? = "",
+    val type : LampType = LampType(),
+    val state : LampState = LampState(),
+)
+
+
+data class LampType(
+    val id : String = "go46xmbqeomjrsjr",
+    val name : String = "lamp",
+    val powerUsage : Int = 15
+)
+
+data class LampState(
+    val status : String? = "off",
+    val color : String? = "FFFFFF",
+    val brightness : Int? = 100
 )

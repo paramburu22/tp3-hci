@@ -4,5 +4,6 @@ data class SongInfo (
     val title: String,
     val artist: String,
     val album: String,
-    val duration: String
+    val duration: String,
+    val progress: String,
     )

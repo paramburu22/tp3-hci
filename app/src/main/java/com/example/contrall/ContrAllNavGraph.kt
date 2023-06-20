@@ -43,11 +43,11 @@ fun ContrAllNavGraph(navController: NavHostController) {
         }
         composable(Screen.DeviceScreen.route) {
             when(sharedDeviceModel.device?.type?.name) {
-                "lamp" -> LampScreen(LampViewModel())
-                "oven" -> OvenScreen(OvenViewModel())
-                "ac" -> AirConditionerScreen(AirConditionerViewModel())
-                "speaker" -> SpeakerScreen(SpeakerViewModel())
-                "door" -> DoorScreen(DoorViewModel())
+                "lamp" -> LampScreen(LampViewModel(sharedDeviceModel.device!!))
+                "oven" -> OvenScreen(OvenViewModel(sharedDeviceModel.device!!))
+                "ac" -> AirConditionerScreen(AirConditionerViewModel(sharedDeviceModel.device!!))
+                "speaker" -> SpeakerScreen(SpeakerViewModel(sharedDeviceModel.device!!))
+                "door" -> DoorScreen(DoorViewModel(sharedDeviceModel.device!!))
             }
         }
     }

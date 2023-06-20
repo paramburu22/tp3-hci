@@ -17,6 +17,10 @@ interface ApiService {
     @GET("/api/devices/{id}")
     suspend fun getDevice(@Path("id")id: String): Response<DeviceResult>
 
+
+//    @GET("/api/devices/{id}")
+//    suspend fun getDevice(@Path("id")id: String): Response<DeviceResult>
+
 //    @POST("/api/devices")
 //    suspend fun addNewDevice(@Body device: DeviceToAdd) : Response<Device>
 //

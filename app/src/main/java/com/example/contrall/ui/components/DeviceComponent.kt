@@ -48,7 +48,7 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
 
     Card(
         modifier = Modifier.clickable {
-//            sharedDeviceModel.addDevice(device)
+            sharedDeviceModel.addDevice(device)
             navController?.navigate(Screen.DeviceScreen.route)
         },
         border = BorderStroke(2.dp, Color.LightGray),

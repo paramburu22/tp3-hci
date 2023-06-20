@@ -300,9 +300,9 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                 onClose = { showPlaylist = false },
                 genre = speakerUiState.state.genre!!,
                 playlist = mutableStateListOf(
-                    SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30"),
-                    SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15"),
-                    SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45")
+                    SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
+                    SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
+                    SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
                 )
             )
         }

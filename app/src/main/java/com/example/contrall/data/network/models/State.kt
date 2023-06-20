@@ -1,5 +1,6 @@
 package com.example.contrall.data.network.models
 
+import com.example.contrall.data.SongInfo
 import com.google.gson.annotations.SerializedName
 
 data class State (
@@ -16,6 +17,7 @@ data class State (
     //speaker
     @SerializedName("volume" ) var volume : Int?    = null,
     @SerializedName("genre") var genre :String? = null,
+    @SerializedName("song") var song :SongInfo? = null,
     //door
     @SerializedName("lock"               ) var lock               : String? = null,
     //oven
