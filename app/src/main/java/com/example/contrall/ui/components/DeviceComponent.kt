@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import com.example.contrall.Screen
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -31,10 +32,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
+import com.example.contrall.util.SharedDeviceModel
 
 @Composable
 
-fun DeviceComponent(device : Device, navController: NavController) {
+fun DeviceComponent(device : Device, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
     lateinit var icon : Painter
     when(device.type?.name) {
         "lamp" -> icon = painterResource(id = R.drawable.ic_baseline_lightbulb_24)
@@ -45,7 +47,10 @@ fun DeviceComponent(device : Device, navController: NavController) {
     }
 
     Card(
-        modifier = Modifier.clickable { navController.navigate(route = "home_screen") },
+        modifier = Modifier.clickable {
+//            sharedDeviceModel.addDevice(device)
+            navController?.navigate(Screen.DeviceScreen.route)
+        },
         border = BorderStroke(2.dp, Color.LightGray),
         shape = RoundedCornerShape(15.dp),
     ) {

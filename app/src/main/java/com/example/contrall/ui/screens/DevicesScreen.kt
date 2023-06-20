@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.R
@@ -24,15 +25,15 @@ import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.DevicesViewModel
+import com.example.contrall.util.SharedDeviceModel
 
 @Composable
 
-fun DevicesScreen(deviceViewModel: DevicesViewModel) {
+fun DevicesScreen(deviceViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
     val painter = painterResource(R.drawable.background)
     val deviceUiState by deviceViewModel.uiState.collectAsState()
 
     deviceViewModel.getDevices()
-    val navController = rememberNavController()
 
     Scaffold(
         topBar = {
@@ -61,7 +62,7 @@ fun DevicesScreen(deviceViewModel: DevicesViewModel) {
                     if (myDevices != null) {
                         items(myDevices.devices.size) { index ->
                             val device : Device = myDevices.devices[index]
-                            DeviceComponent(device, navController)
+                            DeviceComponent(device, navController, sharedDeviceModel)
                         }
                     }
                 }
