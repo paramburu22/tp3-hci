@@ -44,7 +44,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
     }
 
     fun switchState(){
-        if(_uiState.value.state.status.toBoolean()){
+        if(_uiState.value.state.isOn){
             turnOff()
         }
         else{
@@ -59,7 +59,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
             apiService.execute(_uiState.value.id!!, "turnOn")
             _uiState.update {currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "on"),
+                    state = currentState.state.copy(status = "on", isOn = true),
                     isLoading = false
                 )
             }
@@ -74,7 +74,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
             apiService.execute(_uiState.value.id!!, "turnOff")
             _uiState.update {currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "off"),
+                    state = currentState.state.copy(status = "off", isOn = false),
                     isLoading = false
                 )
             }

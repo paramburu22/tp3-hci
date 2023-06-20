@@ -20,4 +20,6 @@ data class DoorType(
 data class DoorState(
     val status: String = "closed",
     val lock: String = "unlocked",
+    val isLocked : Boolean = false,
+    val isOpen : Boolean = false
 )

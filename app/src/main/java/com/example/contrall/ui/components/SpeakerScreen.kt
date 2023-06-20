@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.SongInfo
 import com.example.contrall.ui.components.TopAppBar
@@ -59,7 +60,10 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
-fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
+fun SpeakerScreen(
+    speakerViewModel: SpeakerViewModel,
+    navController: NavController
+) {
     val speakerUiState by speakerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
@@ -67,7 +71,7 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
 
     Scaffold(
         topBar = {
-                 TopAppBar()
+                 TopAppBar(navController)
         }, content = {
             Box( modifier = Modifier
                 .fillMaxSize()
@@ -109,10 +113,12 @@ fun SpeakerScreen(speakerViewModel: SpeakerViewModel = viewModel()) {
                                     .align(Alignment.CenterVertically)
                             )
                             // Door Title
-                            androidx.compose.material.Text(
-                                text = "Speaker",
-                                fontSize = 30.sp,
-                            )
+                            speakerUiState.name?.let { it1 ->
+                                androidx.compose.material.Text(
+                                    text = it1,
+                                    fontSize = 30.sp,
+                                )
+                            }
                         }
 
                         Divider(modifier = Modifier.fillMaxWidth())

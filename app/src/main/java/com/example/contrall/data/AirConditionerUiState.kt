@@ -37,4 +37,5 @@ data class AirConditionerState(
     val horizontalSwing: String = "0",
     val verticalSwing: String = "automatic",
     val temperature: String = "24",
+    val isOn : Boolean = false
 )

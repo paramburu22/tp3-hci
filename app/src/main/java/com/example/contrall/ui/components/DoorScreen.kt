@@ -25,19 +25,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.util.DoorViewModel
 
 @Composable
 fun DoorScreen(
     doorViewModel: DoorViewModel,
+    navController: NavController,
 ) {
     val painter = painterResource(R.drawable.background);
     val doorUiState by doorViewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
-            TopAppBar()
+            TopAppBar(navController)
         }, content = {
             Box( modifier = Modifier
                 .fillMaxSize()
@@ -94,14 +96,14 @@ fun DoorScreen(
                         ) {
                             // Lock Switch
                             Switch(
-                                checked = doorUiState.state.lock.toBoolean(),
+                                checked = doorUiState.state.isLocked,
                                 onCheckedChange = { value -> doorViewModel.switchLock() },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.state.lock.toBoolean()) "Bloqueada" else "Desbloqueada",
+                                text = if (doorUiState.state.isLocked) "Bloqueada" else "Desbloqueada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -118,14 +120,14 @@ fun DoorScreen(
                         ) {
                             // Open Switch
                             Switch(
-                                checked = doorUiState.state.status.toBoolean(),
+                                checked = doorUiState.state.isOpen,
                                 onCheckedChange = { value -> doorViewModel.switchState() },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.state.status.toBoolean()) "Abierta" else "Cerrada",
+                                text = if (doorUiState.state.isOpen) "Abierta" else "Cerrada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)

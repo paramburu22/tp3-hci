@@ -22,5 +22,6 @@ data class OvenState(
     val temperature: String = "90",
     val heat : String = "conventional",
     val grill : String = "off",
-    val convection : String = "off"
+    val convection : String = "off",
+    val isOn : Boolean = false
 )

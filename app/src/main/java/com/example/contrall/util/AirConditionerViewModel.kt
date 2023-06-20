@@ -50,11 +50,11 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
         )
     }
     fun switchState(){
-        if(_uiState.value.state.status.toBoolean()){
+        if(_uiState.value.state.isOn){
             turnOff()
         }
         else{
-            turnOff()
+            turnOn()
         }
     }
     fun turnOn(){
@@ -65,7 +65,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
             apiService.execute(_uiState.value.id!!, "turnOn")
             _uiState.update {currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "on"),
+                    state = currentState.state.copy(status = "on", isOn = true),
                     isLoading = false
                 )
             }
@@ -79,7 +79,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
             apiService.execute(_uiState.value.id!!, "turnOff")
             _uiState.update {currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "off"),
+                    state = currentState.state.copy(status = "off" , isOn = false),
                     isLoading = false
                 )
             }

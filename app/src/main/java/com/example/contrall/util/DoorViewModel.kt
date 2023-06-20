@@ -41,12 +41,12 @@ class DoorViewModel(device : Device)  : ViewModel() {
     }
 
     fun switchState() {
-        if(_uiState.value.state.lock.toBoolean())
+        if(_uiState.value.state.isLocked)
             return
-        if (_uiState.value.state.status.toBoolean()) {
-            openDoor()
-        } else {
+        if (_uiState.value.state.isOpen) {
             closeDoor()
+        } else {
+            openDoor()
         }
     }
 
@@ -58,7 +58,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
             apiService.execute(_uiState.value.id!!, "open")
             _uiState.update { currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "opened"),
+                    state = currentState.state.copy(status = "opened", isOpen = true),
                     isLoading = false
                 )
             }
@@ -73,7 +73,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
             apiService.execute(_uiState.value.id!!, "close")
             _uiState.update { currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "closed"),
+                    state = currentState.state.copy(status = "closed", isOpen = false),
                     isLoading = false
                 )
             }
@@ -82,7 +82,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
 
 
     fun switchLock(){
-        if(_uiState.value.state.lock.toBoolean())
+        if(_uiState.value.state.isLocked)
             unlockDoor()
         else lockDoor()
     }
@@ -94,7 +94,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
             apiService.execute(_uiState.value.id!!, "lock")
             _uiState.update { currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "closed", lock = "locked"),
+                    state = currentState.state.copy(status = "closed", lock = "locked", isLocked = true , isOpen = false),
                     isLoading = false
                 )
             }
@@ -109,7 +109,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
             apiService.execute(_uiState.value.id!!, "unlock")
             _uiState.update { currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(lock = "unlocked"),
+                    state = currentState.state.copy(lock = "unlocked", isLocked = false),
                     isLoading = false
                 )
             }

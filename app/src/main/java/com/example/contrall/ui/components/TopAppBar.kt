@@ -10,10 +10,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun TopAppBar(
-    title: String = "Device",
+    navController: NavController = rememberNavController(),
+    title: String = "Dispositivo",
     showIcon: Boolean = true,
 ) {
 
@@ -25,8 +28,7 @@ fun TopAppBar(
         navigationIcon = if (showIcon) {
             {
                 IconButton(onClick = {
-                    Toast.makeText(contextForToast, "Back Icon Click", Toast.LENGTH_SHORT)
-                        .show()
+                    navController.popBackStack()
                 }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
                 }

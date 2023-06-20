@@ -53,23 +53,23 @@ class LampViewModel(device : Device = Device()) : ViewModel() {
 
 
 
-    fun toggleSwitchState(newState: Boolean) {
+    fun toggleSwitchState() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
-            if (!switchState) {
+            if (!_uiState.value.state.isOn) {
                 apiService.execute(_uiState.value.id!!, "turnOn")
             } else {
                 apiService.execute(_uiState.value.id!!, "turnOff")
             }
         }
-        if (!switchState) {
+        if (!_uiState.value.state.isOn) {
             _uiState.update { currentState ->
-                currentState.copy(state = currentState.state.copy(status = "on"))
+                currentState.copy(state = currentState.state.copy(status = "on", isOn = true))
             }
         } else {
             _uiState.update { currentState ->
-                currentState.copy(state = currentState.state.copy(status = "off"))
+                currentState.copy(state = currentState.state.copy(status = "off", isOn = false))
             }
         }
 

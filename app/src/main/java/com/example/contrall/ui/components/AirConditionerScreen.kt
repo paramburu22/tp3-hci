@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.AirConditionerUiState
 import com.example.contrall.ui.theme.PrimaryLight
@@ -46,13 +47,14 @@ import com.example.contrall.util.AirConditionerViewModel
 @Composable
 fun AirConditionerScreen(
     airConditionerViewModel: AirConditionerViewModel,
+    navController: NavController,
 ) {
     val airConditionerUiState by airConditionerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background);
 
     Scaffold(
         topBar = {
-            TopAppBar()
+            TopAppBar(navController)
         },content = {
             Box( modifier = Modifier
                 .fillMaxSize()
@@ -101,7 +103,7 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         Switch(
-                            checked = airConditionerUiState.state.status.toBoolean(),
+                            checked = airConditionerUiState.state.isOn,
                             onCheckedChange = {
                                 airConditionerViewModel.switchState()
                             },
@@ -116,7 +118,7 @@ fun AirConditionerScreen(
                             ),
                         )
                         Text(
-                            text = if (airConditionerUiState.state.status.toBoolean()) "Prendido" else "Apagado",
+                            text = if (airConditionerUiState.state.isOn) "Prendido" else "Apagado",
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(bottom = 8.dp)

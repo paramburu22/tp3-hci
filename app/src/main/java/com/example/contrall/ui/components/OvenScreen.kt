@@ -2,6 +2,7 @@ package com.example.contrall.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.OvenViewModel
@@ -41,13 +43,14 @@ import com.example.contrall.util.OvenViewModel
 @Composable
 fun OvenScreen(
     ovenViewModel : OvenViewModel,
+    navController: NavController,
 ) {
     val ovenUiState by ovenViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
     Scaffold(
         topBar = {
-            TopAppBar()
+            TopAppBar(navController)
         },
         content = {
             Box(
@@ -86,7 +89,6 @@ fun OvenScreen(
                                     .padding(end = 12.dp)
                                     .align(Alignment.CenterVertically)
                             )
-                            // Lamp Title
                             Text(
                                 text = "Horno",
                                 fontSize = 30.sp,
@@ -102,7 +104,7 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             Switch(
-                                checked = ovenUiState.state.status.toBoolean(),
+                                checked = ovenUiState.state.isOn,
                                 onCheckedChange = {
                                     ovenViewModel.switchState()
                                 },
@@ -120,7 +122,7 @@ fun OvenScreen(
                                 //modifier = Modifier.padding(bottom = 10.dp)
                             )
                             Text(
-                                text = if (ovenUiState.state.status.toBoolean()) "Prendido" else "Apagado",
+                                text = if (ovenUiState.state.isOn) "Prendido" else "Apagado",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -152,7 +154,8 @@ fun OvenScreen(
                         Row(
                             modifier = Modifier
                                 .padding(10.dp)
-                                .fillMaxWidth()
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
                         ) {
                             Button(
                                 onClick = {ovenViewModel.decreaseTemperatureValue()},

@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavController
 import com.example.contrall.ui.components.TopAppBar
 
 
@@ -59,13 +60,14 @@ import com.example.contrall.ui.components.TopAppBar
 @Composable
 fun LampScreen(
     lampViewModel: LampViewModel,
+    navController: NavController,
 ) {
     val lampUiState by lampViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
     Scaffold(
         topBar = {
-            TopAppBar()
+            TopAppBar(navController)
         },
         content = {
             Box(
@@ -114,10 +116,10 @@ fun LampScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Switch(
-                                checked = lampViewModel.switchState,
-                                onCheckedChange = { isChecked ->
-                                    lampViewModel.toggleSwitchState(isChecked)
-                                },
+                                checked = lampUiState.state.isOn,
+                                onCheckedChange =
+                                {lampViewModel.toggleSwitchState()}
+                                ,
                                 modifier = Modifier.padding(end = 8.dp),
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = PrimaryLight,
@@ -127,7 +129,7 @@ fun LampScreen(
                                 )
                             )
                             Text(
-                                text = if (lampViewModel.switchState) "Prendido" else "Apagado",
+                                text = if (lampUiState.state.isOn) "Prendido" else "Apagado",
                                 fontSize = 18.sp
                             )
                         }
