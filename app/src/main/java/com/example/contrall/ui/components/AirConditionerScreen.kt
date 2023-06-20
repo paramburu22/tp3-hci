@@ -89,7 +89,7 @@ fun AirConditionerScreen(
                         )
                         // Lamp Title
                         Text(
-                            text = "Aire Acondicionado",
+                            text = "${airConditionerUiState.name}",
                             fontSize = 30.sp,
                         )
                     }

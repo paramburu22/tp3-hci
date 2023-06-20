@@ -83,7 +83,7 @@ fun LampScreen(
                         )
                         // Lamp Title
                         Text(
-                            text = "Luz",
+                            text = "${lampUiState.name}",
                             fontSize = 30.sp,
                         )
                     }

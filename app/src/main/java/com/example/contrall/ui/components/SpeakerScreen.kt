@@ -112,7 +112,6 @@ fun SpeakerScreen(
                                     .padding(end = 12.dp)
                                     .align(Alignment.CenterVertically)
                             )
-                            // Door Title
                             speakerUiState.name?.let { it1 ->
                                 androidx.compose.material.Text(
                                     text = it1,

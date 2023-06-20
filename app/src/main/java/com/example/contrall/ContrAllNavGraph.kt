@@ -18,6 +18,7 @@ import com.example.contrall.util.DevicesViewModel
 import com.example.contrall.util.DoorViewModel
 import com.example.contrall.util.LampViewModel
 import com.example.contrall.util.OvenViewModel
+import com.example.contrall.util.RecentsViewModel
 import com.example.contrall.util.RoutinesViewModel
 import com.example.contrall.util.SharedDeviceModel
 import com.example.contrall.util.SpeakerViewModel
@@ -27,16 +28,17 @@ fun ContrAllNavGraph(navController: NavHostController) {
     val sharedDeviceModel: SharedDeviceModel = viewModel()
     val devicesModel = DevicesViewModel()
     val routinesModel = RoutinesViewModel()
+    val recentsModel = RecentsViewModel()
 
     NavHost(
         navController = navController,
         startDestination = Screen.HomeScreen.route
     ) {
         composable(Screen.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(recentsModel, navController, sharedDeviceModel)
         }
         composable(Screen.DevicesScreen.route) {
-            DevicesScreen(devicesModel, navController, sharedDeviceModel)
+            DevicesScreen(devicesModel, navController, sharedDeviceModel, recentsModel)
         }
         composable(Screen.RoutinesScreen.route) {
             RoutinesScreen(routinesModel)

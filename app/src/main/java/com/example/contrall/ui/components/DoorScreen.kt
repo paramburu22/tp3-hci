@@ -81,7 +81,7 @@ fun DoorScreen(
                             )
                             // Door Title
                             Text(
-                                text = "Door",
+                                text = "${doorUiState.name}",
                                 fontSize = 30.sp,
                             )
                         }

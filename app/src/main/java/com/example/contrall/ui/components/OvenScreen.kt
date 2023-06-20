@@ -90,7 +90,7 @@ fun OvenScreen(
                                     .align(Alignment.CenterVertically)
                             )
                             Text(
-                                text = "Horno",
+                                text = "${ovenUiState.name}",
                                 fontSize = 30.sp,
                             )
                         }

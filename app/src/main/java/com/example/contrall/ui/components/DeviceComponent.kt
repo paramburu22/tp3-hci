@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,11 +33,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
+import com.example.contrall.util.RecentsViewModel
 import com.example.contrall.util.SharedDeviceModel
 
 @Composable
 
-fun DeviceComponent(device : Device, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
+fun DeviceComponent(device : Device, navController: NavController, sharedDeviceModel: SharedDeviceModel, recentsViewModel: RecentsViewModel) {
     lateinit var icon : Painter
     when(device.type?.name) {
         "lamp" -> icon = painterResource(id = R.drawable.ic_baseline_lightbulb_24)
@@ -49,6 +51,7 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
     Card(
         modifier = Modifier.clickable {
             sharedDeviceModel.addDevice(device)
+            recentsViewModel.addDevice(device)
             navController?.navigate(Screen.DeviceScreen.route)
         },
         border = BorderStroke(2.dp, Color.LightGray),

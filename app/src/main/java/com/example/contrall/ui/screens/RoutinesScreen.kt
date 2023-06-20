@@ -24,6 +24,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -52,7 +53,11 @@ import com.example.contrall.util.SharedDeviceModel
 fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
     val painter = painterResource(R.drawable.background)
     val routinesUiState by routinesViewModel.uiState.collectAsState()
-    routinesViewModel.getRoutines()
+
+    LaunchedEffect(Unit) {
+        routinesViewModel.getRoutines()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(title = "Rutinas", showIcon = false)

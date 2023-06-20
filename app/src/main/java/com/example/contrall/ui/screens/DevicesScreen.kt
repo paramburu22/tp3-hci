@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
@@ -25,15 +26,19 @@ import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.DevicesViewModel
+import com.example.contrall.util.RecentsViewModel
 import com.example.contrall.util.SharedDeviceModel
 
 @Composable
 
-fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
+fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel, recentsModel: RecentsViewModel) {
     val painter = painterResource(R.drawable.background)
     val deviceUiState by devicesViewModel.uiState.collectAsState()
 
-    devicesViewModel.getDevices()
+    LaunchedEffect(Unit) {
+        devicesViewModel.getDevices();
+    }
+
 
     Scaffold(
         topBar = {
@@ -62,7 +67,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                     if (myDevices != null) {
                         items(myDevices.devices.size) { index ->
                             val device : Device = myDevices.devices[index]
-                            DeviceComponent(device, navController, sharedDeviceModel)
+                            DeviceComponent(device, navController, sharedDeviceModel, recentsModel)
                         }
                     }
                 }
