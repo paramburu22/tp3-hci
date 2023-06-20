@@ -101,11 +101,9 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         Switch(
-                            checked = airConditionerViewModel.switchState,
-                            onCheckedChange = { isChecked ->
-                                airConditionerViewModel.toggleSwitchState(
-                                    isChecked
-                                )
+                            checked = airConditionerUiState.state.status.toBoolean(),
+                            onCheckedChange = {
+                                airConditionerViewModel.switchState()
                             },
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
@@ -118,7 +116,7 @@ fun AirConditionerScreen(
                             ),
                         )
                         Text(
-                            text = if (airConditionerViewModel.switchState) "Prendido" else "Apagado",
+                            text = if (airConditionerUiState.state.status.toBoolean()) "Prendido" else "Apagado",
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
@@ -134,8 +132,8 @@ fun AirConditionerScreen(
 
                     ) {
                         OurDropdownMenu(
-                            items = airConditionerUiState.modes,
-                            selectedItem = airConditionerUiState.selectedMode,
+                            items =  listOf<String>("Ventilación", "Frio", "Calor"),
+                            selectedItem = airConditionerUiState.state.mode,
                             onItemSelected = airConditionerViewModel::setMode,
                             title = "Seleccione un Modo"
                         )
@@ -168,7 +166,7 @@ fun AirConditionerScreen(
                         }
 
                         Text(
-                            text = "${airConditionerViewModel.temperature}°C",
+                            text = "${airConditionerUiState.state.temperature}°C",
                             fontSize = 18.sp,
                             modifier = Modifier.padding(end = 10.dp)
                         )
@@ -190,8 +188,22 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         OurDropdownMenu(
-                            items = airConditionerUiState.fanSpeeds,
-                            selectedItem = airConditionerUiState.selectedFanSpeed,
+                            //items = airConditionerUiState.fanSpeeds,
+                            items = listOf<String>("Automático", "22", "45", "67", "90"),
+                            selectedItem = airConditionerUiState.state.verticalSwing,
+                            onItemSelected = airConditionerViewModel::setFanSpeed,
+                            title = "Desplazamiento Vertical"
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth()
+                    ) {
+                        OurDropdownMenu(
+                            //items = airConditionerUiState.fanSpeeds,
+                            items = listOf<String>("Automático", "25%", "50%", "75%", "100%"),
+                            selectedItem = airConditionerUiState.state.fanSpeed,
                             onItemSelected = airConditionerViewModel::setFanSpeed,
                             title = "Velocidad Ventilador"
                         )
@@ -202,8 +214,8 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         OurDropdownMenu(
-                            items = airConditionerUiState.horizontalSwings,
-                            selectedItem = airConditionerUiState.selectedHorizontalSwing,
+                            items = listOf<String>("Automático","-90", "-45", "0", "45", "90"),
+                            selectedItem = airConditionerUiState.state.horizontalSwing,
                             onItemSelected = airConditionerViewModel::setHorizontalSwing,
                             title = "Desplazamiento Horizontal"
                         )
