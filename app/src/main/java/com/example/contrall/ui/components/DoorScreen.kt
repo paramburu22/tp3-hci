@@ -5,8 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,15 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.R
 import com.example.contrall.util.DoorViewModel
-import com.example.contrall.ui.components.TopAppBar
 
 @Composable
 fun DoorScreen(
@@ -98,14 +94,14 @@ fun DoorScreen(
                         ) {
                             // Lock Switch
                             Switch(
-                                checked = doorUiState.lockSwitchState,
-                                onCheckedChange = { value -> doorViewModel.lockOrUnlockDoor(value) },
+                                checked = doorUiState.state.lock.toBoolean(),
+                                onCheckedChange = { value -> doorViewModel.switchLock() },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.lockSwitchState) "Bloqueada" else "Desbloqueada",
+                                text = if (doorUiState.state.lock.toBoolean()) "Bloqueada" else "Desbloqueada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -122,14 +118,14 @@ fun DoorScreen(
                         ) {
                             // Open Switch
                             Switch(
-                                checked = doorUiState.openSwitchState,
-                                onCheckedChange = { value -> doorViewModel.openOrCloseDoor(value) },
+                                checked = doorUiState.state.status.toBoolean(),
+                                onCheckedChange = { value -> doorViewModel.switchState() },
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.openSwitchState) "Abierta" else "Cerrada",
+                                text = if (doorUiState.state.status.toBoolean()) "Abierta" else "Cerrada",
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)

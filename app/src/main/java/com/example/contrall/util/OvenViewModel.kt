@@ -48,7 +48,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
             turnOff()
         }
         else{
-            turnOff()
+            turnOn()
         }
     }
     fun turnOn() {
