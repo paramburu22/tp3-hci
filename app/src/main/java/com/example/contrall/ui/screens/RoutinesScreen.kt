@@ -18,10 +18,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,15 +34,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
+import com.example.contrall.data.network.models.Routine
+import com.example.contrall.data.network.models.RoutinesList
 import com.example.contrall.ui.components.DeviceComponent
+import com.example.contrall.ui.components.RoutineComponent
 import com.example.contrall.ui.components.TopAppBar
-@Preview
+import com.example.contrall.util.DevicesViewModel
+import com.example.contrall.util.RoutinesViewModel
+import com.example.contrall.util.SharedDeviceModel
+
+//@Preview
 @Composable
-fun RoutinesScreen() {
+fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
     val painter = painterResource(R.drawable.background)
+    val routinesUiState by routinesViewModel.uiState.collectAsState()
+    routinesViewModel.getRoutines()
     Scaffold(
         topBar = {
             TopAppBar(title = "Rutinas", showIcon = false)
@@ -55,67 +69,23 @@ fun RoutinesScreen() {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                /*val myRoutines : RoutinesList? = routineUiState.devices
-                    if (myRoutines != null) {
-                        items(myRoutines.devices.size) { index ->
-                            val routine : Routine = myRoutines.routines[index]
-                            RoutineComponent(routine, navController)
-                        }
-                    }*/
-
-                Card(
-                    border = BorderStroke(2.dp, Color.LightGray),
-                    shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.padding(16.dp),
-                    backgroundColor = Color.LightGray
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(5.dp),
+                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp, top = 25.dp).heightIn(min = 200.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(20.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            // Routine Title
-                            Text(
-                                text = "Rutina",
-                                fontSize = 30.sp,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Image(
-                                painter = painterResource(R.drawable.ic_baseline_play_circle_outline_24),
-                                contentDescription = null,
-                                modifier = Modifier.size(48.dp)
-                            )
-                        }
-                        Card(
-                            border = BorderStroke(2.dp, Color.LightGray),
-                            shape = RoundedCornerShape(15.dp),
-                            modifier = Modifier.padding(16.dp),
-                            backgroundColor = Color.White,
-                        ) {
-                            Column(modifier = Modifier.padding(20.dp)
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(20.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = "Luz",
-                                        fontSize = 30.sp
-                                    )
-                                }
-                                Row(){
-                                    Text(
-                                        text = "Prender Luz",
-                                        fontSize = 20.sp,
-                                        color = Color.Gray
-                                    )
-                                }
-                            }
+                    val myRoutines : RoutinesList? = routinesUiState.routines
+                    if (myRoutines != null) {
+                        items(myRoutines.routines.size) { index ->
+                            val routine : Routine = myRoutines.routines[index]
+                            RoutineComponent(routine, routinesViewModel)
                         }
                     }
                 }
+
+
             }
         }
     )

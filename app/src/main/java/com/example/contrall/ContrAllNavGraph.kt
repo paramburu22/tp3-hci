@@ -1,13 +1,10 @@
 package com.example.contrall
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.contrall.ui.components.AirConditionerScreen
 import com.example.contrall.ui.components.DoorScreen
 import com.example.contrall.ui.components.LampScreen
@@ -21,12 +18,15 @@ import com.example.contrall.util.DevicesViewModel
 import com.example.contrall.util.DoorViewModel
 import com.example.contrall.util.LampViewModel
 import com.example.contrall.util.OvenViewModel
+import com.example.contrall.util.RoutinesViewModel
 import com.example.contrall.util.SharedDeviceModel
 import com.example.contrall.util.SpeakerViewModel
 
 @Composable
 fun ContrAllNavGraph(navController: NavHostController) {
     val sharedDeviceModel: SharedDeviceModel = viewModel()
+    val devicesModel = DevicesViewModel()
+    val routinesModel = RoutinesViewModel()
 
     NavHost(
         navController = navController,
@@ -36,10 +36,10 @@ fun ContrAllNavGraph(navController: NavHostController) {
             HomeScreen()
         }
         composable(Screen.DevicesScreen.route) {
-            DevicesScreen(DevicesViewModel(), navController, sharedDeviceModel)
+            DevicesScreen(devicesModel, navController, sharedDeviceModel)
         }
         composable(Screen.RoutinesScreen.route) {
-            RoutinesScreen()
+            RoutinesScreen(routinesModel)
         }
         composable(Screen.DeviceScreen.route) {
             when(sharedDeviceModel.device?.type?.name) {

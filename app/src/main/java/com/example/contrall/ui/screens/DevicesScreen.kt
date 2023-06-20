@@ -29,11 +29,11 @@ import com.example.contrall.util.SharedDeviceModel
 
 @Composable
 
-fun DevicesScreen(deviceViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
+fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
     val painter = painterResource(R.drawable.background)
-    val deviceUiState by deviceViewModel.uiState.collectAsState()
+    val deviceUiState by devicesViewModel.uiState.collectAsState()
 
-    deviceViewModel.getDevices()
+    devicesViewModel.getDevices()
 
     Scaffold(
         topBar = {

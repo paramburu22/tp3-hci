@@ -2,6 +2,7 @@ package com.example.contrall.data.network
 
 import com.example.contrall.data.network.models.DeviceResult
 import com.example.contrall.data.network.models.DevicesList
+import com.example.contrall.data.network.models.RoutinesList
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,8 +25,8 @@ interface ApiService {
 //    @POST("/api/devices")
 //    suspend fun addNewDevice(@Body device: DeviceToAdd) : Response<Device>
 //
-//    @GET("/api/routines")
-//    suspend fun getRoutines() : Response<RoutineList>
+   @GET("/api/routines")
+    suspend fun getRoutines() : Response<RoutinesList>
 
     @PUT("/api/devices/{deviceId}/{actionName}")
     suspend fun executePS(@Path("deviceId")deviceId: String, @Path("actionName")actionName: String, @Body params: List<String> )
