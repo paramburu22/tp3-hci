@@ -1,29 +1,20 @@
 package com.example.contrall.ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Switch
@@ -40,20 +31,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.LampViewModel
-import androidx.compose.material.Scaffold
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.window.DialogProperties
-import androidx.navigation.NavController
-import com.example.contrall.ui.components.TopAppBar
 
 
 //@Preview
@@ -142,7 +123,7 @@ fun LampScreen(
                                     modifier = Modifier.padding(8.dp)
                                         .size(80.dp)
                                         .fillMaxWidth()
-                                        .background(lampViewModel.selectedColor)
+                                        .background(hexToColor(lampUiState.state.color!!))
                                         .clickable { lampViewModel.changeDialog(true) }
                                 )
                             }
@@ -194,7 +175,7 @@ fun LampScreen(
                         )
                         if (lampViewModel.showDialog) {
                             ColorPickerDialog(
-                                initialColor = lampViewModel.selectedColor,
+                                initialColor = hexToColor(lampUiState.state.color!!),
                                 onColorSelected = { color ->
                                     lampViewModel.setColor(color)
                                 },
@@ -223,4 +204,12 @@ fun colorToRgb(color: Color): Triple<Int, Int, Int> {
     val green = (color.green * 255).toInt()
     val blue = (color.blue * 255).toInt()
     return Triple(red, green, blue)
+}
+
+fun hexToColor(hex : String) : Color {
+    val red = Integer.parseInt(hex.substring(0, 2), 16)
+    val green = Integer.parseInt(hex.substring(2, 4), 16)
+    val blue = Integer.parseInt(hex.substring(4, 6), 16)
+    // Create the Color object with the extracted color values
+    return Color(red, green, blue)
 }
