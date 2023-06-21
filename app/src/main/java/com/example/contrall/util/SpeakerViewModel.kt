@@ -44,6 +44,28 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         )
     }
 
+    fun updateState() {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            runCatching {
+                val apiService = RetrofitClient.getApiService()
+                apiService.getSong(_uiState.value.id!!)
+            }.onSuccess { response ->
+                _uiState.update {
+                    it.copy(
+                        state = it.state.copy(song = response.body()?.result)
+                    )
+                }
+            }.onFailure { e->
+                _uiState.update { it.copy(
+                    message = e.message,
+                    isLoading = false
+                ) }
+            }
+        }
+
+    }
+
     fun setSong() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {

@@ -46,9 +46,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.util.SpeakerViewModel
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -60,8 +62,11 @@ import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.SongInfo
 import com.example.contrall.ui.components.TopAppBar
+import kotlinx.coroutines.launch
 
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.util.Timer
+import java.util.TimerTask
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
@@ -72,9 +77,29 @@ fun SpeakerScreen(
     val speakerUiState by speakerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
+    val scope = rememberCoroutineScope()
+
     var showPlaylist by remember { mutableStateOf(false) }
 
+
+
 //    speakerViewModel.setSong()
+    LaunchedEffect(Unit) {
+        scope.launch {
+            try {
+                println("Empezo")
+                Timer().scheduleAtFixedRate(object : TimerTask() {
+                    override fun run() {
+//                speakerViewModel.updateState()
+                        println("hola")
+                    }
+                }, 0, 1000)
+            } catch (ex: Exception) {
+
+            }
+
+        }
+    }
 
     Scaffold(
         topBar = {
