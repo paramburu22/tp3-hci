@@ -1,18 +1,12 @@
 package com.example.contrall.util
 
 import android.annotation.SuppressLint
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.contrall.R
 import com.example.contrall.data.AirConditionerState
 import com.example.contrall.data.AirConditionerType
 import com.example.contrall.data.AirConditionerUiState
-import com.example.contrall.data.OvenState
-import com.example.contrall.data.OvenType
-import com.example.contrall.data.OvenUIState
-import com.example.contrall.data.SpeakerUiState
 import com.example.contrall.data.network.RetrofitClient
 import com.example.contrall.data.network.models.Device
 import kotlinx.coroutines.Job
@@ -167,7 +161,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
             apiService.executePS(_uiState.value.id!!, "setFanSpeed", listOf(speed))
             _uiState.update {currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(verticalSwing = speed),
+                    state = currentState.state.copy(fanSpeed = speed),
                     isLoading = false
                 )
             }
