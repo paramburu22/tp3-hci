@@ -1,5 +1,7 @@
 package com.example.contrall.data.network
 
+import com.example.contrall.data.PlaylistResult
+import com.example.contrall.data.SongResult
 import com.example.contrall.data.network.models.DeviceResult
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.data.network.models.RoutinesList
@@ -18,14 +20,18 @@ interface ApiService {
     @GET("/api/devices/{id}")
     suspend fun getDevice(@Path("id")id: String): Response<DeviceResult>
 
+    @PUT("/api/devices/{deviceId}/getPlaylist")
+    suspend fun getPlaylist(@Path("deviceId")id: String): Response<PlaylistResult>
 
-//    @GET("/api/devices/{id}")
-//    suspend fun getDevice(@Path("id")id: String): Response<DeviceResult>
+    @PUT("/api/devices/{id}/state/song")
+    suspend fun getSong(@Path("id")id: String): Response<SongResult>
+
+
 
 //    @POST("/api/devices")
 //    suspend fun addNewDevice(@Body device: DeviceToAdd) : Response<Device>
 //
-   @GET("/api/routines")
+    @GET("/api/routines")
     suspend fun getRoutines() : Response<RoutinesList>
 
     @PUT("/api/devices/{deviceId}/{actionName}")

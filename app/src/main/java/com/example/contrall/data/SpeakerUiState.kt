@@ -10,7 +10,9 @@ data class SpeakerUiState(
     val name : String? = "",
     val type : SpeakerType = SpeakerType(),
     val state : SpeakerState = SpeakerState(),
-
+    val isLoading : Boolean? = false,
+    val message : String? = null,
+    val playlist : List<SongInfo>? = null
 )
 
 data class SpeakerType(
@@ -20,9 +22,9 @@ data class SpeakerType(
 )
 
 data class SpeakerState(
-    val status : String? = "stopped",
-    var volume : Int? = 5,
-    val genre : String? = "pop",
-    val song : SongInfo? = null,
+    val status: String? = "stopped",
+    var volume: Int? = 5,
+    val genre: String? = "pop",
+    val song: SongInfo? = null,
 )
 

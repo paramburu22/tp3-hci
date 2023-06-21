@@ -2,8 +2,10 @@ package com.example.contrall.ui.components
 
 import android.content.ClipData
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -48,12 +50,12 @@ fun PlaylistDialog(
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
-                        LazyColumn {
+                        LazyColumn (content = {
                             items(playlist) { info ->
                                 SongItem(info)
                                 Divider()
                             }
-                        }
+                        })
                         Row(
                             modifier = Modifier.padding(top = 16.dp),
                             horizontalArrangement = Arrangement.End
@@ -78,15 +80,30 @@ fun SongItem(info: SongInfo) {
             modifier = Modifier.size(49.dp)
         )
         Column(modifier = Modifier.padding(start = 16.dp)) {
-            Text(text = info.title, style = MaterialTheme.typography.body1)
-            Text(text = info.artist, style = MaterialTheme.typography.body2)
+            Row(modifier = Modifier.fillMaxWidth()) {
+                BoxWithConstraints(modifier = Modifier.weight(0.8f)) {
+                    info.title?.let { Text(text = it, style = MaterialTheme.typography.body1,
+                        modifier = Modifier
+                            .fillMaxWidth()) }
+                }
+                info.duration?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.body2,
+                        textAlign = TextAlign.End
+                    )
+                }
+            }
+            info.artist?.let { Text(text = it, style = MaterialTheme.typography.body2) }
             Text(text = "Del album ${info.album}", style = MaterialTheme.typography.body2)
         }
-        Text(
-            text = info.duration,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.weight(1f),
-            textAlign = TextAlign.End
-        )
+        info.duration?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.End
+            )
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.example.contrall.util
 
-import android.annotation.SuppressLint
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +9,6 @@ import com.example.contrall.data.SpeakerType
 import com.example.contrall.data.SpeakerUiState
 import com.example.contrall.data.network.RetrofitClient
 import com.example.contrall.data.network.models.Device
-import com.example.contrall.ui.components.PlaylistDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,11 +24,6 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
     var showPlaylist : Boolean = false
 
 
-    val currentPlaylist : List<SongInfo> = mutableStateListOf(
-        SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
-        SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
-        SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
-    )
 
     private var fetchJob : Job? = null
     init {
@@ -52,7 +44,29 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         )
     }
 
+    fun setSong() {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            runCatching {
+                val apiService = RetrofitClient.getApiService()
+                apiService.getSong(_uiState.value.id!!)
+            }.onSuccess { response ->
+            _uiState.update {
+                    it.copy(
+                        state = it.state.copy(song = response.body()?.result),
+                        isLoading = false
+                    )
+                }
+            }.onFailure { e->
+                _uiState.update { it.copy(
+                    message = e.message,
+                    isLoading = false
+                ) }
+            }
 
+        }
+    }
 
     fun setVolume(value : Float) {
         fetchJob?.cancel()
@@ -155,18 +169,29 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
 
     }
 
-    fun getPlaylist(/*list : List<SongInfo>*/)  {
+    fun getPlaylist() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
-
-            val apiService = RetrofitClient.getApiService()
-            apiService.execute(_uiState.value.id!!,"getPlaylist") }
-
-        val res : List<SongInfo> = mutableStateListOf(
-            SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
-            SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
-            SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
-        )
+            _uiState.update { it.copy(isLoading = true) }
+            runCatching {
+                val apiService = RetrofitClient.getApiService()
+                apiService.getPlaylist(_uiState.value.id!!)
+            }.onSuccess { response ->
+                _uiState.update {
+                    it.copy(
+                        playlist = response.body()?.result,
+                        isLoading = false
+                    )
+                }
+            }.onFailure { e ->
+                _uiState.update {
+                    it.copy(
+                        message = e.message,
+                        isLoading = false
+                    )
+                }
+            }
+        }
     }
 }
 
