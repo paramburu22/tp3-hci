@@ -66,7 +66,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                if(routinesUiState.routines?.routines?.size!! <= 0) {
+                if(routinesUiState.routines?.routines?.isEmpty() == true) {
                     Text(
                         text = "No hay rutinas registradas",
                         textAlign = TextAlign.Center,
@@ -75,7 +75,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
                     )
                 } else {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
+                        columns = GridCells.Fixed(1),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         contentPadding = PaddingValues(5.dp),

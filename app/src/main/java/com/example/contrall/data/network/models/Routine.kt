@@ -10,6 +10,5 @@ data class RoutineResult (
 data class Routine(
     @SerializedName("id")  var id    : String? = null,
     @SerializedName("name")  var name  : String? = null,
-    @SerializedName("actions" ) var actions : List<Action>   = listOf()
-
-)
+    @SerializedName("actions" ) var actions : List<Action> = listOf(),
+    )

@@ -47,6 +47,6 @@ class RoutinesViewModel : ViewModel() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
-            apiService.execute(id!!,"executeRoutine") }
+            apiService.executeRoutine(id!!) }
     }
 }

@@ -59,7 +59,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                if(deviceUiState.devices?.devices?.size!! <= 0) {
+                if(deviceUiState.devices?.devices?.isEmpty() == true) {
                     Text(
                         text = "No hay dispositivos utilizados recientemente",
                         textAlign = TextAlign.Center,
