@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -55,19 +57,38 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                     Text(
                         text = "Dispositivos Recientes",
                         fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(bottom = 10.dp)
                     )
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(1),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        contentPadding = PaddingValues(5.dp),
-                        modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp, top = 25.dp).heightIn(min = 200.dp)
-                    ) {
-                        val myDevices : MutableList<Device> = recentsViewModel.recentDevices.asReversed()
-                        if (myDevices != null) {
-                            items(myDevices.size) { index ->
-                                val device : Device = myDevices[index]
-                                DeviceComponent(device, navController, sharedDeviceModel, recentsViewModel)
+                    if(recentsViewModel.recentDevices.size <= 0) {
+                        Text(
+                            text = "No hay dispositivos utilizados recientemente",
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                    } else {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(1),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            contentPadding = PaddingValues(5.dp),
+                            modifier = Modifier
+                                .padding(start = 4.dp, end = 4.dp, bottom = 4.dp, top = 25.dp)
+                                .heightIn(min = 200.dp)
+                        ) {
+                            val myDevices: MutableList<Device> =
+                                recentsViewModel.recentDevices.asReversed()
+                            if (myDevices != null) {
+                                items(myDevices.size) { index ->
+                                    val device: Device = myDevices[index]
+                                    DeviceComponent(
+                                        device,
+                                        navController,
+                                        sharedDeviceModel,
+                                        recentsViewModel
+                                    )
+                                }
                             }
                         }
                     }

@@ -14,10 +14,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.contrall.ui.components.DeviceComponent
@@ -56,18 +59,37 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = PaddingValues(5.dp),
-                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp, top = 25.dp).heightIn(min = 200.dp)
-                ) {
-                    val myDevices : DevicesList? = deviceUiState.devices
-                    if (myDevices != null) {
-                        items(myDevices.devices.size) { index ->
-                            val device : Device = myDevices.devices[index]
-                            DeviceComponent(device, navController, sharedDeviceModel, recentsModel)
+                if(deviceUiState.devices?.devices?.size!! <= 0) {
+                    Text(
+                        text = "No hay dispositivos utilizados recientemente",
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(top = 20.dp),
+                    )
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(5.dp),
+                        modifier = Modifier.padding(
+                            start = 4.dp,
+                            end = 4.dp,
+                            bottom = 4.dp,
+                            top = 25.dp
+                        ).heightIn(min = 200.dp)
+                    ) {
+                        val myDevices: DevicesList? = deviceUiState.devices
+                        if (myDevices != null) {
+                            items(myDevices.devices.size) { index ->
+                                val device: Device = myDevices.devices[index]
+                                DeviceComponent(
+                                    device,
+                                    navController,
+                                    sharedDeviceModel,
+                                    recentsModel
+                                )
+                            }
                         }
                     }
                 }
