@@ -2,6 +2,7 @@ package com.example.contrall.data
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
 import com.example.contrall.R
 
 data class AirConditionerUiState (
@@ -32,10 +33,11 @@ data class AirConditionerType(
 
 data class AirConditionerState(
     val status: String = "off", //switch
-    val mode: String = "ventilación",
+    val mode: String = "fan",
+    val modeClass : DropdownClass = DropdownClass("fan", "ventilacion"),
     val fanSpeed: String = "medium",
     val horizontalSwing: String = "0",
-    val verticalSwing: String = "automatic",
+    val verticalSwing: String = "auto",
     val temperature: String = "24",
     val isOn : Boolean = false
 )

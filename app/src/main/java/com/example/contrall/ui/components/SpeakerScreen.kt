@@ -58,6 +58,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -181,7 +182,7 @@ fun SpeakerScreen(
                             )
                             if(speakerUiState.state.song == null || speakerUiState.state.status == "stopped") {
                                 Text(
-                                    text = R.string.no_song.toString(),
+                                    text = stringResource(R.string.no_song),
                                     fontSize = 18.sp,
                                     modifier = Modifier.padding(5.dp)
                                 )
@@ -217,7 +218,7 @@ fun SpeakerScreen(
                                     }
                                     speakerUiState.state.song!!.album?.let { it1 ->
                                         Text(
-                                            text = "${R.string.from_album} $it1",
+                                            text = "${stringResource(R.string.from_album)} $it1",
                                             fontSize = 16.sp,
                                         )
                                     }
@@ -291,7 +292,7 @@ fun SpeakerScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "${R.string.volume}: ${speakerUiState.state.volume}",
+                                text = "${stringResource(R.string.volume)}: ${speakerUiState.state.volume}",
                                 fontSize = 18.sp,
                             )
                         }
@@ -343,16 +344,16 @@ fun SpeakerScreen(
                         ) {
                             speakerUiState.state.genre?.let { it1 ->
                                 OurDropdownMenu(items = listOf(
-                                    DropdownClass("classical", R.string.classical.toString()),
-                                    DropdownClass("country", R.string.country.toString()),
-                                    DropdownClass("dance", R.string.dance.toString()),
-                                    DropdownClass("latina", R.string.latina.toString()),
-                                    DropdownClass("pop", R.string.pop.toString()),
-                                    DropdownClass("rock", R.string.rock.toString())
+                                    DropdownClass("classical", stringResource(R.string.classical)),
+                                    DropdownClass("country", stringResource(R.string.country)),
+                                    DropdownClass("dance", stringResource(R.string.dance)),
+                                    DropdownClass("latina", stringResource(R.string.latina)),
+                                    DropdownClass("pop", stringResource(R.string.pop)),
+                                    DropdownClass("rock", stringResource(R.string.rock))
                                 ),
                                     selectedItem = it1,
                                     onItemSelected = speakerViewModel::changeGenre,
-                                    title = R.string.sel_genre.toString())
+                                    title = stringResource(R.string.sel_genre))
                             }
                         }
                         Row(
@@ -366,7 +367,7 @@ fun SpeakerScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
                             ) {
-                                Text(text = R.string.playlist.toString())
+                                Text(text = stringResource(R.string.playlist))
                             }
                         }
 
@@ -389,12 +390,12 @@ fun SpeakerScreen(
                     open = showPlaylist,
                     onClose = { showPlaylist = false },
                     genre = when (speakerUiState.state.genre) {
-                        "classical" -> R.string.classical.toString()
-                        "country" -> R.string.country.toString()
-                        "dance" -> R.string.dance.toString()
-                        "latina" -> R.string.latina.toString()
-                        "pop" -> R.string.pop.toString()
-                        else -> {R.string.rock.toString()}
+                        "classical" -> stringResource(R.string.classical)
+                        "country" -> stringResource(R.string.country)
+                        "dance" -> stringResource(R.string.dance)
+                        "latina" -> stringResource(R.string.latina)
+                        "pop" -> stringResource(R.string.pop)
+                        else -> {stringResource(R.string.rock)}
                     },
                     playlist = it
                 )

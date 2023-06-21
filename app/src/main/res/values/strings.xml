@@ -49,4 +49,9 @@
     <string name="closed">Cerrada</string>
     <string name="locked">Bloqueada</string>
     <string name="unlocked">Desbloqueada</string>
+    <string name="new_color">Elija un color nuevo</string>
+    <string name="hex">Hexa</string>
+    <string name="rgb" translatable="false">RGB</string>
+    <string name="cancel">Cancelar</string>
+    <string name="done">Listo</string>
 </resources>

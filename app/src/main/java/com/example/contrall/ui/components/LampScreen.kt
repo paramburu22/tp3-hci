@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -110,18 +111,21 @@ fun LampScreen(
                             )
                         )
                         Text(
-                            text = if (lampUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
+                            text = if (lampUiState.state.isOn) stringResource(R.string.on) else stringResource(R.string.off),
                             fontSize = 18.sp
                         )
                         }
                     Divider()
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(){
                             Box(
-                                modifier = Modifier.padding(8.dp)
+                                modifier = Modifier
+                                    .padding(8.dp)
                                     .size(80.dp)
                                     .fillMaxWidth()
                                     .background(hexToColor(lampUiState.state.color!!))
@@ -130,12 +134,12 @@ fun LampScreen(
                         }
                         Column() {
                             Text(
-                                text = "${R.string.hex_val}: #${lampUiState.state.color}",
+                                text = "${stringResource(R.string.hex_val)}: #${lampUiState.state.color}",
                                 fontSize = 18.sp
                             )
 
                             Text(
-                                text = "${R.string.rgb_val}: ${lampUiState.state.color?.let { it1 ->
+                                text = "${stringResource(R.string.rgb_val)}: ${lampUiState.state.color?.let { it1 ->
                                     hexToRgb(
                                         it1
                                     )
@@ -145,7 +149,7 @@ fun LampScreen(
                         }
                     }
                     Row( modifier = Modifier
-                        .padding( 8.dp)
+                        .padding(8.dp)
                         .fillMaxWidth()) {
                         if (lampUiState.state.showDialog) {
                             ColorPickerDialog(
@@ -160,12 +164,12 @@ fun LampScreen(
                     Divider()
                         Row(
                             modifier = Modifier
-                                .padding( 8.dp)
+                                .padding(8.dp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "${R.string.brightness}: ${lampUiState.state.brightness!!}%",
+                                text = "${stringResource(R.string.brightness)}: ${lampUiState.state.brightness!!}%",
                                 fontSize = 18.sp,
                                 modifier = Modifier.padding(end = 10.dp)
                             )
@@ -187,7 +191,9 @@ fun LampScreen(
                         Image(
                             painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
                             contentDescription = null,
-                            modifier = Modifier.fillMaxWidth().padding(16.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
                         )
 
 

@@ -32,10 +32,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.contrall.R
+
 @Composable
 fun ColorPickerDialog(
     initialColor: Color,
@@ -65,14 +68,15 @@ fun ColorPickerDialog(
         ) {
             Column {
                 Text(
-                    text = "Elegi un Color Nuevo",
+                    text = stringResource(R.string.new_color),
                     fontSize = 20.sp,
                     modifier = Modifier.padding( 8.dp)
                 )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp).align(Alignment.CenterHorizontally)
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally)
                 ) {
                     // Red slider
                     Text(
@@ -95,7 +99,8 @@ fun ColorPickerDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp).align(Alignment.CenterHorizontally)
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally)
                 ) {
                     // Green slider
                     Text(
@@ -118,7 +123,8 @@ fun ColorPickerDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp).align(Alignment.CenterHorizontally)
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally)
                 ){
                     // Blue slider
                     Text(
@@ -156,24 +162,32 @@ fun ColorPickerDialog(
                                 )
                         )
                     }
-                    Column(modifier = Modifier.padding(6.dp).fillMaxWidth()) {
+                    Column(modifier = Modifier
+                        .padding(6.dp)
+                        .fillMaxWidth()) {
                         val color = Color(red = red.value, green = green.value, blue = blue.value)
-                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                        Row(modifier = Modifier
+                            .padding(6.dp)
+                            .fillMaxWidth()){
                             Text(
-                                text = "Hexa: #${colorToHex(color)}"
+                                text = "${stringResource(R.string.hex)}: #${colorToHex(color)}"
                             )
                         }
-                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                        Row(modifier = Modifier
+                            .padding(6.dp)
+                            .fillMaxWidth()){
                             Text(
-                                text = "Rgb: #${colorToRgb(color)}"
+                                text = "${stringResource(R.string.rgb)}: #${colorToRgb(color)}"
                             )
                         }
-                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                        Row(modifier = Modifier
+                            .padding(6.dp)
+                            .fillMaxWidth()){
                             Button(
                                 onClick = onDismiss,
                                 modifier = Modifier.padding(end=26.dp)
                             ) {
-                                Text(text = "Cancel")
+                                Text(text = stringResource(R.string.cancel))
                             }
 
                             // Confirm button
@@ -183,7 +197,7 @@ fun ColorPickerDialog(
                                     onDismiss()
                                 },
                             ) {
-                                Text(text = "OK")
+                                Text(text = stringResource(R.string.done))
                             }
                         }
 

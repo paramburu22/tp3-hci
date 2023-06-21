@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -46,7 +47,7 @@ fun PlaylistDialog(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "${R.string.playlist} ${genre}",
+                            text = "${stringResource(R.string.playlist)} ${genre}",
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -61,7 +62,7 @@ fun PlaylistDialog(
                             horizontalArrangement = Arrangement.End
                         ) {
                             Button(onClick = { onClose() }) {
-                                Text(text = R.string.close.toString())
+                                Text(text = stringResource(R.string.close))
                             }
                         }
                     }
@@ -95,7 +96,7 @@ fun SongItem(info: SongInfo) {
                 }
             }
             info.artist?.let { Text(text = it, style = MaterialTheme.typography.body2) }
-            Text(text = "${R.string.from_album} ${info.album}", style = MaterialTheme.typography.body2)
+            Text(text = "${stringResource(R.string.from_album)} ${info.album}", style = MaterialTheme.typography.body2)
         }
         info.duration?.let {
             Text(

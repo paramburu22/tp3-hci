@@ -1,5 +1,6 @@
 package com.example.contrall.ui.screens
 
+import android.provider.Settings.Global.getString
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.RecentsViewModel
+import androidx.compose.ui.res.stringResource
 import com.example.contrall.util.SharedDeviceModel
 
 @Composable
@@ -38,7 +40,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
     val painter = painterResource(R.drawable.background)
     Scaffold(
         topBar = {
-            TopAppBar(title = R.string.home_title.toString(), showIcon = false)
+            TopAppBar(title = stringResource(R.string.home_title), showIcon = false)
         },
         content = {
             Box(
@@ -57,14 +59,14 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = R.string.recent_title.toString(),
+                        text = stringResource(R.string.recent_title),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                     if(recentsViewModel.recentDevices.size <= 0) {
                         Text(
-                            text = R.string.no_recent.toString(),
+                            text = stringResource(R.string.no_recent),
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp,
                             modifier = Modifier.padding(top = 20.dp)

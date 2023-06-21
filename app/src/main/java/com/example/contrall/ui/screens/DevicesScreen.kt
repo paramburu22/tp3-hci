@@ -20,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,7 +66,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
 
     Scaffold(
         topBar = {
-            TopAppBar(title = R.string.devices_title.toString(), showIcon = false)
+            TopAppBar(title = stringResource(R.string.devices_title), showIcon = false)
         },
         content = {
             Box(
@@ -81,7 +82,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                 )
                 if(deviceUiState.devices?.devices?.isEmpty() == true) {
                     Text(
-                        text = R.string.no_devices.toString(),
+                        text = stringResource(R.string.no_devices),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(top = 20.dp),

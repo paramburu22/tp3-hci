@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -118,7 +119,7 @@ fun OvenScreen(
                                 ),
                             )
                             Text(
-                                text = if (ovenUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
+                                text = if (ovenUiState.state.isOn) stringResource(R.string.on) else stringResource(R.string.off),
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -133,18 +134,18 @@ fun OvenScreen(
                         ) {
                             OurDropdownMenu(
                                 items = listOf(
-                                    DropdownClass("conventional", R.string.conv.toString()),
-                                    DropdownClass("top", R.string.top.toString()),
-                                    DropdownClass("bottom", R.string.bottom.toString())
+                                    DropdownClass("conventional", stringResource(R.string.conv)),
+                                    DropdownClass("top", stringResource(R.string.top)),
+                                    DropdownClass("bottom", stringResource(R.string.bottom))
                                 ),
                                 selectedItem = ovenUiState.state.heat,
                                 onItemSelected = ovenViewModel::setHeatMode,
-                                title = R.string.heat_source.toString()
+                                title = stringResource(R.string.heat_source)
                             )
                         }
 
                         Text(
-                            text = R.string.temp.toString(),
+                            text = stringResource(R.string.temp),
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(10.dp)
@@ -198,13 +199,13 @@ fun OvenScreen(
                         ) {
                             OurDropdownMenu(
                                 items = listOf(
-                                    DropdownClass("large", R.string.mode_large.toString()),
-                                    DropdownClass("eco", R.string.mode_eco.toString()),
-                                    DropdownClass("off", R.string.off.toString())
+                                    DropdownClass("large", stringResource(R.string.mode_large)),
+                                    DropdownClass("eco", stringResource(R.string.mode_eco)),
+                                    DropdownClass("off", stringResource(R.string.off))
                                 ),
                                 selectedItem = ovenUiState.state.grill,
                                 onItemSelected = ovenViewModel::setGrillMode,
-                                title = R.string.grill_mode.toString()
+                                title = stringResource(R.string.grill_mode)
                             )
                         }
                         Row(
@@ -214,12 +215,12 @@ fun OvenScreen(
                         ) {
                             OurDropdownMenu(
                                 items = listOf(
-                                    DropdownClass("normal", R.string.mode_normal.toString()),
-                                    DropdownClass("eco", R.string.mode_eco.toString()),
-                                    DropdownClass("off", R.string.off.toString())),
+                                    DropdownClass("normal", stringResource(R.string.mode_normal)),
+                                    DropdownClass("eco", stringResource(R.string.mode_eco)),
+                                    DropdownClass("off", stringResource(R.string.off))),
                                 selectedItem = ovenUiState.state.convection,
                                 onItemSelected = ovenViewModel::setConvMode,
-                                title = R.string.convection_mode.toString()
+                                title = stringResource(R.string.convection_mode)
                             )
                         }
                         // Trash Bin Image

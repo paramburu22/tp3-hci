@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ContrAllTheme {
+                setupScreens()
                 val navController = rememberNavController()
                 ContrAllNavGraph(navController = navController)
             }

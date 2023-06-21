@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -120,7 +121,7 @@ fun AirConditionerScreen(
                             ),
                         )
                         Text(
-                            text = if (airConditionerUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
+                            text = if (airConditionerUiState.state.isOn) stringResource(R.string.on) else stringResource(R.string.off),
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
@@ -137,13 +138,13 @@ fun AirConditionerScreen(
                     ) {
                         OurDropdownMenu(
                             items =  listOf(
-                                DropdownClass("cool", R.string.cool.toString()),
-                                DropdownClass("heat", R.string.heat.toString()),
-                                DropdownClass("fan", R.string.fan.toString())
+                                DropdownClass("cool", stringResource(R.string.cool)),
+                                DropdownClass("heat", stringResource(R.string.heat)),
+                                DropdownClass("fan", stringResource(R.string.fan))
                             ),
                             selectedItem = airConditionerUiState.state.mode,
                             onItemSelected = airConditionerViewModel::setMode,
-                            title = R.string.mode.toString()
+                            title = stringResource(R.string.mode)
                         )
                     }
                     Row(
@@ -152,7 +153,7 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "${R.string.temp}:",
+                            text = "${stringResource(R.string.temp)}:",
                             fontSize = 18.sp
                         )
                     }
@@ -198,14 +199,14 @@ fun AirConditionerScreen(
                         OurDropdownMenu(
                             //items = airConditionerUiState.fanSpeeds,
                             items = listOf(
-                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("auto", stringResource(R.string.auto)),
                                 DropdownClass("22", "22"),
                                 DropdownClass("45", "45"),
                                 DropdownClass("67", "67"),
                                 DropdownClass("90", "90"),),
                             selectedItem = airConditionerUiState.state.verticalSwing,
                             onItemSelected = airConditionerViewModel::setVerticalSwing,
-                            title = R.string.v_swing.toString()
+                            title = stringResource(R.string.v_swing)
                         )
                     }
                     Row(
@@ -217,14 +218,14 @@ fun AirConditionerScreen(
                             //items = airConditionerUiState.fanSpeeds,
 
                             items = listOf(
-                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("auto", stringResource(R.string.auto)),
                                 DropdownClass("25", "25%"),
                                 DropdownClass("50", "50%"),
                                 DropdownClass("75", "75%"),
                                 DropdownClass("100", "100%"),),
                             selectedItem = airConditionerUiState.state.fanSpeed,
                             onItemSelected = airConditionerViewModel::setFanSpeed,
-                            title = R.string.fan_speed.toString()
+                            title = stringResource(R.string.fan_speed)
                         )
                     }
                     Row(
@@ -234,7 +235,7 @@ fun AirConditionerScreen(
                     ) {
                         OurDropdownMenu(
                             items = listOf(
-                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("auto", stringResource(R.string.auto)),
                                 DropdownClass("-90", "-90"),
                                 DropdownClass("-45", "-45"),
                                 DropdownClass("0", "0"),
@@ -242,7 +243,7 @@ fun AirConditionerScreen(
                                 DropdownClass("90", "90"),),
                             selectedItem = airConditionerUiState.state.horizontalSwing,
                             onItemSelected = airConditionerViewModel::setHorizontalSwing,
-                            title = R.string.h_swing.toString()
+                            title = stringResource(R.string.h_swing)
                         )
                     }
                     // Trash Bin Image

@@ -43,4 +43,8 @@
     <string name="closed">Closed</string>
     <string name="locked">Locked</string>
     <string name="unlocked">Unlocked</string>
+    <string name="new_color">Choose a new color</string>
+    <string name="hex">Hex</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
 </resources>

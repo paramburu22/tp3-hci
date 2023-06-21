@@ -40,6 +40,9 @@ import com.example.contrall.util.RoutinesViewModel
 
 @Composable
 fun RoutineComponent(routine : Routine, routinesViewModel: RoutinesViewModel) {
+    val actionsNames : Map<String, String> = mapOf(
+
+    )
     Card(
         border = BorderStroke(2.dp, Color.LightGray),
         shape = RoundedCornerShape(15.dp),

@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,7 +74,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavContr
 
     Scaffold(
         topBar = {
-            TopAppBar(title = "Rutinas", showIcon = false)
+            TopAppBar(title = stringResource(R.string.routine_title), showIcon = false)
         },
         content = {
             Box(
@@ -89,7 +90,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavContr
                 )
                 if(routinesUiState.routines?.routines?.isEmpty() == true) {
                     Text(
-                        text = "No hay rutinas registradas",
+                        text = stringResource(R.string.no_routines),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(top = 20.dp)
