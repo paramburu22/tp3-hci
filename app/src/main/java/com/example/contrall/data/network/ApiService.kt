@@ -5,6 +5,8 @@ import com.example.contrall.data.SongResult
 import com.example.contrall.data.network.models.DeviceResult
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.data.network.models.RoutinesList
+import com.example.contrall.data.network.models.State
+import com.example.contrall.data.network.models.StateResult
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,8 +25,8 @@ interface ApiService {
     @PUT("/api/devices/{deviceId}/getPlaylist")
     suspend fun getPlaylist(@Path("deviceId")id: String): Response<PlaylistResult>
 
-    @PUT("/api/devices/{id}/state/song")
-    suspend fun getSong(@Path("id")id: String): Response<SongResult>
+    @GET("/api/devices/{id}/state")
+    suspend fun getState(@Path("id")id: String): Response<StateResult>
 
 
 

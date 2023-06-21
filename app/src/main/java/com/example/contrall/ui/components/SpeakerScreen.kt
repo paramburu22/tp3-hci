@@ -80,8 +80,6 @@ fun SpeakerScreen(
     val speakerUiState by speakerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
-    val scope = rememberCoroutineScope()
-
     var showPlaylist by remember { mutableStateOf(false) }
 
     val timer = Timer()
@@ -204,7 +202,7 @@ fun SpeakerScreen(
                                         }
                                         speakerUiState.state.song!!.progress?.let { it1 ->
                                             Text(text = it1, fontSize = 14.sp,
-//                                            modifier = Modifier.align(alignment = Alignment.End)
+//                                            modif
                                             )
                                         }
 
@@ -284,7 +282,6 @@ fun SpeakerScreen(
 
                         Divider(modifier = Modifier.fillMaxWidth())
 
-                        //volumen
                         Row(
                             modifier = Modifier
                                 .padding(top = 10.dp, start = 10.dp, end = 10.dp)

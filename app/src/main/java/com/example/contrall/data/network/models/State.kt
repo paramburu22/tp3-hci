@@ -3,6 +3,12 @@ package com.example.contrall.data.network.models
 import com.example.contrall.data.SongInfo
 import com.google.gson.annotations.SerializedName
 
+data class StateResult (
+
+    @SerializedName("result" ) var result : State? = State()
+
+)
+
 data class State (
     //lamp
     @SerializedName("status"             ) var status             : String? = null,

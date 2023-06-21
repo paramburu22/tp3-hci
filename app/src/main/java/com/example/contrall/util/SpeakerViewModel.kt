@@ -49,11 +49,16 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         fetchJob = viewModelScope.launch {
             runCatching {
                 val apiService = RetrofitClient.getApiService()
-                apiService.getSong(_uiState.value.id!!)
+                apiService.getState(_uiState.value.id!!)
             }.onSuccess { response ->
                 _uiState.update {
                     it.copy(
-                        state = it.state.copy(song = response.body()?.result)
+                        state = it.state.copy(
+                            song = response.body()?.result?.song,
+                            volume = response.body()?.result?.volume,
+                            genre = response.body()?.result?.genre,
+                            status = response.body()?.result?.status,
+                        )
                     )
                 }
             }.onFailure { e->
@@ -64,30 +69,6 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
             }
         }
 
-    }
-
-    fun setSong() {
-        fetchJob?.cancel()
-        fetchJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            runCatching {
-                val apiService = RetrofitClient.getApiService()
-                apiService.getSong(_uiState.value.id!!)
-            }.onSuccess { response ->
-            _uiState.update {
-                    it.copy(
-                        state = it.state.copy(song = response.body()?.result),
-                        isLoading = false
-                    )
-                }
-            }.onFailure { e->
-                _uiState.update { it.copy(
-                    message = e.message,
-                    isLoading = false
-                ) }
-            }
-
-        }
     }
 
     fun setVolume(value : Float) {
