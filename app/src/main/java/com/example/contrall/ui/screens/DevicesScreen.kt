@@ -15,12 +15,16 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.Text
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.contrall.ui.components.DeviceComponent
@@ -39,8 +43,23 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
     val painter = painterResource(R.drawable.background)
     val deviceUiState by devicesViewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        devicesViewModel.getDevices();
+    val lifecycleObserver = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_START -> {
+                devicesViewModel.getDevices();
+            }
+            else -> Unit
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
+        }
     }
 
 

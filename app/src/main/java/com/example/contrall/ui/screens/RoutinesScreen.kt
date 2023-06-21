@@ -18,16 +18,20 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
@@ -48,8 +52,23 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavContr
     val painter = painterResource(R.drawable.background)
     val routinesUiState by routinesViewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        routinesViewModel.getRoutines()
+    val lifecycleObserver = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_START -> {
+                routinesViewModel.getRoutines();
+            }
+            else -> Unit
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
+        }
     }
 
     Scaffold(

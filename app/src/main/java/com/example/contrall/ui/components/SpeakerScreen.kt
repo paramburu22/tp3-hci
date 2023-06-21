@@ -88,9 +88,7 @@ fun SpeakerScreen(
 
     val task = object : TimerTask() {
         override fun run() {
-            // Código que deseas ejecutar cada x segundos
             speakerViewModel.updateState()
-            println("Ejecutando la función...")
         }
     }
 
@@ -114,24 +112,6 @@ fun SpeakerScreen(
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
             timer.cancel()
-        }
-    }
-
-//    speakerViewModel.setSong()
-    LaunchedEffect(Unit) {
-        scope.launch {
-            try {
-                println("Empezo")
-                Timer().scheduleAtFixedRate(object : TimerTask() {
-                    override fun run() {
-//                speakerViewModel.updateState()
-                        println("hola")
-                    }
-                }, 0, 1000)
-            } catch (ex: Exception) {
-
-            }
-
         }
     }
 
