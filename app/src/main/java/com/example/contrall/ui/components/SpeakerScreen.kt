@@ -2,10 +2,12 @@ package com.example.contrall.ui.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.End
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -41,9 +46,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.util.SpeakerViewModel
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -55,8 +62,11 @@ import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.SongInfo
 import com.example.contrall.ui.components.TopAppBar
+import kotlinx.coroutines.launch
 
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.util.Timer
+import java.util.TimerTask
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
@@ -67,7 +77,29 @@ fun SpeakerScreen(
     val speakerUiState by speakerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
+    val scope = rememberCoroutineScope()
+
     var showPlaylist by remember { mutableStateOf(false) }
+
+
+
+//    speakerViewModel.setSong()
+    LaunchedEffect(Unit) {
+        scope.launch {
+            try {
+                println("Empezo")
+                Timer().scheduleAtFixedRate(object : TimerTask() {
+                    override fun run() {
+//                speakerViewModel.updateState()
+                        println("hola")
+                    }
+                }, 0, 1000)
+            } catch (ex: Exception) {
+
+            }
+
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -113,7 +145,7 @@ fun SpeakerScreen(
                                     .align(Alignment.CenterVertically)
                             )
                             speakerUiState.name?.let { it1 ->
-                                androidx.compose.material.Text(
+                                Text(
                                     text = it1,
                                     fontSize = 30.sp,
                                 )
@@ -127,7 +159,8 @@ fun SpeakerScreen(
                             modifier = Modifier
                                 .padding(top = 10.dp, start = 10.dp, end = 10.dp)
                                 .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+//                            horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.baseline_library_music_24),
@@ -135,12 +168,54 @@ fun SpeakerScreen(
                                 modifier = Modifier
                                     .size(48.dp)
                                     .padding(end = 12.dp)
-                                    .align(Alignment.CenterVertically))
-                            Text(
-                                text = "No hay canciones en reproduccion",
-                                fontSize = 18.sp,
-                                modifier = Modifier.padding(5.dp)
+                                    .align(Alignment.CenterVertically)
+                            )
+                            if(speakerUiState.state.song == null || speakerUiState.state.status == "stopped") {
+                                Text(
+                                    text = "No hay canciones en reproduccion",
+                                    fontSize = 18.sp,
+                                    modifier = Modifier.padding(5.dp)
                                 )
+                            } else {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp)
+                                ) {
+                                    Row(modifier = Modifier.fillMaxWidth()) {
+                                        BoxWithConstraints(modifier = Modifier.weight(0.8f)) {
+                                            speakerUiState.state.song!!.title?.let { it1 ->
+                                                Text(
+                                                    text = it1,
+                                                    fontSize = 22.sp,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                )
+                                            }
+
+                                        }
+                                        speakerUiState.state.song!!.progress?.let { it1 ->
+                                            Text(text = it1, fontSize = 14.sp,
+//                                            modifier = Modifier.align(alignment = Alignment.End)
+                                            )
+                                        }
+
+                                    }
+                                    speakerUiState.state.song!!.artist?.let { it1 ->
+                                        Text(
+                                            text = it1,
+                                            fontSize = 18.sp,
+//                                    modifier = Modifier.padding(5.dp)
+                                        )
+                                    }
+                                    speakerUiState.state.song!!.album?.let { it1 ->
+                                        Text(
+                                            text = "Del album ${it1}",
+                                            fontSize = 16.sp,
+//                                    modifier = Modifier.padding(5.dp)
+                                        )
+                                    }
+                                }
+                            }
                         }
                         Row(
                             modifier = Modifier
@@ -300,16 +375,15 @@ fun SpeakerScreen(
     )
 
         if (showPlaylist) {
-            PlaylistDialog(
-                open = showPlaylist,
-                onClose = { showPlaylist = false },
-                genre = speakerUiState.state.genre!!,
-                playlist = mutableStateListOf(
-                    SongInfo(title = "Style", artist = "Taylor Swift", album = "1989", duration = "3:30", progress = ""),
-                    SongInfo(title = "Mean", artist = "Taylor Swift", album = "Speak Now", duration = "4:15", progress = ""),
-                    SongInfo(title = "August", artist = "Taylor Swift", album = "Folklore", duration = "2:45", progress = "")
+            speakerViewModel.getPlaylist()
+            speakerUiState.playlist?.let {
+                PlaylistDialog(
+                    open = showPlaylist,
+                    onClose = { showPlaylist = false },
+                    genre = speakerUiState.state.genre!!,
+                    playlist = it
                 )
-            )
+            }
         }
 }
 
