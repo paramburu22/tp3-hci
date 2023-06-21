@@ -1,5 +1,6 @@
 package com.example.contrall.util
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -100,6 +101,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
             }
         }
     }
+    @SuppressLint("SuspiciousIndentation")
     fun increaseTemperature() {
         if(_uiState.value.state.temperature.toInt() < 38)
         setTemperature(_uiState.value.state.temperature.toInt()+1)

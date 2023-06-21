@@ -65,7 +65,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
 
     Scaffold(
         topBar = {
-            TopAppBar(title = "Dispositivos", showIcon = false)
+            TopAppBar(title = R.string.devices_title.toString(), showIcon = false)
         },
         content = {
             Box(
@@ -81,7 +81,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                 )
                 if(deviceUiState.devices?.devices?.isEmpty() == true) {
                     Text(
-                        text = "No hay dispositivos utilizados recientemente",
+                        text = R.string.no_devices.toString(),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(top = 20.dp),

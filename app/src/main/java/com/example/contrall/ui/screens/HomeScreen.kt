@@ -38,7 +38,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
     val painter = painterResource(R.drawable.background)
     Scaffold(
         topBar = {
-            TopAppBar(title = "Inicio", showIcon = false)
+            TopAppBar(title = R.string.home_title.toString(), showIcon = false)
         },
         content = {
             Box(
@@ -57,14 +57,14 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Dispositivos Recientes",
+                        text = R.string.recent_title.toString(),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
                     if(recentsViewModel.recentDevices.size <= 0) {
                         Text(
-                            text = "No hay dispositivos utilizados recientemente",
+                            text = R.string.no_recent.toString(),
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp,
                             modifier = Modifier.padding(top = 20.dp)

@@ -1,4 +1,52 @@
 <resources>
-    <string name="app_name">ContrAll</string>
+    <string name="app_name" translatable="false">ContrAll</string>
     <string name="speaker_name">Parlante</string>
+    <string name="home_title">Inicio</string>
+    <string name="recent_title">Dispositivos Recientes</string>
+    <string name="no_recent">No hay dispositivos utilizados recientemente</string>
+    <string name="devices_title">Dispositivos</string>
+    <string name="no_devices">No hay dispositivos registrados</string>
+    <string name="routine_title">Rutinas</string>
+    <string name="device_title">Dispositivo</string>
+    <string name="no_routines">No hay rutinas registradas</string>
+    <string name="go_back">Regresar</string>
+    <string name="no_song">No hay canciones en reproducción</string>
+    <string name="from_album">Del album</string>
+    <string name="volume">Volumen</string>
+    <string name="classical">Clasica</string>
+    <string name="country" translatable="false">Country</string>
+    <string name="pop" translatable="false">Pop</string>
+    <string name="dance" translatable="false">Dance</string>
+    <string name="latina" translatable="false">Latina</string>
+    <string name="rock" translatable="false">Rock</string>
+    <string name="cool">Frio</string>
+    <string name="heat">Calor</string>
+    <string name="fan">Ventilación</string>
+    <string name="on">Prendido</string>
+    <string name="off">Apagado</string>
+    <string name="mode">Seleccione un modo</string>
+    <string name="temp">Temperatura</string>
+    <string name="auto">Automático</string>
+    <string name="h_swing">Desplazamiento horizontal</string>
+    <string name="v_swing">Desplazamiento vertical</string>
+    <string name="fan_speed">Velocidad ventilador</string>
+    <string name="close">Cerrar</string>
+    <string name="playlist">Lista de reproduccion</string>
+    <string name="sel_genre">Seleccione un genero</string>
+    <string name="conv">Convencional</string>
+    <string name="top">Arriba</string>
+    <string name="bottom">Abajo</string>
+    <string name="heat_source">Seleccione fuente de calor</string>
+    <string name="mode_large">Completo</string>
+    <string name="mode_eco">Economico</string>
+    <string name="mode_normal" translatable="false">Normal</string>
+    <string name="grill_mode">Seleccione el modo grill</string>
+    <string name="convection_mode">Seleccione el modo conveccion</string>
+    <string name="hex_val">Valor hexa</string>
+    <string name="rgb_val">Valor RGB</string>
+    <string name="brightness">Intensidad</string>
+    <string name="open">Abierta</string>
+    <string name="closed">Cerrada</string>
+    <string name="locked">Bloqueada</string>
+    <string name="unlocked">Desbloqueada</string>
 </resources>

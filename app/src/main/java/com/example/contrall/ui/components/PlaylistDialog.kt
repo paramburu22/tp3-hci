@@ -46,7 +46,7 @@ fun PlaylistDialog(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Lista de reproduccion de ${genre}",
+                            text = "${R.string.playlist} ${genre}",
                             style = MaterialTheme.typography.body1,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -61,7 +61,7 @@ fun PlaylistDialog(
                             horizontalArrangement = Arrangement.End
                         ) {
                             Button(onClick = { onClose() }) {
-                                Text(text = "Cerrar")
+                                Text(text = R.string.close.toString())
                             }
                         }
                     }
@@ -95,7 +95,7 @@ fun SongItem(info: SongInfo) {
                 }
             }
             info.artist?.let { Text(text = it, style = MaterialTheme.typography.body2) }
-            Text(text = "Del album ${info.album}", style = MaterialTheme.typography.body2)
+            Text(text = "${R.string.from_album} ${info.album}", style = MaterialTheme.typography.body2)
         }
         info.duration?.let {
             Text(

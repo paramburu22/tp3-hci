@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
+import com.example.contrall.data.DropdownClass
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.OvenViewModel
 
@@ -115,14 +116,9 @@ fun OvenScreen(
                                     uncheckedThumbColor = Color.Gray, // Change the color of the switch thumb when unchecked
                                     uncheckedTrackColor = Color.LightGray // Change the color of the switch track when unchecked
                                 ),
-                                //checked = lampViewModel.switchState,
-                                //checked = switchState,
-                                //onCheckedChange = { set -> lampViewModel.toggleSwitch(set) },
-                                //onCheckedChange = func,
-                                //modifier = Modifier.padding(bottom = 10.dp)
                             )
                             Text(
-                                text = if (ovenUiState.state.isOn) "Prendido" else "Apagado",
+                                text = if (ovenUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -136,15 +132,19 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = listOf<String>("conventional", "top", "bottom"),
+                                items = listOf(
+                                    DropdownClass("conventional", R.string.conv.toString()),
+                                    DropdownClass("top", R.string.top.toString()),
+                                    DropdownClass("bottom", R.string.bottom.toString())
+                                ),
                                 selectedItem = ovenUiState.state.heat,
                                 onItemSelected = ovenViewModel::setHeatMode,
-                                title = "Seleccione Fuente de Calor"
+                                title = R.string.heat_source.toString()
                             )
                         }
 
                         Text(
-                            text = "Temperatura",
+                            text = R.string.temp.toString(),
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(10.dp)
@@ -197,23 +197,29 @@ fun OvenScreen(
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = listOf("large", "eco", "off"),
+                                items = listOf(
+                                    DropdownClass("large", R.string.mode_large.toString()),
+                                    DropdownClass("eco", R.string.mode_eco.toString()),
+                                    DropdownClass("off", R.string.off.toString())
+                                ),
                                 selectedItem = ovenUiState.state.grill,
                                 onItemSelected = ovenViewModel::setGrillMode,
-                                title = "Seleccione Modo Grill"
+                                title = R.string.grill_mode.toString()
                             )
                         }
-                        val titleConvection = "Modo Conveccion"
                         Row(
                             modifier = Modifier
                                 .padding(10.dp)
                                 .fillMaxWidth()
                         ) {
                             OurDropdownMenu(
-                                items = listOf("normal","eco","off"),
+                                items = listOf(
+                                    DropdownClass("normal", R.string.mode_normal.toString()),
+                                    DropdownClass("eco", R.string.mode_eco.toString()),
+                                    DropdownClass("off", R.string.off.toString())),
                                 selectedItem = ovenUiState.state.convection,
                                 onItemSelected = ovenViewModel::setConvMode,
-                                title = "Seleccione Modo Conveccion"
+                                title = R.string.convection_mode.toString()
                             )
                         }
                         // Trash Bin Image

@@ -12,11 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.contrall.R
 
 @Composable
 fun TopAppBar(
     navController: NavController = rememberNavController(),
-    title: String = "Dispositivo",
+    title: String = R.string.device_title.toString(),
     showIcon: Boolean = true,
 ) {
 

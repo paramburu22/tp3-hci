@@ -110,7 +110,7 @@ fun LampScreen(
                             )
                         )
                         Text(
-                            text = if (lampUiState.state.isOn) "Prendido" else "Apagado",
+                            text = if (lampUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
                             fontSize = 18.sp
                         )
                         }
@@ -130,12 +130,12 @@ fun LampScreen(
                         }
                         Column() {
                             Text(
-                                text = "Valor Hexa: #${lampUiState.state.color}",
+                                text = "${R.string.hex_val}: #${lampUiState.state.color}",
                                 fontSize = 18.sp
                             )
 
                             Text(
-                                text = "Valor RGB: ${lampUiState.state.color?.let { it1 ->
+                                text = "${R.string.rgb_val}: ${lampUiState.state.color?.let { it1 ->
                                     hexToRgb(
                                         it1
                                     )
@@ -165,7 +165,7 @@ fun LampScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Intensidad: ${lampUiState.state.brightness!!}%",
+                                text = "${R.string.brightness}: ${lampUiState.state.brightness!!}%",
                                 fontSize = 18.sp,
                                 modifier = Modifier.padding(end = 10.dp)
                             )

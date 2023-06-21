@@ -56,8 +56,6 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
             recentsViewModel.addDevice(device)
             navController?.navigate(Screen.DeviceScreen.route)
         }.fillMaxHeight(),
-        border = BorderStroke(2.dp, Color.LightGray),
-        shape = RoundedCornerShape(15.dp),
     ) {
         Row(modifier = Modifier
             .padding(20.dp)

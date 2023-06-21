@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="speaker_name">Speaker</string>
+    <string name="home_title">Home</string>
+    <string name="recent_title">Recent Devices</string>
+    <string name="no_recent">There are no recently used devices</string>
+    <string name="devices_title">Devices</string>
+    <string name="no_devices">There are no devices registered</string>
+    <string name="routine_title">Routines</string>
+    <string name="device_title">Device</string>
+    <string name="no_routines">There are no routines registered</string>
+    <string name="go_back">Go back</string>
+    <string name="no_song">No songs currently playing</string>
+    <string name="from_album">From the album</string>
+    <string name="volume">Volume</string>
+    <string name="classical">Classical</string>
+    <string name="cool">Cool</string>
+    <string name="heat">Heat</string>
+    <string name="fan">Fan</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="mode">Select a mode</string>
+    <string name="temp">Temperature</string>
+    <string name="auto">Automatic</string>
+    <string name="h_swing">Horizontal swing</string>
+    <string name="v_swing">Vertical swing</string>
+    <string name="fan_speed">Fan speed</string>
+    <string name="close">Close</string>
+    <string name="playlist">Playlist</string>
+    <string name="sel_genre">Select a genre</string>
+    <string name="conv">Conventional</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="heat_source">Select heat source</string>
+    <string name="mode_large">Large</string>
+    <string name="mode_eco">Eco</string>
+    <string name="grill_mode">Select the grill mode</string>
+    <string name="convection_mode">Select the convection mode</string>
+    <string name="hex_val">Hex value</string>
+    <string name="rgb_val">RGB value</string>
+    <string name="brightness">Brightness</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+</resources>

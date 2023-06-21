@@ -30,10 +30,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
+import com.example.contrall.data.DropdownClass
 
 @Composable
 fun OurDropdownMenu(
-    items: List<String>,
+    items: List<DropdownClass>,
     selectedItem: String,
     onItemSelected: (String) -> Unit,
     title: String
@@ -79,11 +80,11 @@ fun OurDropdownMenu(
         items.forEach { item ->
             DropdownMenuItem(
                 onClick = {
-                    onItemSelected(item)
+                    onItemSelected(item.value)
                     expanded = false
                 }
             ) {
-                Text(text = item)
+                Text(text = item.name)
             }
         }
     }

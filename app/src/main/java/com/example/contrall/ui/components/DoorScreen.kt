@@ -102,7 +102,7 @@ fun DoorScreen(
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.state.isLocked) "Bloqueada" else "Desbloqueada",
+                                text = if (doorUiState.state.isLocked) R.string.locked.toString() else R.string.unlocked.toString(),
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)
@@ -126,7 +126,7 @@ fun DoorScreen(
                                     .padding(end = 10.dp)
                             )
                             Text(
-                                text = if (doorUiState.state.isOpen) "Abierta" else "Cerrada",
+                                text = if (doorUiState.state.isOpen) R.string.open.toString() else R.string.closed.toString(),
                                 fontSize = 18.sp,
                                 modifier = Modifier
                                     .padding(bottom = 8.dp)

@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.AirConditionerUiState
+import com.example.contrall.data.DropdownClass
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.AirConditionerViewModel
 
@@ -119,7 +120,7 @@ fun AirConditionerScreen(
                             ),
                         )
                         Text(
-                            text = if (airConditionerUiState.state.isOn) "Prendido" else "Apagado",
+                            text = if (airConditionerUiState.state.isOn) R.string.on.toString() else R.string.off.toString(),
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
@@ -135,10 +136,14 @@ fun AirConditionerScreen(
 
                     ) {
                         OurDropdownMenu(
-                            items =  listOf<String>("Ventilación", "Frio", "Calor"),
+                            items =  listOf(
+                                DropdownClass("cool", R.string.cool.toString()),
+                                DropdownClass("heat", R.string.heat.toString()),
+                                DropdownClass("fan", R.string.fan.toString())
+                            ),
                             selectedItem = airConditionerUiState.state.mode,
                             onItemSelected = airConditionerViewModel::setMode,
-                            title = "Seleccione un Modo"
+                            title = R.string.mode.toString()
                         )
                     }
                     Row(
@@ -147,7 +152,7 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Temperatura:",
+                            text = "${R.string.temp}:",
                             fontSize = 18.sp
                         )
                     }
@@ -192,10 +197,15 @@ fun AirConditionerScreen(
                     ) {
                         OurDropdownMenu(
                             //items = airConditionerUiState.fanSpeeds,
-                            items = listOf<String>("Automático", "22", "45", "67", "90"),
+                            items = listOf(
+                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("22", "22"),
+                                DropdownClass("45", "45"),
+                                DropdownClass("67", "67"),
+                                DropdownClass("90", "90"),),
                             selectedItem = airConditionerUiState.state.verticalSwing,
-                            onItemSelected = airConditionerViewModel::setFanSpeed,
-                            title = "Desplazamiento Vertical"
+                            onItemSelected = airConditionerViewModel::setVerticalSwing,
+                            title = R.string.v_swing.toString()
                         )
                     }
                     Row(
@@ -205,10 +215,16 @@ fun AirConditionerScreen(
                     ) {
                         OurDropdownMenu(
                             //items = airConditionerUiState.fanSpeeds,
-                            items = listOf<String>("Automático", "25%", "50%", "75%", "100%"),
+
+                            items = listOf(
+                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("25", "25%"),
+                                DropdownClass("50", "50%"),
+                                DropdownClass("75", "75%"),
+                                DropdownClass("100", "100%"),),
                             selectedItem = airConditionerUiState.state.fanSpeed,
                             onItemSelected = airConditionerViewModel::setFanSpeed,
-                            title = "Velocidad Ventilador"
+                            title = R.string.fan_speed.toString()
                         )
                     }
                     Row(
@@ -217,10 +233,16 @@ fun AirConditionerScreen(
                             .fillMaxWidth()
                     ) {
                         OurDropdownMenu(
-                            items = listOf<String>("Automático","-90", "-45", "0", "45", "90"),
+                            items = listOf(
+                                DropdownClass("auto", R.string.auto.toString()),
+                                DropdownClass("-90", "-90"),
+                                DropdownClass("-45", "-45"),
+                                DropdownClass("0", "0"),
+                                DropdownClass("45", "45"),
+                                DropdownClass("90", "90"),),
                             selectedItem = airConditionerUiState.state.horizontalSwing,
                             onItemSelected = airConditionerViewModel::setHorizontalSwing,
-                            title = "Desplazamiento Horizontal"
+                            title = R.string.h_swing.toString()
                         )
                     }
                     // Trash Bin Image

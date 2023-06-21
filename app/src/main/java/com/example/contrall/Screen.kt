@@ -15,13 +15,13 @@ import androidx.compose.ui.res.painterResource
 
 sealed class Screen(val title: String, val iconResId: Int, val route: String) {
 
-    object HomeScreen : Screen("Inicio", R.drawable.home_icon, "home")
+    object HomeScreen : Screen(R.string.home_title.toString(), R.drawable.home_icon, "home")
 
-    object DevicesScreen : Screen("Dispositivos", R.drawable.devices_icon, "devices")
+    object DevicesScreen : Screen(R.string.devices_title.toString(), R.drawable.devices_icon, "devices")
 
-    object RoutinesScreen : Screen("Rutinas", R.drawable.routine_icon, "routines")
+    object RoutinesScreen : Screen(R.string.routine_title.toString(), R.drawable.routine_icon, "routines")
 
-    object DeviceScreen: Screen("Dispositivo", R.drawable.outline_speaker_24,"device")
+    object DeviceScreen: Screen(R.string.device_title.toString(), R.drawable.outline_speaker_24,"device")
 
 }
 
