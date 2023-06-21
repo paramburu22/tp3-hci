@@ -26,11 +26,6 @@ class LampViewModel(device : Device = Device()) : ViewModel() {
     private val _uiState = MutableStateFlow(LampUiState())
     val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
 
-    val switchState : Boolean = false
-
-    val selectedColor : Color = Color.White
-
-    var showDialog : Boolean = false
 
     private var fetchJob : Job? = null
 
@@ -90,10 +85,10 @@ class LampViewModel(device : Device = Device()) : ViewModel() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
-            apiService.executePS(_uiState.value.id!!,"setColor", listOf(color.toString())) }
+            apiService.executePS(_uiState.value.id!!,"setColor", listOf(colorToHex(color)) ) }
         _uiState.update { currentState ->
             currentState.copy(
-                state = currentState.state.copy(color = color.toString())
+                state = currentState.state.copy(color = colorToHex(color))
             )
         }
     }
@@ -106,9 +101,20 @@ class LampViewModel(device : Device = Device()) : ViewModel() {
         val blue = (colorValue and 0xFF) / 255f
         return Color(red, green, blue, alpha)
     }
+    fun colorToHex(color: Color): String {
+        val red = (color.red * 255).toInt()
+        val green = (color.green * 255).toInt()
+        val blue = (color.blue * 255).toInt()
+        return String.format("%02x%02x%02x", red, green, blue)
+    }
 
     fun changeDialog(value: Boolean){
-        showDialog = value
+        _uiState.update { currentState ->
+            currentState.copy(
+                state = currentState.state.copy(showDialog = value)
+            )
+        }
+        //showDialog = value
     }
 
 }

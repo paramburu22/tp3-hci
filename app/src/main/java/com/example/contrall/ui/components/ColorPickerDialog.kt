@@ -72,9 +72,12 @@ fun ColorPickerDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(16.dp).align(Alignment.CenterHorizontally)
                 ) {
                     // Red slider
+                    Text(
+                        text = "R: ${(red.value * 255).toInt()}"
+                    )
                     Slider(
                         value = red.value,
                         onValueChange = { value ->
@@ -92,9 +95,12 @@ fun ColorPickerDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(16.dp).align(Alignment.CenterHorizontally)
                 ) {
                     // Green slider
+                    Text(
+                        text = "G: ${(green.value * 255).toInt()}"
+                    )
                     Slider(
                         value = green.value,
                         onValueChange = { value ->
@@ -112,9 +118,12 @@ fun ColorPickerDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(16.dp).align(Alignment.CenterHorizontally)
                 ){
                     // Blue slider
+                    Text(
+                        text = "B: ${(blue.value * 255).toInt()}"
+                    )
                     Slider(
                         value = blue.value,
                         onValueChange = { value ->
@@ -148,6 +157,17 @@ fun ColorPickerDialog(
                         )
                     }
                     Column(modifier = Modifier.padding(6.dp).fillMaxWidth()) {
+                        val color = Color(red = red.value, green = green.value, blue = blue.value)
+                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                            Text(
+                                text = "Hexa: #${colorToHex(color)}"
+                            )
+                        }
+                        Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
+                            Text(
+                                text = "Rgb: #${colorToRgb(color)}"
+                            )
+                        }
                         Row(modifier = Modifier.padding(6.dp).fillMaxWidth()){
                             Button(
                                 onClick = onDismiss,
@@ -159,8 +179,6 @@ fun ColorPickerDialog(
                             // Confirm button
                             Button(
                                 onClick = {
-                                    val color =
-                                        Color(red = red.value, green = green.value, blue = blue.value)
                                     onColorSelected(color)
                                     onDismiss()
                                 },
@@ -174,4 +192,17 @@ fun ColorPickerDialog(
             }
         }
     }
+}
+fun colorToHex(color: Color): String {
+    val red = (color.red * 255).toInt()
+    val green = (color.green * 255).toInt()
+    val blue = (color.blue * 255).toInt()
+    return String.format("%02x%02x%02x", red, green, blue)
+}
+
+fun colorToRgb(color: Color): Triple<Int, Int, Int> {
+    val red = (color.red * 255).toInt()
+    val green = (color.green * 255).toInt()
+    val blue = (color.blue * 255).toInt()
+    return Triple(red, green, blue)
 }

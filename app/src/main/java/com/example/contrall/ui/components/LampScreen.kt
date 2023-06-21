@@ -88,92 +88,64 @@ fun LampScreen(
                         )
                     }
 
-                        Divider()
+                    Divider()
 
-                        Row(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Switch(
-                                checked = lampUiState.state.isOn,
-                                onCheckedChange =
-                                {lampViewModel.toggleSwitchState()}
-                                ,
-                                modifier = Modifier.padding(end = 8.dp),
-                                colors = SwitchDefaults.colors(
-                                    checkedThumbColor = PrimaryLight,
-                                    checkedTrackColor = PrimaryLight,
-                                    uncheckedThumbColor = Color.Gray,
-                                    uncheckedTrackColor = Color.Gray
-                                )
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Switch(
+                            checked = lampUiState.state.isOn,
+                            onCheckedChange =
+                            {lampViewModel.toggleSwitchState()}
+                            ,
+                            modifier = Modifier.padding(end = 8.dp),
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = PrimaryLight,
+                                checkedTrackColor = PrimaryLight,
+                                uncheckedThumbColor = Color.Gray,
+                                uncheckedTrackColor = Color.Gray
                             )
+                        )
+                        Text(
+                            text = if (lampUiState.state.isOn) "Prendido" else "Apagado",
+                            fontSize = 18.sp
+                        )
+                    }
+                    Divider()
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    ) {
+                        Column(){
+                            Box(
+                                modifier = Modifier.padding(8.dp)
+                                    .size(80.dp)
+                                    .fillMaxWidth()
+                                    .background(hexToColor(lampUiState.state.color!!))
+                                    .clickable { lampViewModel.changeDialog(true) }
+                            )
+                        }
+                        Column() {
                             Text(
-                                text = if (lampUiState.state.isOn) "Prendido" else "Apagado",
+                                text = "Valor Hexa: #${lampUiState.state.color}",
+                                fontSize = 18.sp
+                            )
+
+                            Text(
+                                text = "Valor RGB: ${lampUiState.state.color?.let { it1 ->
+                                    hexToRgb(
+                                        it1
+                                    )
+                                }} ",
                                 fontSize = 18.sp
                             )
                         }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(){
-                                Box(
-                                    modifier = Modifier.padding(8.dp)
-                                        .size(80.dp)
-                                        .fillMaxWidth()
-                                        .background(hexToColor(lampUiState.state.color!!))
-                                        .clickable { lampViewModel.changeDialog(true) }
-                                )
-                            }
-                            Column() {
-                                Text(
-                                    text = "Valor Hexa: ${colorToHex(lampViewModel.selectedColor)}",
-                                    fontSize = 18.sp
-                                )
-
-                                Text(
-                                    text = "Valor RGB: ${colorToRgb(lampViewModel.selectedColor)} ",
-                                    fontSize = 18.sp
-                                )
-                            }
-
-                        }
-
-                        Row(
-                            modifier = Modifier
-                                .padding( 8.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Intensidad: ${lampUiState.state.brightness!!.toInt()}%",
-                                fontSize = 18.sp,
-                                modifier = Modifier.padding(end = 10.dp)
-                            )
-                            Slider(
-                                value = lampUiState.state.brightness!!.toFloat(),
-                                onValueChange = { value ->
-                                    lampViewModel.setIntensityValue(value.toInt().toFloat())
-                                },
-                                valueRange = 0f..100f,
-                                steps = 1,
-                                colors = SliderDefaults.colors(
-                                    thumbColor = Color(android.graphics.Color.parseColor("#146C94")),
-                                    activeTrackColor = Color(android.graphics.Color.parseColor("#146C94")),
-                                    inactiveTrackColor = Color.LightGray
-                                ),
-                                modifier = Modifier.width(260.dp)
-                            )
-                        }
-
-                        Image(
-                            painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        if (lampViewModel.showDialog) {
+                    }
+                    Row( modifier = Modifier
+                        .padding( 8.dp)
+                        .fillMaxWidth()) {
+                        if (lampUiState.state.showDialog) {
                             ColorPickerDialog(
                                 initialColor = hexToColor(lampUiState.state.color!!),
                                 onColorSelected = { color ->
@@ -182,6 +154,40 @@ fun LampScreen(
                                 onDismiss = { lampViewModel.changeDialog(false) },
                             )
                         }
+                    }
+                    Divider()
+                        Row(
+                            modifier = Modifier
+                                .padding( 8.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Intensidad: ${lampUiState.state.brightness!!}%",
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(end = 10.dp)
+                            )
+                            Slider(
+                                value = lampUiState.state.brightness!!.toFloat(),
+                                onValueChange = { value ->
+                                    lampViewModel.setIntensityValue(value)
+                                },
+                                valueRange = 0f..100f,
+                                colors = SliderDefaults.colors(
+                                    thumbColor = Color(android.graphics.Color.parseColor("#146C94")),
+                                    activeTrackColor = Color(android.graphics.Color.parseColor("#146C94")),
+                                    inactiveTrackColor = Color.LightGray
+                                ),
+                                modifier = Modifier.width(260.dp)
+                            )
+                        }
+                        Divider()
+                        Image(
+                            painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        )
+
 
                 }
 
@@ -191,20 +197,7 @@ fun LampScreen(
     )
 
 }
-fun colorToHex(color: Color): String {
-    val alpha = (color.alpha * 255).toInt()
-    val red = (color.red * 255).toInt()
-    val green = (color.green * 255).toInt()
-    val blue = (color.blue * 255).toInt()
-    return String.format("#%02x%02x%02x%02x", alpha, red, green, blue)
-}
 
-fun colorToRgb(color: Color): Triple<Int, Int, Int> {
-    val red = (color.red * 255).toInt()
-    val green = (color.green * 255).toInt()
-    val blue = (color.blue * 255).toInt()
-    return Triple(red, green, blue)
-}
 
 fun hexToColor(hex : String) : Color {
     val red = Integer.parseInt(hex.substring(0, 2), 16)
@@ -212,4 +205,10 @@ fun hexToColor(hex : String) : Color {
     val blue = Integer.parseInt(hex.substring(4, 6), 16)
     // Create the Color object with the extracted color values
     return Color(red, green, blue)
+}
+fun hexToRgb(hexCode: String): String {
+    val r = hexCode.substring(0, 2).toInt(16)
+    val g = hexCode.substring(2, 4).toInt(16)
+    val b = hexCode.substring(4, 6).toInt(16)
+    return "($r, $g, $b)"
 }
