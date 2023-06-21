@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.contrall.util.SpeakerViewModel
 import androidx.compose.material3.Text
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -55,9 +56,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.SongInfo
@@ -68,7 +72,6 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.util.Timer
 import java.util.TimerTask
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
 fun SpeakerScreen(
     speakerViewModel: SpeakerViewModel,
@@ -81,7 +84,38 @@ fun SpeakerScreen(
 
     var showPlaylist by remember { mutableStateOf(false) }
 
+    val timer = Timer()
 
+    val task = object : TimerTask() {
+        override fun run() {
+            // Código que deseas ejecutar cada x segundos
+            speakerViewModel.updateState()
+            println("Ejecutando la función...")
+        }
+    }
+
+    val lifecycleObserver = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_START -> {
+                timer.scheduleAtFixedRate(task, 0L, 5000L)
+            }
+            Lifecycle.Event.ON_STOP -> {
+                task.cancel()
+            }
+            else -> Unit
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
+            timer.cancel()
+        }
+    }
 
 //    speakerViewModel.setSong()
     LaunchedEffect(Unit) {
