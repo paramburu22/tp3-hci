@@ -94,6 +94,7 @@ fun LampScreen(
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Switch(
                             checked = lampUiState.state.isOn,
@@ -112,10 +113,11 @@ fun LampScreen(
                             text = if (lampUiState.state.isOn) "Prendido" else "Apagado",
                             fontSize = 18.sp
                         )
-                    }
+                        }
                     Divider()
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(){
                             Box(
