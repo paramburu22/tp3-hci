@@ -54,8 +54,7 @@ fun DoorScreen(
                 )
                 Card(
                     //onClick = func,
-                    modifier = Modifier
-                        .padding(25.dp, 0.dp),
+                    modifier = Modifier.padding(16.dp),
                     border = BorderStroke(2.dp, Color.LightGray),
                     shape = RoundedCornerShape(15.dp),
                     //elevation = 2.dp

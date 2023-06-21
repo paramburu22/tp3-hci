@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,7 +55,7 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
             sharedDeviceModel.addDevice(device)
             recentsViewModel.addDevice(device)
             navController?.navigate(Screen.DeviceScreen.route)
-        },
+        }.fillMaxHeight(),
         border = BorderStroke(2.dp, Color.LightGray),
         shape = RoundedCornerShape(15.dp),
     ) {
@@ -71,11 +73,11 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
                     .padding(end = 12.dp)
                     .align(Alignment.CenterVertically)
             )
-            // Door Title
             device.name?.let {
                 Text(
                     text = it,
                     fontSize = 24.sp,
+                    maxLines = 3,
                 )
             }
         }

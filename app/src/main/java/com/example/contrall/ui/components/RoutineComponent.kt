@@ -74,35 +74,37 @@ fun RoutineComponent(routine : Routine, routinesViewModel: RoutinesViewModel) {
             for (action in myActions) {
                 Divider()
                 Row(
-                    modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .padding(top = 15.dp, bottom = 15.dp)
+                        .fillMaxWidth()
                 ) {
-                    Text(
-                        text = "${action.device?.name}",
-                        fontSize = 24.sp
-                    )
-                    Row() {
+                    Column {
+                        Text(
+                            text = "${action.device?.name}",
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            text = "${action.device?.room?.home?.name} - ${action.device?.room?.name}",
+                            fontSize = 16.sp,
+                            color = Color.Gray,
+                        )
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically){
                         Text(
                             text = "${action.actionName}",
-                            fontSize = 20.sp,
+                            fontSize = 16.sp,
                             color = Color.Gray
                         )
-                        if(action.params.size > 0) {
+                        if(action.params.isNotEmpty()) {
                             Text(
-                                text = " - ${action.params[0]}",
-                                fontSize = 20.sp,
+                                text = ": ${action.params[0]}",
+                                fontSize = 16.sp,
                                 color = Color.Gray
                             )
                         }
                     }
-                }
-                Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
-                    Text(
-                        text = "${action.device?.room?.home?.name} - ${action.device?.room?.name}",
-                        fontSize = 16.sp,
-                        color = Color.Gray,
-                    )
                 }
                 Divider()
             }

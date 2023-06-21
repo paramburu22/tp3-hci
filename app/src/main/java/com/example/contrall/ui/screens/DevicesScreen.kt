@@ -27,6 +27,7 @@ import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
+import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.DevicesViewModel
 import com.example.contrall.util.RecentsViewModel
@@ -94,6 +95,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                     }
                 }
             }
-        }
+        },
+        bottomBar = { BottomBar(navController = navController) }
     )
 }

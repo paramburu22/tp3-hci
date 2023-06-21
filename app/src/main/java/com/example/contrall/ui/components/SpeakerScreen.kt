@@ -116,13 +116,10 @@ fun SpeakerScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                androidx.compose.material3.Card(
-                    //onClick = func,
-                    modifier = Modifier
-                        .padding(25.dp, 0.dp),
+                Card (
+                    modifier = Modifier.padding(16.dp),
                     border = BorderStroke(2.dp, Color.LightGray),
                     shape = RoundedCornerShape(15.dp),
-                    //elevation = 2.dp
                 ) {
 
                     // Your UI content goes here
@@ -154,13 +151,11 @@ fun SpeakerScreen(
 
                         Divider(modifier = Modifier.fillMaxWidth())
 
-                        // Songs
                         Row(
                             modifier = Modifier
                                 .padding(top = 10.dp, start = 10.dp, end = 10.dp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
-//                            horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.baseline_library_music_24),
@@ -204,14 +199,12 @@ fun SpeakerScreen(
                                         Text(
                                             text = it1,
                                             fontSize = 18.sp,
-//                                    modifier = Modifier.padding(5.dp)
                                         )
                                     }
                                     speakerUiState.state.song!!.album?.let { it1 ->
                                         Text(
                                             text = "Del album ${it1}",
                                             fontSize = 16.sp,
-//                                    modifier = Modifier.padding(5.dp)
                                         )
                                     }
                                 }

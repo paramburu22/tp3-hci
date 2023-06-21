@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Scaffold
@@ -33,6 +34,7 @@ import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.data.network.models.Routine
 import com.example.contrall.data.network.models.RoutinesList
+import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.ui.components.RoutineComponent
 import com.example.contrall.ui.components.TopAppBar
@@ -42,7 +44,7 @@ import com.example.contrall.util.SharedDeviceModel
 
 //@Preview
 @Composable
-fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
+fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavController) {
     val painter = painterResource(R.drawable.background)
     val routinesUiState by routinesViewModel.uiState.collectAsState()
 
@@ -74,9 +76,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
                         modifier = Modifier.padding(top = 20.dp)
                     )
                 } else {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(1),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         contentPadding = PaddingValues(5.dp),
                         modifier = Modifier.padding(
@@ -97,6 +97,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel) {
                 }
 
             }
-        }
+        },
+        bottomBar = { BottomBar(navController = navController) }
     )
 }

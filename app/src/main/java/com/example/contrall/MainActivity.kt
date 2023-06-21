@@ -19,11 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ContrAllTheme {
                 val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = { BottomBar(navController = navController)}
-                ) {
-                    ContrAllNavGraph(navController = navController)
-                }
+                ContrAllNavGraph(navController = navController)
             }
         }
     }

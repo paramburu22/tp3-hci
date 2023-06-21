@@ -70,6 +70,7 @@ fun AirConditionerScreen(
                 Card(
                     border = BorderStroke(2.dp, Color.LightGray),
                     shape = RoundedCornerShape(15.dp),
+                    modifier = Modifier.padding(16.dp)
                 ) {
 
                     // Your UI content goes here

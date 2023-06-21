@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
+import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.RecentsViewModel
@@ -68,9 +70,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                     } else {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(1),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             contentPadding = PaddingValues(5.dp),
                             modifier = Modifier
@@ -94,6 +94,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                     }
                 }
             }
-        }
+        },
+        bottomBar = { BottomBar(navController = navController) }
     )
 }

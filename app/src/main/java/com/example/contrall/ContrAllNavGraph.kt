@@ -41,7 +41,7 @@ fun ContrAllNavGraph(navController: NavHostController) {
             DevicesScreen(devicesModel, navController, sharedDeviceModel, recentsModel)
         }
         composable(Screen.RoutinesScreen.route) {
-            RoutinesScreen(routinesModel)
+            RoutinesScreen(routinesModel, navController)
         }
         composable(Screen.DeviceScreen.route) {
             when(sharedDeviceModel.device?.type?.name) {
