@@ -41,6 +41,7 @@ private val LightColorScheme = lightColors(
 
 @Composable
 fun ContrAllTheme(
+    windowSizeClass: WindowSizeClass,
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
@@ -50,6 +51,22 @@ fun ContrAllTheme(
     } else {
         LightColorScheme
     }
+    val orientation = when {
+        windowSizeClass.width.size > windowSizeClass.height.size -> Orientation.Landscape
+        else -> Orientation.Portrait
+    }
+
+    val sizeThatMatters = when (orientation) {
+        Orientation.Portrait -> windowSizeClass.width
+        else -> windowSizeClass.height
+    }
+
+    val dimensions = when (sizeThatMatters) {
+        is WindowSize.Small -> smallDimensions
+        is WindowSize.Compact -> compactDimensions
+        is WindowSize.Medium -> mediumDimensions
+        else -> largeDimensions
+    }
 
     MaterialTheme(
         colors = LightColorScheme,
@@ -58,3 +75,12 @@ fun ContrAllTheme(
         content = content
     )
 }
+    object AppTheme{
+        val dimens: Dimensions
+            @Composable
+            get() = LocalAppDimens.current
+
+        val orientation: Orientation
+            @Composable
+            get() = LocalOrientationMode.current
+    }

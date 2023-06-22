@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.*
 import androidx.navigation.compose.rememberNavController
-import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.theme.ContrAllTheme
+import com.example.contrall.ui.theme.rememberWindowSizeClass
 
 
 class MainActivity : ComponentActivity() {
@@ -16,8 +15,10 @@ class MainActivity : ComponentActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            ContrAllTheme {
+            val window = rememberWindowSizeClass()
+            ContrAllTheme(window) {
                 setupScreens()
                 val navController = rememberNavController()
                 ContrAllNavGraph(navController = navController)
