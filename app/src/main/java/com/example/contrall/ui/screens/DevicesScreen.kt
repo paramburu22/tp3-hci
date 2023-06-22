@@ -69,7 +69,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
         },
         content = {
             BoxWithConstraints() {
-                if(maxWidth < 400.dp){
+                if(maxWidth < 520.dp){
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -90,7 +90,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                             )
                         } else {
                             LazyVerticalGrid(
-                                columns = GridCells.Fixed(2),
+                                columns = GridCells.Adaptive(150.dp),
                                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                                 verticalArrangement = Arrangement.spacedBy(16.dp),
                                 contentPadding = PaddingValues(5.dp),
@@ -140,7 +140,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                             )
                         } else {
                             LazyVerticalGrid(
-                                columns = GridCells.Fixed(3),
+                                columns = GridCells.Adaptive(250.dp),
                                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                                 verticalArrangement = Arrangement.spacedBy(16.dp),
                                 contentPadding = PaddingValues(5.dp),
