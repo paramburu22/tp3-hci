@@ -10,6 +10,7 @@ import com.example.contrall.data.SpeakerUiState
 import com.example.contrall.data.network.RetrofitClient
 import com.example.contrall.data.network.models.Device
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +21,9 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
     // Speaker UI state
     private val _uiState = MutableStateFlow(SpeakerUiState())
     val uiState: StateFlow<SpeakerUiState> = _uiState.asStateFlow()
+
+    private val _playlistState = MutableStateFlow<List<SongInfo>?>(null)
+    val playlistState: StateFlow<List<SongInfo>?> = _playlistState
 
     var showPlaylist : Boolean = false
 
@@ -42,6 +46,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 song = device.state?.song,
             )
         )
+
     }
 
     fun updateState() {
@@ -150,11 +155,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
             apiService.execute(_uiState.value.id!!,"nextSong") }
-//        _uiState.update { currentState ->
-//            currentState.copy(
-//                state = currentState.state.copy(song = )
-//            )
-//        }
+
     }
     fun previousSong() {
         if(_uiState.value.state.status == "paused" || _uiState.value.state.status == "stopped") {
@@ -164,12 +165,6 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
             apiService.execute(_uiState.value.id!!,"previousSong") }
-//        _uiState.update { currentState ->
-//            currentState.copy(
-//                state = currentState.state.copy(song = )
-//            )
-//        }
-
     }
 
     fun getPlaylist() {
@@ -186,6 +181,9 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                         isLoading = false
                     )
                 }
+                _playlistState.update {
+                    response.body()?.result
+                }// Actualizar el valor de playlistState
             }.onFailure { e ->
                 _uiState.update {
                     it.copy(

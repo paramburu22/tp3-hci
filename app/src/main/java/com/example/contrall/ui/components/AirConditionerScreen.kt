@@ -46,6 +46,37 @@ fun AirConditionerScreen(
     val airConditionerUiState by airConditionerViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background);
 
+    val modeMap : Map<String, String> = mapOf(
+        "cool" to stringResource(R.string.cool),
+        "heat" to stringResource(R.string.heat),
+        "fan" to stringResource(R.string.fan)
+    )
+
+    val horSwingMap : Map<String, String> = mapOf(
+        "auto" to stringResource(R.string.auto),
+        "22" to "22",
+        "45" to "45",
+        "67" to "67",
+        "90" to "90"
+    )
+
+    val fanSpeedMap : Map<String, String> = mapOf(
+        "auto" to stringResource(R.string.auto),
+        "25" to "25%",
+        "50" to "50%",
+        "75" to "75%",
+        "100" to "100%"
+    )
+
+    val verSwingMap : Map<String, String> = mapOf(
+        "auto" to stringResource(R.string.auto),
+        "-90" to "-90",
+        "-45" to "-45",
+        "0" to "0",
+        "45" to "45",
+        "90" to "90"
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(navController)
@@ -135,11 +166,7 @@ fun AirConditionerScreen(
 
                             ) {
                                 OurDropdownMenu(
-                                    items =  listOf(
-                                        DropdownClass("cool", stringResource(R.string.cool)),
-                                        DropdownClass("heat", stringResource(R.string.heat)),
-                                        DropdownClass("fan", stringResource(R.string.fan))
-                                    ),
+                                    items =  modeMap,
                                     selectedItem = airConditionerUiState.state.mode,
                                     onItemSelected = airConditionerViewModel::setMode,
                                     title = stringResource(R.string.mode)
@@ -196,12 +223,7 @@ fun AirConditionerScreen(
                             ) {
                                 OurDropdownMenu(
                                     //items = airConditionerUiState.fanSpeeds,
-                                    items = listOf(
-                                        DropdownClass("auto", stringResource(R.string.auto)),
-                                        DropdownClass("22", "22"),
-                                        DropdownClass("45", "45"),
-                                        DropdownClass("67", "67"),
-                                        DropdownClass("90", "90"),),
+                                    items = horSwingMap,
                                     selectedItem = airConditionerUiState.state.verticalSwing,
                                     onItemSelected = airConditionerViewModel::setVerticalSwing,
                                     title = stringResource(R.string.v_swing)
@@ -215,12 +237,7 @@ fun AirConditionerScreen(
                                 OurDropdownMenu(
                                     //items = airConditionerUiState.fanSpeeds,
 
-                                    items = listOf(
-                                        DropdownClass("auto", stringResource(R.string.auto)),
-                                        DropdownClass("25", "25%"),
-                                        DropdownClass("50", "50%"),
-                                        DropdownClass("75", "75%"),
-                                        DropdownClass("100", "100%"),),
+                                    items = fanSpeedMap,
                                     selectedItem = airConditionerUiState.state.fanSpeed,
                                     onItemSelected = airConditionerViewModel::setFanSpeed,
                                     title = stringResource(R.string.fan_speed)
@@ -232,13 +249,7 @@ fun AirConditionerScreen(
                                     .fillMaxWidth()
                             ) {
                                 OurDropdownMenu(
-                                    items = listOf(
-                                        DropdownClass("auto", stringResource(R.string.auto)),
-                                        DropdownClass("-90", "-90"),
-                                        DropdownClass("-45", "-45"),
-                                        DropdownClass("0", "0"),
-                                        DropdownClass("45", "45"),
-                                        DropdownClass("90", "90"),),
+                                    items = horSwingMap,
                                     selectedItem = airConditionerUiState.state.horizontalSwing,
                                     onItemSelected = airConditionerViewModel::setHorizontalSwing,
                                     title = stringResource(R.string.h_swing)

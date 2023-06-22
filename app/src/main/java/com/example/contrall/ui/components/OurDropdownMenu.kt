@@ -34,7 +34,7 @@ import com.example.contrall.data.DropdownClass
 
 @Composable
 fun OurDropdownMenu(
-    items: List<DropdownClass>,
+    items: Map<String, String>,
     selectedItem: String,
     onItemSelected: (String) -> Unit,
     title: String
@@ -80,11 +80,11 @@ fun OurDropdownMenu(
         items.forEach { item ->
             DropdownMenuItem(
                 onClick = {
-                    onItemSelected(item.value)
+                    onItemSelected(item.key)
                     expanded = false
                 }
             ) {
-                Text(text = item.name)
+                Text(text = item.value)
             }
         }
     }

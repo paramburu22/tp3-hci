@@ -28,10 +28,12 @@ import androidx.compose.material.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,10 +46,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.contrall.R
 import com.example.contrall.data.DropdownClass
+import com.example.contrall.data.SongInfo
 import com.example.contrall.util.SpeakerViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
 
@@ -56,23 +63,37 @@ fun SpeakerScreen(
     speakerViewModel: SpeakerViewModel,
     navController: NavController
 ) {
-    val speakerUiState by speakerViewModel.uiState.collectAsState()
+    var speakerUiState by remember { mutableStateOf(speakerViewModel.uiState.value) }
+    val playlistState by speakerViewModel.playlistState.collectAsState()
     val painter = painterResource(R.drawable.background)
+
+    val genresMap : Map<String, String> = mapOf(
+        "classical" to stringResource(R.string.classical),
+        "country" to stringResource(R.string.country),
+        "dance" to stringResource(R.string.dance),
+        "latina" to stringResource(R.string.latina),
+        "pop" to stringResource(R.string.pop),
+        "rock" to stringResource(R.string.rock),
+
+    )
 
     var showPlaylist by remember { mutableStateOf(false) }
 
     val timer = Timer()
 
+
     val task = object : TimerTask() {
         override fun run() {
             speakerViewModel.updateState()
+            speakerUiState = speakerViewModel.uiState.value
         }
     }
 
     val lifecycleObserver = LifecycleEventObserver { _, event ->
         when (event) {
             Lifecycle.Event.ON_START -> {
-                timer.scheduleAtFixedRate(task, 0L, 5000L)
+                timer.scheduleAtFixedRate(task, 0L, 1000L)
+                speakerViewModel.getPlaylist()
             }
             Lifecycle.Event.ON_STOP -> {
                 task.cancel()
@@ -91,6 +112,7 @@ fun SpeakerScreen(
             timer.cancel()
         }
     }
+
 
 
     Scaffold(
@@ -176,7 +198,7 @@ fun SpeakerScreen(
                                         ) {
                                             Row(modifier = Modifier.fillMaxWidth()) {
                                                 BoxWithConstraints(modifier = Modifier.weight(0.8f)) {
-                                                    speakerUiState.state.song!!.title?.let { it1 ->
+                                                    speakerUiState.state.song?.title!!.let { it1 ->
                                                         Text(
                                                             text = it1,
                                                             fontSize = 22.sp,
@@ -281,7 +303,12 @@ fun SpeakerScreen(
                                 }
                                 Row(
                                     modifier = Modifier
-                                        .padding(bottom = 10.dp, start = 10.dp, end = 10.dp, top = 5.dp)
+                                        .padding(
+                                            bottom = 10.dp,
+                                            start = 10.dp,
+                                            end = 10.dp,
+                                            top = 5.dp
+                                        )
                                         .fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -305,7 +332,7 @@ fun SpeakerScreen(
                                         ),
                                         modifier = Modifier
                                             .padding(start = 10.dp, end = 10.dp)
-                                            .width(260.dp)
+                                            .width(230.dp)
                                     )
                                     IconButton(
                                         onClick = { speakerViewModel.setVolume(speakerUiState.state.volume!!.toFloat() + 1) },
@@ -325,19 +352,13 @@ fun SpeakerScreen(
                                         .fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    speakerUiState.state.genre?.let { it1 ->
-                                        OurDropdownMenu(items = listOf(
-                                            DropdownClass("classical", stringResource(R.string.classical)),
-                                            DropdownClass("country", stringResource(R.string.country)),
-                                            DropdownClass("dance", stringResource(R.string.dance)),
-                                            DropdownClass("latina", stringResource(R.string.latina)),
-                                            DropdownClass("pop", stringResource(R.string.pop)),
-                                            DropdownClass("rock", stringResource(R.string.rock))
-                                        ),
+                                    genresMap.get(speakerUiState.state.genre)?.let { it1 ->
+                                        OurDropdownMenu(items = genresMap,
                                             selectedItem = it1,
                                             onItemSelected = speakerViewModel::changeGenre,
                                             title = stringResource(R.string.sel_genre))
                                     }
+
                                 }
                                 Row(
                                     modifier = Modifier
@@ -348,9 +369,10 @@ fun SpeakerScreen(
                                     TextButton(
                                         onClick = { showPlaylist = true },
                                         modifier = Modifier.fillMaxWidth(),
-                                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
                                     ) {
-                                        Text(text = stringResource(R.string.playlist))
+                                        Text(text = stringResource(R.string.playlist),
+                                        fontSize = 18.sp)
                                     }
                                 }
 
@@ -370,20 +392,15 @@ fun SpeakerScreen(
 
         if (showPlaylist) {
             speakerViewModel.getPlaylist()
-            speakerUiState.playlist?.let {
-                PlaylistDialog(
-                    open = showPlaylist,
-                    onClose = { showPlaylist = false },
-                    genre = when (speakerUiState.state.genre) {
-                        "classical" -> stringResource(R.string.classical)
-                        "country" -> stringResource(R.string.country)
-                        "dance" -> stringResource(R.string.dance)
-                        "latina" -> stringResource(R.string.latina)
-                        "pop" -> stringResource(R.string.pop)
-                        else -> {stringResource(R.string.rock)}
-                    },
-                    playlist = it
-                )
+            playlistState?.let {
+                genresMap.get(speakerUiState.state.genre)?.let { it1 ->
+                    PlaylistDialog(
+                        open = showPlaylist,
+                        onClose = { showPlaylist = false },
+                        genre = it1,
+                        playlist = it
+                    )
+                }
             }
         }
 }

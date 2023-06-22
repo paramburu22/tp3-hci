@@ -52,6 +52,23 @@ fun OvenScreen(
     val ovenUiState by ovenViewModel.uiState.collectAsState()
     val painter = painterResource(R.drawable.background)
 
+    val heatModeMap : Map<String, String> = mapOf(
+        "conventional" to stringResource(R.string.conv),
+        "top" to stringResource(R.string.top),
+        "bottom" to stringResource(R.string.bottom)
+    )
+
+    val grillModeMap : Map<String, String> = mapOf(
+        "large" to stringResource(R.string.mode_large),
+        "eco" to stringResource(R.string.mode_eco),
+        "off" to stringResource(R.string.off)
+    )
+
+    val convModeMap : Map<String, String> = mapOf(
+        "normal" to stringResource(R.string.mode_normal),
+        "eco" to stringResource(R.string.mode_eco),
+        "off" to stringResource(R.string.off)
+    )
     Scaffold(
         topBar = {
             TopAppBar(navController)
@@ -140,16 +157,14 @@ fun OvenScreen(
                                         .padding(10.dp)
                                         .fillMaxWidth()
                                 ) {
-                                    OurDropdownMenu(
-                                        items = listOf(
-                                            DropdownClass("conventional", stringResource(R.string.conv)),
-                                            DropdownClass("top", stringResource(R.string.top)),
-                                            DropdownClass("bottom", stringResource(R.string.bottom))
-                                        ),
-                                        selectedItem = ovenUiState.state.heat,
-                                        onItemSelected = ovenViewModel::setHeatMode,
-                                        title = stringResource(R.string.heat_source)
-                                    )
+                                    heatModeMap.get(ovenUiState.state.heat)?.let { it1 ->
+                                        OurDropdownMenu(
+                                            items = heatModeMap,
+                                            selectedItem = it1,
+                                            onItemSelected = ovenViewModel::setHeatMode,
+                                            title = stringResource(R.string.heat_source)
+                                        )
+                                    }
                                 }
 
                                 Text(
@@ -206,11 +221,7 @@ fun OvenScreen(
                                         .fillMaxWidth()
                                 ) {
                                     OurDropdownMenu(
-                                        items = listOf(
-                                            DropdownClass("large", stringResource(R.string.mode_large)),
-                                            DropdownClass("eco", stringResource(R.string.mode_eco)),
-                                            DropdownClass("off", stringResource(R.string.off))
-                                        ),
+                                        items = grillModeMap,
                                         selectedItem = ovenUiState.state.grill,
                                         onItemSelected = ovenViewModel::setGrillMode,
                                         title = stringResource(R.string.grill_mode)
@@ -222,10 +233,7 @@ fun OvenScreen(
                                         .fillMaxWidth()
                                 ) {
                                     OurDropdownMenu(
-                                        items = listOf(
-                                            DropdownClass("normal", stringResource(R.string.mode_normal)),
-                                            DropdownClass("eco", stringResource(R.string.mode_eco)),
-                                            DropdownClass("off", stringResource(R.string.off))),
+                                        items = convModeMap,
                                         selectedItem = ovenUiState.state.convection,
                                         onItemSelected = ovenViewModel::setConvMode,
                                         title = stringResource(R.string.convection_mode)
