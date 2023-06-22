@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">ContrAll</string>
     <string name="speaker_name">Parlante</string>
+    <string name="ac_name">Aire Acondicionado</string>
+    <string name="lamp_name">Lámpara</string>
+    <string name="oven_name">Horno</string>
+    <string name="door_name">Puerta</string>
+    <string name="filter">Filtre por Dispositivo</string>
     <string name="home_title">Inicio</string>
     <string name="recent_title">Dispositivos Recientes</string>
     <string name="no_recent">No hay dispositivos utilizados recientemente</string>

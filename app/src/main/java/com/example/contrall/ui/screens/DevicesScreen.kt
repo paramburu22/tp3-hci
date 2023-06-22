@@ -28,10 +28,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.example.contrall.R
+import com.example.contrall.data.DropdownClass
 import com.example.contrall.data.network.models.Device
 import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
+import com.example.contrall.ui.components.OurDropdownMenu
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.DevicesViewModel
 import com.example.contrall.util.RecentsViewModel
@@ -41,7 +43,7 @@ import com.example.contrall.util.SharedDeviceModel
 
 fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel, recentsModel: RecentsViewModel) {
     val painter = painterResource(R.drawable.background)
-    val deviceUiState by devicesViewModel.uiState.collectAsState()
+    val devicesUiState by devicesViewModel.uiState.collectAsState()
 
     val lifecycleObserver = LifecycleEventObserver { _, event ->
         when (event) {
@@ -69,6 +71,18 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
         },
         content = {
             BoxWithConstraints() {
+                /*OurDropdownMenu(items = listOf(
+                    DropdownClass("ac", stringResource(R.string.ac_name)),
+                    DropdownClass("oven", stringResource(R.string.oven_name)),
+                    DropdownClass("lamp", stringResource(R.string.lamp_name)),
+                    DropdownClass("speaker", stringResource(R.string.speaker_name)),
+                    DropdownClass("door", stringResource(R.string.door_name)),
+                    ),
+                    selectedItem = devicesUiState.filter,
+                    onItemSelected = devicesViewModel::setFilter,
+                    title = stringResource(R.string.filter)
+                )*/
+
                 if(maxWidth < 520.dp){
                     Box(
                         modifier = Modifier
@@ -81,7 +95,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize(),
                         )
-                        if(deviceUiState.devices?.devices?.isEmpty() == true) {
+                        if(devicesUiState.devices?.devices?.isEmpty() == true) {
                             Text(
                                 text = stringResource(R.string.no_devices),
                                 textAlign = TextAlign.Center,
@@ -103,7 +117,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                     )
                                     .heightIn(min = 200.dp)
                             ) {
-                                val myDevices: DevicesList? = deviceUiState.devices
+                                val myDevices: DevicesList? = devicesUiState.devices
                                 if (myDevices != null) {
                                     items(myDevices.devices.size) { index ->
                                         val device: Device = myDevices.devices[index]
@@ -131,7 +145,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize(),
                         )
-                        if(deviceUiState.devices?.devices?.isEmpty() == true) {
+                        if(devicesUiState.devices?.devices?.isEmpty() == true) {
                             Text(
                                 text = stringResource(R.string.no_devices),
                                 textAlign = TextAlign.Center,
@@ -153,7 +167,7 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                     )
                                     .heightIn(min = 200.dp)
                             ) {
-                                val myDevices: DevicesList? = deviceUiState.devices
+                                val myDevices: DevicesList? = devicesUiState.devices
                                 if (myDevices != null) {
                                     items(myDevices.devices.size) { index ->
                                         val device: Device = myDevices.devices[index]
