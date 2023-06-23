@@ -70,4 +70,6 @@
     <string name="unlock_routine">Unlock</string>
     <string name="turn_on">Turn On</string>
     <string name="turn_off">Turn Off</string>
+    <string name="notifications_title">A device has been updated</string>
+    <string name="notifications_message">Click here to check the current state</string>
 </resources>

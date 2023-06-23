@@ -223,11 +223,11 @@ fun AirConditionerScreen(
                                     .padding(10.dp)
                                     .fillMaxWidth()
                             ) {
-                                horSwingMap.get(airConditionerUiState.state.horizontalSwing)?.let { it1 ->
+                                verSwingMap[airConditionerUiState.state.verticalSwing]?.let { it1 ->
                                     OurDropdownMenu(
-                                        items = horSwingMap,
+                                        items = verSwingMap,
                                         selectedItem = it1,
-                                        onItemSelected = airConditionerViewModel::setHorizontalSwing,
+                                        onItemSelected = airConditionerViewModel::setVerticalSwing,
                                         title = stringResource(R.string.v_swing)
                                     )
                                 }
@@ -237,11 +237,11 @@ fun AirConditionerScreen(
                                     .padding(10.dp)
                                     .fillMaxWidth()
                             ) {
-                                verSwingMap.get(airConditionerUiState.state.verticalSwing)?.let { it1 ->
+                                horSwingMap[airConditionerUiState.state.horizontalSwing]?.let { it1 ->
                                     OurDropdownMenu(
-                                        items = verSwingMap,
+                                        items = horSwingMap,
                                         selectedItem = it1,
-                                        onItemSelected = airConditionerViewModel::setVerticalSwing,
+                                        onItemSelected = airConditionerViewModel::setHorizontalSwing,
                                         title = stringResource(R.string.h_swing)
                                     )
                                 }

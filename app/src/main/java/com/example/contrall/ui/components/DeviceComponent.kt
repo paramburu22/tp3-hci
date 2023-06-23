@@ -22,11 +22,11 @@ import com.example.contrall.R
 import com.example.contrall.Screen
 import com.example.contrall.data.network.models.Device
 import com.example.contrall.util.RecentsViewModel
-import com.example.contrall.util.SharedDeviceModel
+import com.example.contrall.util.SharedDeviceViewModel
 
 @Composable
 
-fun DeviceComponent(device : Device, navController: NavController, sharedDeviceModel: SharedDeviceModel, recentsViewModel: RecentsViewModel) {
+fun DeviceComponent(device : Device, navController: NavController, sharedDeviceViewModel: SharedDeviceViewModel, recentsViewModel: RecentsViewModel) {
     lateinit var icon : Painter
     when(device.type?.name) {
         "lamp" -> icon = painterResource(id = R.drawable.ic_baseline_lightbulb_24)
@@ -41,9 +41,9 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
             Card(
                 modifier = Modifier
                     .clickable {
-                        sharedDeviceModel.addDevice(device)
+                        sharedDeviceViewModel.addDevice(device)
                         recentsViewModel.addDevice(device)
-                        navController?.navigate(Screen.DeviceScreen.route)
+                        navController.navigate(Screen.DeviceScreen.route)
                     }
                     .fillMaxHeight(),
             ) {
@@ -85,9 +85,9 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
             Card(
                 modifier = Modifier
                     .clickable {
-                        sharedDeviceModel.addDevice(device)
+                        sharedDeviceViewModel.addDevice(device)
                         recentsViewModel.addDevice(device)
-                        navController?.navigate(Screen.DeviceScreen.route)
+                        navController.navigate(Screen.DeviceScreen.route)
                     }
                     .fillMaxHeight(),
             ) {

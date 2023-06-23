@@ -3,13 +3,16 @@ package com.example.contrall.util
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.contrall.MainActivity
 import com.example.contrall.R
 import com.example.contrall.data.AirConditionerState
 import com.example.contrall.data.AirConditionerType
 import com.example.contrall.data.AirConditionerUiState
 import com.example.contrall.data.network.RetrofitClient
 import com.example.contrall.data.network.models.Device
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,9 +20,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class AirConditionerViewModel( device : Device) : ViewModel() {
+class AirConditionerViewModel( device : Device, devicesViewModel: DevicesViewModel) : ViewModel() {
     // AirCond UI state
     private val _uiState = MutableStateFlow(AirConditionerUiState())
+    var deviceModel =  devicesViewModel
     val uiState: StateFlow<AirConditionerUiState> = _uiState.asStateFlow()
 
     private var fetchJob : Job? = null
@@ -35,10 +39,16 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
             ),
             state = AirConditionerState(
                 status = device.state?.status ?: "off",
+                isOn = if(device.state?.status != null) {
+                    device.state?.status == "on"
+                } else {
+                       false
+                },
                 temperature = device.state?.temperature ?: "24",
                 mode = device.state?.mode ?: "ventilacion",
                 fanSpeed = device.state?.fanSpeed ?: "medium",
                 horizontalSwing = device.state?.horizontalSwing ?: "0",
+                verticalSwing = device.state?.verticalSwing ?: "0",
             ) ,
             img = R.drawable.ic_baseline_ac_unit_24  ,
             isLoading = false
@@ -65,6 +75,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
     fun turnOff(){
         fetchJob?.cancel()
@@ -79,6 +90,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
 
     fun setTemperature(value: Int){
@@ -94,6 +106,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
     @SuppressLint("SuspiciousIndentation")
     fun increaseTemperature() {
@@ -121,6 +134,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
 
     fun setVerticalSwing(mode: String){
@@ -136,6 +150,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
 
     fun setHorizontalSwing(mode: String){
@@ -151,6 +166,7 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
+        skipNoti()
     }
 
     fun setFanSpeed(speed: String) {
@@ -166,53 +182,12 @@ class AirConditionerViewModel( device : Device) : ViewModel() {
                 )
             }
         }
-    }
-    /*
-
-    val switchState: Boolean
-        get() = _uiState.value.state.status
-
-    val temperature: Int
-        get() = _uiState.value.temperature
-
-    val fanSpeed: String
-        get() = _uiState.value.selectedFanSpeed
-
-    val horizontalSwing: String
-        get() = _uiState.value.selectedHorizontalSwing
-
-    val modes: List<String>
-        get() = _uiState.value.modes
-
-    val selectedMode: String
-        get() = _uiState.value.selectedMode
-
-    val fanSpeeds: List<String>
-        get() = _uiState.value.fanSpeeds
-
-    val selectedFanSpeed: String
-        get() = _uiState.value.selectedFanSpeed
-
-    val horizontalSwings: List<String>
-        get() = _uiState.value.horizontalSwings
-
-    val selectedHorizontalSwing: String
-        get() = _uiState.value.selectedHorizontalSwing
-
-    fun toggleSwitchState(newState: Boolean) {
-        _uiState.update { currentState -> currentState.copy(
-            switchState = newState
-        ) }
+        skipNoti()
     }
 
 
-
-
-
-    fun setHorizontalSwing(swing: String) {
-        _uiState.update { currentState -> currentState.copy(
-            selectedHorizontalSwing = swing
-        ) }
+    fun skipNoti(){
+        _uiState.value.id?.let { deviceModel.notifGenerate(it) }
     }
-    */
+
 }

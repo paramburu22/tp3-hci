@@ -17,10 +17,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SpeakerViewModel(device : Device = Device()) : ViewModel() {
+class SpeakerViewModel(device : Device = Device(), devicesViewModel: DevicesViewModel) : ViewModel() {
     // Speaker UI state
     private val _uiState = MutableStateFlow(SpeakerUiState())
     val uiState: StateFlow<SpeakerUiState> = _uiState.asStateFlow()
+
+    var deviceModel =  devicesViewModel
 
     private val _playlistState = MutableStateFlow<List<SongInfo>?>(null)
     val playlistState: StateFlow<List<SongInfo>?> = _playlistState
@@ -46,7 +48,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 song = device.state?.song,
             )
         )
-
+        skipNoti()
     }
 
     fun updateState() {
@@ -73,6 +75,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 ) }
             }
         }
+        skipNoti()
 
     }
 
@@ -85,6 +88,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 currentState.copy(
                 state = currentState.state.copy(volume = value.toInt())
         ) }
+        skipNoti()
     }
 
 
@@ -99,6 +103,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 state = currentState.state.copy(genre = newGenre)
             )
         }
+        skipNoti()
     }
 
 
@@ -111,6 +116,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
             currentState.copy(
                 state = currentState.state.copy(status = "playing")
             ) }
+        skipNoti()
     }
 
     fun pause() {
@@ -122,6 +128,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
             currentState.copy(
                 state = currentState.state.copy(status = "paused")
             ) }
+        skipNoti()
     }
 
     fun resume() {
@@ -133,6 +140,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
             currentState.copy(
                 state = currentState.state.copy(status = "playing")
             ) }
+        skipNoti()
     }
 
 
@@ -145,6 +153,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
             currentState.copy(
                 state = currentState.state.copy(status = "stopped")
             ) }
+        skipNoti()
     }
 
     fun nextSong() {
@@ -155,7 +164,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
             apiService.execute(_uiState.value.id!!,"nextSong") }
-
+        skipNoti()
     }
     fun previousSong() {
         if(_uiState.value.state.status == "paused" || _uiState.value.state.status == "stopped") {
@@ -165,6 +174,7 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
         fetchJob = viewModelScope.launch {
             val apiService = RetrofitClient.getApiService()
             apiService.execute(_uiState.value.id!!,"previousSong") }
+        skipNoti()
     }
 
     fun getPlaylist() {
@@ -193,6 +203,10 @@ class SpeakerViewModel(device : Device = Device()) : ViewModel() {
                 }
             }
         }
+        skipNoti()
+    }
+    fun skipNoti(){
+        _uiState.value.id?.let { deviceModel.notifGenerate(it) }
     }
 }
 

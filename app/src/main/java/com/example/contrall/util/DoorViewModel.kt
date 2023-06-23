@@ -15,12 +15,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DoorViewModel(device : Device)  : ViewModel() {
+class DoorViewModel(device : Device, devicesViewModel: DevicesViewModel)  : ViewModel() {
 
 
     private val _uiState = MutableStateFlow(DoorUIState())
     val uiState: StateFlow<DoorUIState> = _uiState.asStateFlow()
     private var fetchJob: Job? = null
+
+    var deviceModel =  devicesViewModel
 
     init {
         _uiState.value = DoorUIState(
@@ -33,7 +35,17 @@ class DoorViewModel(device : Device)  : ViewModel() {
             ),
             state = DoorState(
                 status = device.state?.status ?: "closed",
-                lock = device.state?.lock ?: "unlocked"
+                lock = device.state?.lock ?: "unlocked",
+                isLocked =  if(device.state?.lock != null) {
+                    device.state?.lock == "locked"
+                } else {
+                    false
+                },
+                isOpen =  if(device.state?.status != null) {
+                    device.state?.status == "opened"
+                } else {
+                    false
+                },
             ),
             img = R.drawable.outline_sensor_door_24,
             isLoading = false
@@ -41,6 +53,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
     }
 
     fun switchState() {
+
         if(_uiState.value.state.isLocked)
             return
         if (_uiState.value.state.isOpen) {
@@ -48,6 +61,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
         } else {
             openDoor()
         }
+        skipNoti()
     }
 
     fun openDoor() {
@@ -85,6 +99,7 @@ class DoorViewModel(device : Device)  : ViewModel() {
         if(_uiState.value.state.isLocked)
             unlockDoor()
         else lockDoor()
+        skipNoti()
     }
     fun lockDoor() {
         fetchJob?.cancel()
@@ -92,9 +107,12 @@ class DoorViewModel(device : Device)  : ViewModel() {
             _uiState.update { it.copy(isLoading = true) }
             val apiService = RetrofitClient.getApiService()
             apiService.execute(_uiState.value.id!!, "lock")
+            if(_uiState.value.state.status == "opened") {
+                closeDoor()
+            }
             _uiState.update { currentState ->
                 currentState.copy(
-                    state = currentState.state.copy(status = "closed", lock = "locked", isLocked = true , isOpen = false),
+                    state = currentState.state.copy(lock = "locked", isLocked = true),
                     isLoading = false
                 )
             }
@@ -114,6 +132,10 @@ class DoorViewModel(device : Device)  : ViewModel() {
                 )
             }
         }
+    }
+
+    fun skipNoti(){
+        _uiState.value.id?.let { deviceModel.notifGenerate(it) }
     }
 
 }

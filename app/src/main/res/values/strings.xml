@@ -58,7 +58,6 @@
     <string name="hex">Hexa</string>
     <string name="rgb">RGB</string>
     <string name="cancel">Cancelar</string>
-    <string name="done">Listo</string>
     <string name="default_filter">Todos</string>
     <string name="play">Reproducir</string>
     <string name="stop">Detener</string>
@@ -77,4 +76,9 @@
     <string name="unlock_routine">Desbloquear</string>
     <string name="turn_on">Prender</string>
     <string name="turn_off">Apagar</string>
+    <string name="channel_name" translatable="false">Notificaciones del dispositivo</string>
+    <string name="channel_description" translatable="false">Device notifications</string>
+    <string name="notifications_title">Un dispositivo ha sido actualizado</string>
+    <string name="notifications_message">Haz click aquí para ver el estado actual</string>
+    <string name="done">Ok</string>
 </resources>

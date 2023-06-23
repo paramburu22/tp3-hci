@@ -198,19 +198,19 @@ fun SpeakerScreen(
                                         ) {
                                             Row(modifier = Modifier.fillMaxWidth()) {
                                                 BoxWithConstraints(modifier = Modifier.weight(0.8f)) {
-                                                    speakerUiState.state.song?.title!!.let { it1 ->
-                                                        Text(
-                                                            text = it1,
-                                                            fontSize = 22.sp,
-                                                            modifier = Modifier
-                                                                .fillMaxWidth()
-                                                        )
+                                                    if(speakerUiState.state.song != null) {
+                                                        speakerUiState.state.song?.title!!.let { it1 ->
+                                                            Text(
+                                                                text = it1,
+                                                                fontSize = 22.sp,
+                                                                modifier = Modifier
+                                                                    .fillMaxWidth()
+                                                            )
+                                                        }
                                                     }
-
                                                 }
                                                 speakerUiState.state.song!!.progress?.let { it1 ->
                                                     Text(text = it1, fontSize = 14.sp,
-//                                            modifier = Modifier.align(alignment = Alignment.End)
                                                     )
                                                 }
 

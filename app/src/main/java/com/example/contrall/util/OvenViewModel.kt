@@ -15,11 +15,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class OvenViewModel(device : Device)  : ViewModel(){
+class OvenViewModel(device : Device, devicesViewModel: DevicesViewModel)  : ViewModel(){
 
 
     private val _uiState = MutableStateFlow(OvenUIState())
     val uiState: StateFlow<OvenUIState> = _uiState.asStateFlow()
+    var deviceModel =  devicesViewModel
     private var fetchJob : Job? = null
 
     init {
@@ -36,7 +37,12 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 temperature = device.state?.temperature ?: "90",
                 heat  = device.state?.heat ?: "conventional",
                 grill  = device.state?.grill ?: "off",
-                convection  = device.state?.convection ?: "off"
+                convection  = device.state?.convection ?: "off",
+                isOn =  if(device.state?.status != null) {
+                    device.state?.status == "on"
+                } else {
+                    false
+                },
             ) ,
             img = R.drawable.baseline_cookie_24  ,
             isLoading = false
@@ -64,6 +70,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
     }
 
     fun turnOff() {
@@ -79,6 +86,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
     }
 
 
@@ -95,6 +103,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
     }
     fun increaseTemperatureValue() {
         if(_uiState.value.state.temperature.toInt() < 230)
@@ -119,6 +128,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
     }
     fun setConvMode(value : String) {
         fetchJob?.cancel()
@@ -133,6 +143,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
     }
     fun setGrillMode(value : String) {
         fetchJob?.cancel()
@@ -147,6 +158,10 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 )
             }
         }
+        skipNoti()
+    }
+    fun skipNoti(){
+        _uiState.value.id?.let { deviceModel.notifGenerate(it) }
     }
 
 }

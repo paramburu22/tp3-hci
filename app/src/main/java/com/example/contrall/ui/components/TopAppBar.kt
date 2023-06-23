@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.contrall.R
+import com.example.contrall.Screen
 
 @Composable
 fun TopAppBar(
@@ -30,7 +31,11 @@ fun TopAppBar(
         navigationIcon = if (showIcon) {
             {
                 IconButton(onClick = {
-                    navController.popBackStack()
+                    if(navController.currentBackStack.value.isEmpty()) {
+                        navController.popBackStack()
+                    } else {
+                        navController.navigate(Screen.DevicesScreen.route)
+                    }
                 }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Go Back")
                 }

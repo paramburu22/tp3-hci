@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Scaffold
@@ -33,10 +32,10 @@ import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.ui.components.TopAppBar
 import com.example.contrall.util.RecentsViewModel
-import com.example.contrall.util.SharedDeviceModel
+import com.example.contrall.util.SharedDeviceViewModel
 
 @Composable
-fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController, sharedDeviceModel: SharedDeviceModel) {
+fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController, sharedDeviceViewModel: SharedDeviceViewModel) {
     val painter = painterResource(R.drawable.background)
     Scaffold(
         topBar = {
@@ -96,7 +95,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                                             DeviceComponent(
                                                 device,
                                                 navController,
-                                                sharedDeviceModel,
+                                                sharedDeviceViewModel,
                                                 recentsViewModel
                                             )
                                         }
@@ -153,7 +152,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                                             DeviceComponent(
                                                 device,
                                                 navController,
-                                                sharedDeviceModel,
+                                                sharedDeviceViewModel,
                                                 recentsViewModel
                                             )
                                         }

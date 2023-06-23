@@ -19,9 +19,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LampViewModel(device : Device) : ViewModel() {
+class LampViewModel(device : Device = Device(), devicesViewModel: DevicesViewModel) : ViewModel() {
     private val _uiState = MutableStateFlow(LampUiState())
     val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
+    var deviceModel =  devicesViewModel
+
     private var fetchJob : Job? = null
 
     init {
@@ -34,9 +36,14 @@ class LampViewModel(device : Device) : ViewModel() {
                 powerUsage = device.type?.powerUsage ?: 15,
             ),
             state = LampState(
-                status = device.state?.status ?: "stopped",
+                status = device.state?.status ?: "off",
                 color = device.state?.color ?: "FFFFFF",
                 brightness = device.state?.brightness ?: 100,
+                isOn =  if(device.state?.status != null) {
+                    device.state?.status == "on"
+                } else {
+                    false
+                },
             ),
             img = R.drawable.ic_baseline_lightbulb_24,
             isLoading = false
@@ -64,7 +71,7 @@ class LampViewModel(device : Device) : ViewModel() {
                 currentState.copy(state = currentState.state.copy(status = "off", isOn = false))
             }
         }
-
+        skipNoti()
     }
 
     fun setIntensityValue(value: Float) {
@@ -76,6 +83,7 @@ class LampViewModel(device : Device) : ViewModel() {
             currentState.copy(
                 state = currentState.state.copy(brightness = value.toInt())
             ) }
+        skipNoti()
     }
 
     fun setColor(color: Color) {
@@ -88,16 +96,10 @@ class LampViewModel(device : Device) : ViewModel() {
                 state = currentState.state.copy(color = colorToHex(color))
             )
         }
+        skipNoti()
     }
 
 
-    fun intToColor(colorValue: Int): Color {
-        val alpha = (colorValue shr 24 and 0xFF) / 255f
-        val red = (colorValue shr 16 and 0xFF) / 255f
-        val green = (colorValue shr 8 and 0xFF) / 255f
-        val blue = (colorValue and 0xFF) / 255f
-        return Color(red, green, blue, alpha)
-    }
     fun colorToHex(color: Color): String {
         val red = (color.red * 255).toInt()
         val green = (color.green * 255).toInt()
@@ -112,6 +114,10 @@ class LampViewModel(device : Device) : ViewModel() {
             )
         }
         //showDialog = value
+    }
+
+    fun skipNoti(){
+        _uiState.value.id?.let { deviceModel.notifGenerate(it) }
     }
 
 }
