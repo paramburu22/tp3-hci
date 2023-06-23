@@ -169,38 +169,51 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                 modifier = Modifier.padding(top = 20.dp),
                             )
                         } else {
-                            OurDropdownMenu(items = filterMap,
-                                selectedItem = devicesUiState.filter,
-                                onItemSelected = devicesViewModel::setFilter,
-                                title = stringResource(R.string.filter)
-                            )
-                            LazyVerticalGrid(
-                                columns = GridCells.Adaptive(250.dp),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(16.dp),
-                                contentPadding = PaddingValues(5.dp),
-                                modifier = Modifier
-                                    .padding(
-                                        start = 4.dp,
-                                        end = 4.dp,
-                                        bottom = 4.dp,
-                                        top = 25.dp
-                                    )
-                                    .heightIn(min = 200.dp)
-                            ) {
-                                var myDevices: List<Device> = if( devicesUiState.filter == "all" ) {
-                                    devicesUiState.devices?.devices!!
-                                } else {
-                                    devicesUiState.devices?.devices?.filter { device -> device.type?.name ==  devicesUiState.filter }!!
+                            Column(modifier = Modifier.fillMaxSize()) {
+                                Row(
+                                    modifier = Modifier.width(250.dp).padding(15.dp)
+                                        .align(Alignment.End),
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    filterMap.get(devicesUiState.filter)?.let { it1 ->
+                                        OurDropdownMenu(
+                                            items = filterMap,
+                                            selectedItem = it1,
+                                            onItemSelected = devicesViewModel::setFilter,
+                                            title = stringResource(R.string.filter)
+                                        )
+                                    }
                                 }
-                                items(myDevices.size) { index ->
-                                    val device: Device = myDevices[index]
-                                    DeviceComponent(
-                                        device,
-                                        navController,
-                                        sharedDeviceModel,
-                                        recentsModel
-                                    )
+                                LazyVerticalGrid(
+                                    columns = GridCells.Adaptive(250.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                                    contentPadding = PaddingValues(5.dp),
+                                    modifier = Modifier
+                                        .padding(
+                                            start = 4.dp,
+                                            end = 4.dp,
+                                            bottom = 4.dp
+                                        )
+                                        .heightIn(min = 200.dp)
+                                ) {
+                                    if (devicesUiState.devices != null) {
+                                        var myDevices: List<Device> =
+                                            if (devicesUiState.filter == "all") {
+                                                devicesUiState.devices?.devices!!
+                                            } else {
+                                                devicesUiState.devices?.devices?.filter { device -> device.type?.name == devicesUiState.filter }!!
+                                            }
+                                        items(myDevices.size) { index ->
+                                            val device: Device = myDevices[index]
+                                            DeviceComponent(
+                                                device,
+                                                navController,
+                                                sharedDeviceModel,
+                                                recentsModel
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }

@@ -37,7 +37,7 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
     }
 
     BoxWithConstraints(modifier = Modifier.fillMaxHeight()) {
-        if(maxWidth < 400.dp)
+        if(maxWidth < 520.dp)
             Card(
                 modifier = Modifier
                     .clickable {

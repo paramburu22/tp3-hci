@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
+import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.DoorViewModel
 
 @Composable
@@ -105,9 +107,13 @@ fun DoorScreen(
                                 Switch(
                                     checked = doorUiState.state.isLocked,
                                     onCheckedChange = { value -> doorViewModel.switchLock() },
-                                    modifier = Modifier
-                                        .padding(bottom = 8.dp)
-                                        .padding(end = 10.dp)
+                                    modifier = Modifier.padding(end = 8.dp, bottom = 8.dp),
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = PrimaryLight,
+                                        checkedTrackColor = PrimaryLight,
+                                        uncheckedThumbColor = Color.Gray,
+                                        uncheckedTrackColor = Color.Gray
+                                    )
                                 )
                                 Text(
                                     text = if (doorUiState.state.isLocked) stringResource(R.string.locked) else stringResource(R.string.unlocked),
@@ -129,9 +135,13 @@ fun DoorScreen(
                                 Switch(
                                     checked = doorUiState.state.isOpen,
                                     onCheckedChange = { value -> doorViewModel.switchState() },
-                                    modifier = Modifier
-                                        .padding(bottom = 8.dp)
-                                        .padding(end = 10.dp)
+                                    modifier = Modifier.padding(end = 8.dp, bottom = 8.dp),
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = PrimaryLight,
+                                        checkedTrackColor = PrimaryLight,
+                                        uncheckedThumbColor = Color.Gray,
+                                        uncheckedTrackColor = Color.Gray
+                                    )
                                 )
                                 Text(
                                     text = if (doorUiState.state.isOpen) stringResource(R.string.open) else stringResource(R.string.closed),

@@ -80,7 +80,8 @@ fun RoutineComponent(routine : Routine, routinesViewModel: RoutinesViewModel) {
                         contentDescription = null,
                         modifier = Modifier
                             .size(48.dp)
-                            .padding(end = 12.dp)
+                            .padding(end = 12.dp),
+                        tint = Color(android.graphics.Color.parseColor("#146C94"))
                     )
                 }
 

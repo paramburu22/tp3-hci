@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -77,7 +78,7 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavContr
             TopAppBar(title = stringResource(R.string.routine_title), showIcon = false)
         },
         content = {
-            Box(
+            BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it),
@@ -96,21 +97,47 @@ fun RoutinesScreen(routinesViewModel: RoutinesViewModel, navController: NavContr
                         modifier = Modifier.padding(top = 20.dp)
                     )
                 } else {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        contentPadding = PaddingValues(5.dp),
-                        modifier = Modifier.padding(
-                            start = 4.dp,
-                            end = 4.dp,
-                            bottom = 4.dp,
-                            top = 25.dp
-                        ).heightIn(min = 200.dp)
-                    ) {
-                        val myRoutines: RoutinesList? = routinesUiState.routines
-                        if (myRoutines != null) {
-                            items(myRoutines.routines.size) { index ->
-                                val routine: Routine = myRoutines.routines[index]
-                                RoutineComponent(routine, routinesViewModel)
+                    if (maxWidth < 520.dp) {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            contentPadding = PaddingValues(5.dp),
+                            modifier = Modifier.padding(
+                                start = 4.dp,
+                                end = 4.dp,
+                                bottom = 4.dp,
+                                top = 25.dp
+                            ).heightIn(min = 200.dp)
+                        ) {
+                            val myRoutines: RoutinesList? = routinesUiState.routines
+                            if (myRoutines != null) {
+                                items(myRoutines.routines.size) { index ->
+                                    val routine: Routine = myRoutines.routines[index]
+                                    RoutineComponent(routine, routinesViewModel)
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            contentPadding = PaddingValues(5.dp),
+                            modifier = Modifier
+                                .padding(
+                                    start = 4.dp,
+                                    end = 4.dp,
+                                    bottom = 4.dp,
+                                    top = 25.dp
+                                )
+                                .heightIn(min = 200.dp)
+                        ) {
+                            val myRoutines: RoutinesList? = routinesUiState.routines
+                            if (myRoutines != null) {
+                                items(myRoutines.routines.size) { index ->
+                                    val routine: Routine = myRoutines.routines[index]
+                                    RoutineComponent(routine, routinesViewModel)
+                                }
                             }
                         }
                     }

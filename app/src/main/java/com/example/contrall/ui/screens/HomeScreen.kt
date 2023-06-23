@@ -44,7 +44,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
         },
         content = {
             BoxWithConstraints() {
-                if(maxWidth < 400.dp){
+                if(maxWidth < 520.dp){
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -66,15 +66,16 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                                 fontSize = 30.sp,
                             )}
                             if(recentsViewModel.recentDevices.size <= 0) {
-                                Row(modifier = Modifier.fillMaxWidth()){
+                                Row(modifier = Modifier.fillMaxWidth().padding(top=30.dp)){
                                 Text(
                                     text = stringResource(R.string.no_recent),
                                     fontSize = 25.sp,
+                                    color = Color(android.graphics.Color.parseColor("#146C94"))
                                 )
                                 }
                             } else {
                                 LazyVerticalGrid(
-                                    columns = GridCells.Adaptive(150.dp),
+                                    columns = GridCells.Adaptive(250.dp),
                                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                                     verticalArrangement = Arrangement.spacedBy(16.dp),
                                     contentPadding = PaddingValues(5.dp),
@@ -132,7 +133,7 @@ fun HomeScreen(recentsViewModel: RecentsViewModel, navController: NavController,
                                     text = stringResource(R.string.no_recent),
                                     textAlign = TextAlign.Center,
                                     fontSize = 25.sp,
-
+                                    color = Color(android.graphics.Color.parseColor("#146C94"))
                                 )
                             } else {
                                 LazyVerticalGrid(
