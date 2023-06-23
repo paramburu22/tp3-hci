@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -20,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -32,9 +32,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.example.contrall.R
-import com.example.contrall.data.DropdownClass
 import com.example.contrall.data.network.models.Device
-import com.example.contrall.data.network.models.DevicesList
 import com.example.contrall.ui.components.BottomBar
 import com.example.contrall.ui.components.DeviceComponent
 import com.example.contrall.ui.components.OurDropdownMenu
@@ -63,7 +61,6 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
         "all" to stringResource(R.string.default_filter),
         "ac" to stringResource(R.string.ac_name),
         "oven" to stringResource(R.string.oven_name),
-        "fan" to stringResource(R.string.fan),
         "lamp" to stringResource(R.string.lamp_name),
         "speaker" to stringResource(R.string.speaker_name),
         "door" to stringResource(R.string.door_name)
@@ -105,13 +102,16 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                             )
                         } else {
                             Column(modifier = Modifier.fillMaxSize()) {
-                                Row(modifier = Modifier.width(300.dp).padding(15.dp)) {
-                                    OurDropdownMenu(
-                                        items = filterMap,
-                                        selectedItem = devicesUiState.filter,
-                                        onItemSelected = devicesViewModel::setFilter,
-                                        title = stringResource(R.string.filter)
-                                    )
+                                Row(modifier = Modifier.width(250.dp).padding(15.dp).align(Alignment.End),
+                                horizontalArrangement = Arrangement.End) {
+                                    filterMap.get(devicesUiState.filter)?.let { it1 ->
+                                        OurDropdownMenu(
+                                            items = filterMap,
+                                            selectedItem = it1,
+                                            onItemSelected = devicesViewModel::setFilter,
+                                            title = stringResource(R.string.filter)
+                                        )
+                                    }
                                 }
                                 LazyVerticalGrid(
                                     columns = GridCells.Adaptive(150.dp),
@@ -127,10 +127,14 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                         )
                                         .heightIn(min = 200.dp)
                                 ) {
-                                    val myDevices: DevicesList? = devicesUiState.devices
-                                    if (myDevices != null) {
-                                        items(myDevices.devices.size) { index ->
-                                            val device: Device = myDevices.devices[index]
+                                    if(devicesUiState.devices != null) {
+                                        var myDevices: List<Device> = if( devicesUiState.filter == "all" ) {
+                                            devicesUiState.devices?.devices!!
+                                        } else {
+                                            devicesUiState.devices?.devices?.filter { device -> device.type?.name ==  devicesUiState.filter }!!
+                                        }
+                                        items(myDevices.size) { index ->
+                                            val device: Device = myDevices[index]
                                             DeviceComponent(
                                                 device,
                                                 navController,
@@ -184,17 +188,19 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                     )
                                     .heightIn(min = 200.dp)
                             ) {
-                                val myDevices: DevicesList? = devicesUiState.devices
-                                if (myDevices != null) {
-                                    items(myDevices.devices.size) { index ->
-                                        val device: Device = myDevices.devices[index]
-                                        DeviceComponent(
-                                            device,
-                                            navController,
-                                            sharedDeviceModel,
-                                            recentsModel
-                                        )
-                                    }
+                                var myDevices: List<Device> = if( devicesUiState.filter == "all" ) {
+                                    devicesUiState.devices?.devices!!
+                                } else {
+                                    devicesUiState.devices?.devices?.filter { device -> device.type?.name ==  devicesUiState.filter }!!
+                                }
+                                items(myDevices.size) { index ->
+                                    val device: Device = myDevices[index]
+                                    DeviceComponent(
+                                        device,
+                                        navController,
+                                        sharedDeviceModel,
+                                        recentsModel
+                                    )
                                 }
                             }
                         }

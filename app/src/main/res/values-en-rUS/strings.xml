@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="default_filter">All</string>
     <string name="speaker_name">Speaker</string>
     <string name="ac_name">Air Conditioner</string>
     <string name="lamp_name">Lamp</string>
     <string name="oven_name">Oven</string>
     <string name="door_name">Door</string>
-    <string name="filter">Filter for Device Type</string>
+    <string name="filter">Filter device</string>
     <string name="home_title">Home</string>
     <string name="recent_title">Recent Devices</string>
     <string name="no_recent">There are no recently used devices</string>
@@ -55,4 +54,20 @@
     <string name="hex">Hex</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
+    <string name="default_filter">All</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="next_song">Next song</string>
+    <string name="prev_song">Previous song</string>
+    <string name="genre">Genre</string>
+    <string name="convection">Convection</string>
+    <string name="mode_routine">Mode</string>
+    <string name="close_routine">Close</string>
+    <string name="open_routine">Open</string>
+    <string name="lock_routine">Lock</string>
+    <string name="unlock_routine">Unlock</string>
+    <string name="turn_on">Turn On</string>
+    <string name="turn_off">Turn Off</string>
 </resources>

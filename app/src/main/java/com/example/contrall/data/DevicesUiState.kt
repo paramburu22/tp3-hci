@@ -8,7 +8,7 @@ data class DevicesUiState (
     val isLoading : Boolean? = false,
     val devices : DevicesList? = null,
     val message : String? = null,
-    val filter: String = "Todos",
+    val filter: String = "all",
     ) {
     override fun toString(): String = Uri.encode(Gson().toJson(this))
 }

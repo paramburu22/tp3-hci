@@ -1,12 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">ContrAll</string>
-    <string name="default_filter">Todos</string>
     <string name="speaker_name">Parlante</string>
     <string name="ac_name">Aire Acondicionado</string>
     <string name="lamp_name">Lámpara</string>
     <string name="oven_name">Horno</string>
     <string name="door_name">Puerta</string>
-    <string name="filter">Filtre por Dispositivo</string>
+    <string name="filter">Filtre dispositivo</string>
     <string name="home_title">Inicio</string>
     <string name="recent_title">Dispositivos Recientes</string>
     <string name="no_recent">No hay dispositivos utilizados recientemente</string>
@@ -59,5 +58,23 @@
     <string name="hex">Hexa</string>
     <string name="rgb">RGB</string>
     <string name="cancel">Cancelar</string>
-    <string name="done">Ok</string>
+    <string name="done">Listo</string>
+    <string name="default_filter">Todos</string>
+    <string name="play">Reproducir</string>
+    <string name="stop">Detener</string>
+    <string name="pause">Pausar</string>
+    <string name="resume">Reanudar</string>
+    <string name="next_song">Siguiente cancion</string>
+    <string name="prev_song">Cancion anterior</string>
+    <string name="genre">Genero</string>
+    <string name="color" translatable="false">Color</string>
+    <string name="grill" translatable="false">Grill</string>
+    <string name="convection">Conveccion</string>
+    <string name="mode_routine">Modo</string>
+    <string name="open_routine">Abrir</string>
+    <string name="close_routine">Cerrar</string>
+    <string name="lock_routine">Bloquear</string>
+    <string name="unlock_routine">Desbloquear</string>
+    <string name="turn_on">Prender</string>
+    <string name="turn_off">Apagar</string>
 </resources>

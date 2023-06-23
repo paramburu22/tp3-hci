@@ -1,46 +1,58 @@
 package com.example.contrall.ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.contrall.R
 import com.example.contrall.data.network.models.Action
 import com.example.contrall.data.network.models.Routine
-import com.example.contrall.data.network.models.RoutinesList
 import com.example.contrall.util.RoutinesViewModel
 
 @Composable
 fun RoutineComponent(routine : Routine, routinesViewModel: RoutinesViewModel) {
     val actionsNames : Map<String, String> = mapOf(
+        "setVolume" to stringResource(R.string.volume),
+        "play" to stringResource(R.string.play),
+        "stop" to stringResource(R.string.stop),
+        "pause" to stringResource(R.string.pause),
+        "resume" to stringResource(R.string.resume),
+        "nextSong" to stringResource(R.string.next_song),
+        "previousSong" to stringResource(R.string.prev_song),
+        "setGenre" to stringResource(R.string.genre),
+        "turnOn" to stringResource(R.string.turn_on),
+        "turnOff" to stringResource(R.string.turn_off),
+        "setColor" to stringResource(R.string.color),
+        "setBrightness" to stringResource(R.string.brightness),
+        "setTemperature" to stringResource(R.string.temp),
+        "setHeat" to stringResource(R.string.heat),
+        "setGrill" to stringResource(R.string.grill),
+        "setConvection" to stringResource(R.string.convection),
+        "setMode" to stringResource(R.string.mode_routine),
+        "setVerticalSwing" to stringResource(R.string.v_swing),
+        "setHorizontalSwing" to stringResource(R.string.h_swing),
+        "setFanSpeed" to stringResource(R.string.fan_speed),
+        "open" to stringResource(R.string.open_routine),
+        "close" to stringResource(R.string.close_routine),
+        "lock" to stringResource(R.string.lock_routine),
+        "unlock" to stringResource(R.string.unlock_routine),
 
     )
     Card(
@@ -96,7 +108,7 @@ fun RoutineComponent(routine : Routine, routinesViewModel: RoutinesViewModel) {
                     }
                     Row(verticalAlignment = Alignment.CenterVertically){
                         Text(
-                            text = "${action.actionName}",
+                            text = "${actionsNames.get(action.actionName)}",
                             fontSize = 16.sp,
                             color = Color.Gray
                         )
