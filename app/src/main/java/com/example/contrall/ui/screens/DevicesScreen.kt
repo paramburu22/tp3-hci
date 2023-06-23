@@ -4,10 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Scaffold
@@ -55,7 +59,15 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
     }
 
     val lifecycleOwner = LocalLifecycleOwner.current
-
+    val filterMap : Map<String, String> = mapOf(
+        "all" to stringResource(R.string.default_filter),
+        "ac" to stringResource(R.string.ac_name),
+        "oven" to stringResource(R.string.oven_name),
+        "fan" to stringResource(R.string.fan),
+        "lamp" to stringResource(R.string.lamp_name),
+        "speaker" to stringResource(R.string.speaker_name),
+        "door" to stringResource(R.string.door_name)
+    )
     DisposableEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
 
@@ -71,17 +83,6 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
         },
         content = {
             BoxWithConstraints() {
-                /*OurDropdownMenu(items = listOf(
-                    DropdownClass("ac", stringResource(R.string.ac_name)),
-                    DropdownClass("oven", stringResource(R.string.oven_name)),
-                    DropdownClass("lamp", stringResource(R.string.lamp_name)),
-                    DropdownClass("speaker", stringResource(R.string.speaker_name)),
-                    DropdownClass("door", stringResource(R.string.door_name)),
-                    ),
-                    selectedItem = devicesUiState.filter,
-                    onItemSelected = devicesViewModel::setFilter,
-                    title = stringResource(R.string.filter)
-                )*/
 
                 if(maxWidth < 520.dp){
                     Box(
@@ -103,32 +104,43 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                 modifier = Modifier.padding(top = 20.dp),
                             )
                         } else {
-                            LazyVerticalGrid(
-                                columns = GridCells.Adaptive(150.dp),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(16.dp),
-                                contentPadding = PaddingValues(5.dp),
-                                modifier = Modifier
-                                    .padding(
-                                        start = 4.dp,
-                                        end = 4.dp,
-                                        bottom = 4.dp,
-                                        top = 25.dp
+                            Column(modifier = Modifier.fillMaxSize()) {
+                                Row(modifier = Modifier.width(300.dp).padding(15.dp)) {
+                                    OurDropdownMenu(
+                                        items = filterMap,
+                                        selectedItem = devicesUiState.filter,
+                                        onItemSelected = devicesViewModel::setFilter,
+                                        title = stringResource(R.string.filter)
                                     )
-                                    .heightIn(min = 200.dp)
-                            ) {
-                                val myDevices: DevicesList? = devicesUiState.devices
-                                if (myDevices != null) {
-                                    items(myDevices.devices.size) { index ->
-                                        val device: Device = myDevices.devices[index]
-                                        DeviceComponent(
-                                            device,
-                                            navController,
-                                            sharedDeviceModel,
-                                            recentsModel
+                                }
+                                LazyVerticalGrid(
+                                    columns = GridCells.Adaptive(150.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                                    contentPadding = PaddingValues(5.dp),
+                                    modifier = Modifier
+                                        .padding(
+                                            start = 4.dp,
+                                            end = 4.dp,
+                                            bottom = 4.dp,
+                                            top = 25.dp
                                         )
+                                        .heightIn(min = 200.dp)
+                                ) {
+                                    val myDevices: DevicesList? = devicesUiState.devices
+                                    if (myDevices != null) {
+                                        items(myDevices.devices.size) { index ->
+                                            val device: Device = myDevices.devices[index]
+                                            DeviceComponent(
+                                                device,
+                                                navController,
+                                                sharedDeviceModel,
+                                                recentsModel
+                                            )
+                                        }
                                     }
                                 }
+
                             }
                         }
                     }
@@ -153,6 +165,11 @@ fun DevicesScreen(devicesViewModel: DevicesViewModel, navController: NavControll
                                 modifier = Modifier.padding(top = 20.dp),
                             )
                         } else {
+                            OurDropdownMenu(items = filterMap,
+                                selectedItem = devicesUiState.filter,
+                                onItemSelected = devicesViewModel::setFilter,
+                                title = stringResource(R.string.filter)
+                            )
                             LazyVerticalGrid(
                                 columns = GridCells.Adaptive(250.dp),
                                 horizontalArrangement = Arrangement.spacedBy(16.dp),

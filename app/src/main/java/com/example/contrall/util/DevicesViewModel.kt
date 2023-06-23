@@ -40,4 +40,10 @@ class DevicesViewModel : ViewModel() {
             }
         }
     }
+
+    fun setFilter(mode: String) {
+        _uiState.update { it.copy(
+            filter = mode
+        )}
+    }
 }

@@ -110,6 +110,7 @@ fun DeviceComponent(device : Device, navController: NavController, sharedDeviceM
                             text = it,
                             fontSize = 30.sp,
                             maxLines = 3,
+                            modifier = Modifier.padding(end = 15.dp)
                         )
                     }
                     Text(
