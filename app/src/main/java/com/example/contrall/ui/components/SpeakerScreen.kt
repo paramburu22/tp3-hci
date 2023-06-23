@@ -322,9 +322,8 @@ fun SpeakerScreen(
                                     }
                                     Slider(
                                         value = speakerUiState.state.volume!!.toFloat(),
-                                        onValueChange = { value -> speakerViewModel.setVolume(value.toInt().toFloat()) },
+                                        onValueChange = { value -> speakerViewModel.setVolume(value)},
                                         valueRange = 0f..10f,
-                                        steps = 1,
                                         colors = SliderDefaults.colors(
                                             thumbColor = Color(android.graphics.Color.parseColor("#146C94")),
                                             activeTrackColor = Color(android.graphics.Color.parseColor("#146C94")),
@@ -375,34 +374,27 @@ fun SpeakerScreen(
                                         fontSize = 18.sp)
                                     }
                                 }
-
-                                // Trash Bin Image
-                                Image(
-                                    painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
                             }
                         }
-                    }}
-
+                    }
+                }
             }
         }
     )
 
-        if (showPlaylist) {
-            speakerViewModel.getPlaylist()
-            playlistState?.let {
-                genresMap.get(speakerUiState.state.genre)?.let { it1 ->
-                    PlaylistDialog(
-                        open = showPlaylist,
-                        onClose = { showPlaylist = false },
-                        genre = it1,
-                        playlist = it
-                    )
-                }
+    if (showPlaylist) {
+        speakerViewModel.getPlaylist()
+        playlistState?.let {
+            genresMap.get(speakerUiState.state.genre)?.let { it1 ->
+                PlaylistDialog(
+                    open = showPlaylist,
+                    onClose = { showPlaylist = false },
+                    genre = it1,
+                    playlist = it
+                )
             }
         }
+    }
 }
 
 

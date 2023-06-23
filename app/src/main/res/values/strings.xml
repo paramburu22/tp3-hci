@@ -1,5 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">ContrAll</string>
+    <string name="default_filter">Todos</string>
     <string name="speaker_name">Parlante</string>
     <string name="ac_name">Aire Acondicionado</string>
     <string name="lamp_name">Lámpara</string>
@@ -27,8 +28,8 @@
     <string name="cool">Frio</string>
     <string name="heat">Calor</string>
     <string name="fan">Ventilación</string>
-    <string name="on">Prendido</string>
-    <string name="off">Apagado</string>
+    <string name="on" tools:ignore="PrivateResource">Prendido</string>
+    <string name="off" tools:ignore="PrivateResource">Apagado</string>
     <string name="mode">Seleccione un modo</string>
     <string name="temp">Temperatura</string>
     <string name="auto">Automático</string>
@@ -44,7 +45,7 @@
     <string name="heat_source">Seleccione fuente de calor</string>
     <string name="mode_large">Completo</string>
     <string name="mode_eco">Economico</string>
-    <string name="mode_normal" translatable="false">Normal</string>
+    <string name="mode_normal">Normal</string>
     <string name="grill_mode">Seleccione el modo grill</string>
     <string name="convection_mode">Seleccione el modo conveccion</string>
     <string name="hex_val">Valor hexa</string>
@@ -56,7 +57,7 @@
     <string name="unlocked">Desbloqueada</string>
     <string name="new_color">Elija un color nuevo</string>
     <string name="hex">Hexa</string>
-    <string name="rgb" translatable="false">RGB</string>
+    <string name="rgb">RGB</string>
     <string name="cancel">Cancelar</string>
-    <string name="done">Listo</string>
+    <string name="done">Ok</string>
 </resources>

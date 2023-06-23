@@ -196,14 +196,6 @@ fun LampScreen(
                                     modifier = Modifier.width(260.dp)
                                 )
                             }
-                            Divider()
-                            Image(
-                                painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            )
                         }
                     }
                 }

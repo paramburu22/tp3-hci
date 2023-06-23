@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.contrall.R
-import com.example.contrall.data.DropdownClass
 import com.example.contrall.ui.theme.PrimaryLight
 import com.example.contrall.util.OvenViewModel
 
@@ -69,6 +68,7 @@ fun OvenScreen(
         "eco" to stringResource(R.string.mode_eco),
         "off" to stringResource(R.string.off)
     )
+
     Scaffold(
         topBar = {
             TopAppBar(navController)
@@ -220,31 +220,29 @@ fun OvenScreen(
                                         .padding(10.dp)
                                         .fillMaxWidth()
                                 ) {
-                                    OurDropdownMenu(
-                                        items = grillModeMap,
-                                        selectedItem = ovenUiState.state.grill,
-                                        onItemSelected = ovenViewModel::setGrillMode,
-                                        title = stringResource(R.string.grill_mode)
-                                    )
+                                    grillModeMap.get(ovenUiState.state.grill)?.let { it1 ->
+                                        OurDropdownMenu(
+                                            items = grillModeMap,
+                                            selectedItem = it1,
+                                            onItemSelected = ovenViewModel::setGrillMode,
+                                            title = stringResource(R.string.grill_mode)
+                                        )
+                                    }
                                 }
                                 Row(
                                     modifier = Modifier
                                         .padding(10.dp)
                                         .fillMaxWidth()
                                 ) {
-                                    OurDropdownMenu(
-                                        items = convModeMap,
-                                        selectedItem = ovenUiState.state.convection,
-                                        onItemSelected = ovenViewModel::setConvMode,
-                                        title = stringResource(R.string.convection_mode)
-                                    )
+                                    convModeMap.get(ovenUiState.state.convection)?.let { it1 ->
+                                        OurDropdownMenu(
+                                            items = convModeMap,
+                                            selectedItem = it1,
+                                            onItemSelected = ovenViewModel::setConvMode,
+                                            title = stringResource(R.string.convection_mode)
+                                        )
+                                    }
                                 }
-                                // Trash Bin Image
-                                Image(
-                                    painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
                             }
                         }
                     }}

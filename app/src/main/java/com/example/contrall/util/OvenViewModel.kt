@@ -36,7 +36,7 @@ class OvenViewModel(device : Device)  : ViewModel(){
                 temperature = device.state?.temperature ?: "90",
                 heat  = device.state?.heat ?: "conventional",
                 grill  = device.state?.grill ?: "off",
-                convection  = device.state?.status ?: "off"
+                convection  = device.state?.convection ?: "off"
             ) ,
             img = R.drawable.baseline_cookie_24  ,
             isLoading = false

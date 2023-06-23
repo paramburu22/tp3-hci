@@ -26,17 +26,31 @@ android {
         }
         resConfigs("en", "es")
     }
+//    signingConfigs{
+//        debug{
+//            storeFile file('./debug.keystore')
+//            storePassword 'pcsofi'
+//            keyAlias 'test'
+//            keyPassword 'pcsofi'
+//        }
+//        release{
+//            storeFile file('./debug.keystore')
+//            storePassword 'pcsofi'
+//            keyAlias 'test'
+//            keyPassword 'pcsofi'
+//        }
+//    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_BASE_URL",
-                    "\"http://192.168.1.12:8080/\""
+                    "\"http://10.0.2.2:8080/\""
         }
         debug {
             buildConfigField "String", "API_BASE_URL",
-                    "\"http://192.168.1.12:8080/\""
+                    "\"http://10.0.2.2:8080/\""
         }
     }
     compileOptions {

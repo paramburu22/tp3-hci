@@ -165,12 +165,14 @@ fun AirConditionerScreen(
                                 horizontalArrangement = Arrangement.Start
 
                             ) {
-                                OurDropdownMenu(
-                                    items =  modeMap,
-                                    selectedItem = airConditionerUiState.state.mode,
-                                    onItemSelected = airConditionerViewModel::setMode,
-                                    title = stringResource(R.string.mode)
-                                )
+                                modeMap.get(airConditionerUiState.state.mode)?.let { it1 ->
+                                    OurDropdownMenu(
+                                        items = modeMap,
+                                        selectedItem = it1,
+                                        onItemSelected = airConditionerViewModel::setMode,
+                                        title = stringResource(R.string.mode)
+                                    )
+                                }
                             }
                             Row(
                                 modifier = Modifier
@@ -221,46 +223,44 @@ fun AirConditionerScreen(
                                     .padding(10.dp)
                                     .fillMaxWidth()
                             ) {
-                                OurDropdownMenu(
-                                    //items = airConditionerUiState.fanSpeeds,
-                                    items = horSwingMap,
-                                    selectedItem = airConditionerUiState.state.verticalSwing,
-                                    onItemSelected = airConditionerViewModel::setVerticalSwing,
-                                    title = stringResource(R.string.v_swing)
-                                )
+                                horSwingMap.get(airConditionerUiState.state.horizontalSwing)?.let { it1 ->
+                                    OurDropdownMenu(
+                                        items = horSwingMap,
+                                        selectedItem = it1,
+                                        onItemSelected = airConditionerViewModel::setHorizontalSwing,
+                                        title = stringResource(R.string.v_swing)
+                                    )
+                                }
                             }
                             Row(
                                 modifier = Modifier
                                     .padding(10.dp)
                                     .fillMaxWidth()
                             ) {
-                                OurDropdownMenu(
-                                    //items = airConditionerUiState.fanSpeeds,
+                                verSwingMap.get(airConditionerUiState.state.verticalSwing)?.let { it1 ->
+                                    OurDropdownMenu(
+                                        items = verSwingMap,
+                                        selectedItem = it1,
+                                        onItemSelected = airConditionerViewModel::setVerticalSwing,
+                                        title = stringResource(R.string.h_swing)
+                                    )
+                                }
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .padding(10.dp)
+                                    .fillMaxWidth()
+                            ) {
 
-                                    items = fanSpeedMap,
-                                    selectedItem = airConditionerUiState.state.fanSpeed,
-                                    onItemSelected = airConditionerViewModel::setFanSpeed,
-                                    title = stringResource(R.string.fan_speed)
-                                )
+                                fanSpeedMap.get(airConditionerUiState.state.fanSpeed)?.let { it1 ->
+                                    OurDropdownMenu(
+                                        items = fanSpeedMap,
+                                        selectedItem = it1,
+                                        onItemSelected = airConditionerViewModel::setFanSpeed,
+                                        title = stringResource(R.string.fan_speed)
+                                    )
+                                }
                             }
-                            Row(
-                                modifier = Modifier
-                                    .padding(10.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                OurDropdownMenu(
-                                    items = horSwingMap,
-                                    selectedItem = airConditionerUiState.state.horizontalSwing,
-                                    onItemSelected = airConditionerViewModel::setHorizontalSwing,
-                                    title = stringResource(R.string.h_swing)
-                                )
-                            }
-                            // Trash Bin Image
-                            Image(
-                                painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxWidth().padding(10.dp)
-                            )
                         }
                     }}
             }

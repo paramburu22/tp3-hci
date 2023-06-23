@@ -6,13 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.contrall.data.AirConditionerUiState
+import com.example.contrall.R
 import com.example.contrall.data.LampState
 import com.example.contrall.data.LampType
 import com.example.contrall.data.LampUiState
-import com.example.contrall.data.SpeakerState
-import com.example.contrall.data.SpeakerType
-import com.example.contrall.data.SpeakerUiState
 import com.example.contrall.data.network.RetrofitClient
 import com.example.contrall.data.network.models.Device
 import kotlinx.coroutines.Job
@@ -22,11 +19,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LampViewModel(device : Device = Device()) : ViewModel() {
+class LampViewModel(device : Device) : ViewModel() {
     private val _uiState = MutableStateFlow(LampUiState())
     val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
-
-
     private var fetchJob : Job? = null
 
     init {
@@ -42,7 +37,9 @@ class LampViewModel(device : Device = Device()) : ViewModel() {
                 status = device.state?.status ?: "stopped",
                 color = device.state?.color ?: "FFFFFF",
                 brightness = device.state?.brightness ?: 100,
-            )
+            ),
+            img = R.drawable.ic_baseline_lightbulb_24,
+            isLoading = false
         )
     }
 

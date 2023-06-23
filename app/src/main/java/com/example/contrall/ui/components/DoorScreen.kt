@@ -141,13 +141,6 @@ fun DoorScreen(
                                         .align(Alignment.CenterVertically)
                                 )
                             }
-
-                            // Trash Bin Image
-                            Image(
-                                painter = painterResource(R.drawable.ic_baseline_delete_outline_24),
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxWidth()
-                            )
                         }
                     }}
                 }

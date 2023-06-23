@@ -1,6 +1,7 @@
 package com.example.contrall.data
 
 import androidx.compose.ui.graphics.Color
+import com.example.contrall.R
 
 
 data class LampUiState(
@@ -8,6 +9,8 @@ data class LampUiState(
     val name : String? = "",
     val type : LampType = LampType(),
     val state : LampState = LampState(),
+    val img: Int = R.drawable.ic_baseline_lightbulb_24,
+    val isLoading : Boolean = false
 )
 
 

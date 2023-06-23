@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="default_filter">All</string>
     <string name="speaker_name">Speaker</string>
+    <string name="ac_name">Air Conditioner</string>
+    <string name="lamp_name">Lamp</string>
+    <string name="oven_name">Oven</string>
+    <string name="door_name">Door</string>
+    <string name="filter">Filter for Device Type</string>
     <string name="home_title">Home</string>
     <string name="recent_title">Recent Devices</string>
     <string name="no_recent">There are no recently used devices</string>
@@ -17,8 +23,8 @@
     <string name="cool">Cool</string>
     <string name="heat">Heat</string>
     <string name="fan">Fan</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
+    <string name="on" tools:ignore="PrivateResource">On</string>
+    <string name="off" tools:ignore="PrivateResource">Off</string>
     <string name="mode">Select a mode</string>
     <string name="temp">Temperature</string>
     <string name="auto">Automatic</string>
@@ -34,11 +40,13 @@
     <string name="heat_source">Select heat source</string>
     <string name="mode_large">Large</string>
     <string name="mode_eco">Eco</string>
+    <string name="mode_normal">Normal</string>
     <string name="grill_mode">Select the grill mode</string>
     <string name="convection_mode">Select the convection mode</string>
     <string name="hex_val">Hex value</string>
     <string name="rgb_val">RGB value</string>
     <string name="brightness">Brightness</string>
+    <string name="rgb">RGB</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
     <string name="locked">Locked</string>
